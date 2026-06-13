@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ahmet Baş | Portfolyo</title>
-    <!-- Tailwind CSS ve FontAwesome İkonları (Ücretsiz ve Hazır) -->
+    <title>Ahmet Baş | Matematik Öğretmeni</title>
+    <!-- Tailwind CSS ve FontAwesome İkonları (Ücretsiz) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -13,8 +13,8 @@
             color: #f8fafc;
             font-family: 'Inter', sans-serif;
         }
-        .gradient-text {
-            background: linear-gradient(to right, #38bdf8, #818cf8);
+        .math-gradient {
+            background: linear-gradient(to right, #38bdf8, #3b82f6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -22,82 +22,99 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between antialiased">
 
-    <!-- ANA İÇERİK KONTEYNERİ -->
-    <main class="max-w-4xl mx-auto px-6 py-16 flex-grow flex flex-col justify-center items-center text-center">
+    <!-- ANA İÇERİK -->
+    <main class="max-w-4xl mx-auto px-6 py-12 flex-grow w-full">
         
-        <!-- Profil Alanı -->
-        <div class="mb-8">
-            <!-- Profil Resmi Alanı (İsterseniz src kısmına kendi resim linkinizi koyabilirsiniz) -->
-            <div class="w-24 h-24 bg-gradient-to-tr from-sky-400 to-indigo-500 rounded-full mx-auto flex items-center justify-center text-3xl font-bold shadow-lg shadow-indigo-500/20 mb-4">
-                AB
+        <!-- ÜST KISIM / PROFİL -->
+        <div class="text-center mb-12">
+            <div class="w-24 h-24 bg-gradient-to-tr from-blue-500 to-sky-400 rounded-full mx-auto flex items-center justify-center text-3xl text-white shadow-lg shadow-blue-500/20 mb-4">
+                <i class="fas fa-calculator"></i>
             </div>
-            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-2">
-                Merhaba, Ben <span class="gradient-text">Ahmet Baş</span>
+            <h1 class="text-4xl font-extrabold tracking-tight mb-2">
+                Ahmet Baş
             </h1>
-            <p class="text-lg text-slate-400 max-w-md mx-auto font-medium">
-                Geliştirici & Tasarımcı. Web teknolojileri üzerinde çalışıyor ve dijital deneyimler üretiyorum.
+            <h2 class="text-xl font-semibold math-gradient mb-4">
+                Matematik Öğretmeni & Eğitim İçeriği Üreticisi
+            </h2>
+            <p class="text-slate-400 max-w-xl mx-auto text-base leading-relaxed">
+                Ortaokul ve lise düzeyinde matematik eğitimleri veriyor, öğrencilerin analitik düşünme becerilerini geliştirecek dinamik ve dijital içerikler üretiyorum.
             </p>
         </div>
 
-        <!-- YETENEKLER BÖLÜMÜ -->
-        <div class="mb-12 w-full max-w-lg">
-            <div class="flex flex-wrap justify-center gap-2">
-                <span class="bg-slate-800/80 border border-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm font-medium shadow-sm">HTML5</span>
-                <span class="bg-slate-800/80 border border-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm font-medium shadow-sm">CSS3</span>
-                <span class="bg-slate-800/80 border border-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm font-medium shadow-sm">JavaScript</span>
-                <span class="bg-slate-800/80 border border-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm font-medium shadow-sm">Tailwind CSS</span>
-                <span class="bg-slate-800/80 border border-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm font-medium shadow-sm">Node.js</span>
-                <span class="bg-slate-800/80 border border-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm font-medium shadow-sm">Git & GitHub</span>
+        <!-- UZMANLIK VE EĞİTİM SEVİYELERİ -->
+        <div class="mb-10 text-center">
+            <div class="flex flex-wrap justify-center gap-3">
+                <span class="bg-slate-800/90 border border-slate-700 text-slate-300 px-4 py-1.5 rounded-full text-sm font-medium"><i class="fas fa-graduation-cap text-sky-400 mr-2"></i>Ortaokul Matematik</span>
+                <span class="bg-slate-800/90 border border-slate-700 text-slate-300 px-4 py-1.5 rounded-full text-sm font-medium"><i class="fas fa-book-open text-blue-400 mr-2"></i>Lise Matematik</span>
+                <span class="bg-slate-800/90 border border-slate-700 text-slate-300 px-4 py-1.5 rounded-full text-sm font-medium"><i class="fas fa-star text-amber-400 mr-2"></i>LGS & YKS Hazırlık</span>
+                <span class="bg-slate-800/90 border border-slate-700 text-slate-300 px-4 py-1.5 rounded-full text-sm font-medium"><i class="fas fa-laptop-code text-emerald-400 mr-2"></i>Dijital Eğitim İçerikleri</span>
             </div>
         </div>
 
-        <!-- PROJELER/BAĞLANTILAR BÖLÜMÜ -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl mb-12">
+        <!-- İNTERAKTİF BÖLÜM: HAFTANIN SORUSU -->
+        <div class="bg-slate-800/30 border border-blue-500/20 rounded-2xl p-6 mb-10 shadow-xl backdrop-blur-sm">
+            <div class="flex items-center space-x-3 mb-3">
+                <span class="flex h-3 w-3 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+                </span>
+                <h3 class="text-lg font-bold text-slate-200">🧠 Haftanın Matematik Bulmacası</h3>
+            </div>
+            <p class="text-slate-300 text-sm italic mb-4">
+                "Bir çiftçi pazar yerine gitmek üzere yola çıkıyor. Yolun 1/3'ünü gittikten sonra mola veriyor. Moladan sonra kalan yolun yarısını gittiğinde geriye 12 km yolu kaldığını fark ediyor. Çiftçinin toplam yolu kaç km'dir?"
+            </p>
+            <div class="text-xs text-sky-400 font-medium">
+                <i class="fas fa-lightbulb mr-1"></i> Cevabınızı aşağıdaki e-posta veya sosyal medya butonlarından bana ulaştırabilirsiniz!
+            </div>
+        </div>
+
+        <!-- BAĞLANTILAR VE KARTLAR -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             
-            <!-- GitHub Kartı -->
-            <a href="https://github.com/ahmetbas" target="_blank" class="group bg-slate-800/40 border border-slate-800 hover:border-slate-700 p-5 rounded-2xl text-left transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-sky-500/5">
+            <!-- YouTube / Instagram (İçerik Alanı) -->
+            <a href="#" target="_blank" class="group bg-slate-800/40 border border-slate-800 hover:border-slate-700 p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="text-rose-500 text-xl"><i class="fab fa-instagram"></i></div>
+                    <div class="text-slate-500 group-hover:text-slate-300 text-xs">Takip Et <i class="fas fa-arrow-right ml-1"></i></div>
+                </div>
+                <h3 class="text-lg font-semibold text-slate-200 group-hover:text-white mb-1">Eğitim İçerikleri</h3>
+                <p class="text-sm text-slate-400">Sosyal medyada öğrenciler için paylaştığım pratik matematik ipuçları ve soru çözümleri.</p>
+            </a>
+
+            <!-- GitHub (Materyal Deposu) -->
+            <a href="https://github.com/ahmetbas" target="_blank" class="group bg-slate-800/40 border border-slate-800 hover:border-slate-700 p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1">
                 <div class="flex items-center justify-between mb-2">
                     <div class="text-sky-400 text-xl"><i class="fab fa-github"></i></div>
-                    <div class="text-slate-500 group-hover:text-slate-300 transition-colors"><i class="fas fa-arrow-up-right-from-square text-sm"></i></div>
+                    <div class="text-slate-500 group-hover:text-slate-300 text-xs">İncele <i class="fas fa-arrow-right ml-1"></i></div>
                 </div>
-                <h3 class="text-lg font-semibold text-slate-200 group-hover:text-white mb-1">GitHub Profili</h3>
-                <p class="text-sm text-slate-400">Açık kaynaklı projelerimi, kod depolarımı ve çalışmalarımı inceleyin.</p>
+                <h3 class="text-lg font-semibold text-slate-200 group-hover:text-white mb-1">Ders Materyalleri</h3>
+                <p class="text-sm text-slate-400">Geliştirdiğim açık kaynaklı eğitim araçları, PDF şablonları ve formül sayfaları.</p>
             </a>
 
-            <!-- LinkedIn Kartı -->
-            <a href="#" target="_blank" class="group bg-slate-800/40 border border-slate-800 hover:border-slate-700 p-5 rounded-2xl text-left transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-500/5">
-                <div class="flex items-center justify-between mb-2">
-                    <div class="text-indigo-400 text-xl"><i class="fab fa-linkedin"></i></div>
-                    <div class="text-slate-500 group-hover:text-slate-300 transition-colors"><i class="fas fa-arrow-up-right-from-square text-sm"></i></div>
-                </div>
-                <h3 class="text-lg font-semibold text-slate-200 group-hover:text-white mb-1">LinkedIn</h3>
-                <p class="text-sm text-slate-400">Profesyonel ağım, iş deneyimlerim ve kariyer özetim için bağlantı kurun.</p>
-            </a>
-
-            <!-- Proje Örneği 1 -->
-            <div class="bg-slate-800/40 border border-slate-800 p-5 rounded-2xl text-left">
-                <div class="text-emerald-400 text-xl mb-2"><i class="fas fa-code"></i></div>
-                <h3 class="text-lg font-semibold text-slate-200 mb-1">Web Projesi 1</h3>
-                <p class="text-sm text-slate-400">Vercel üzerinde barındırılan, modern UI/UX prensiplerine uygun geliştirilmiş dinamik web uygulaması.</p>
+            <!-- Online Ders Talebi -->
+            <div class="bg-slate-800/40 border border-slate-800 p-5 rounded-2xl">
+                <div class="text-emerald-400 text-xl mb-2"><i class="fas fa-video"></i></div>
+                <h3 class="text-lg font-semibold text-slate-200 mb-1">Birebir & Online Ders</h3>
+                <p class="text-sm text-slate-400">LGS, YKS hazırlık veya okul derslerine takviye için kişiye özel online matematik ders programları.</p>
             </div>
 
-            <!-- İletişim / E-posta Kartı -->
-            <a href="mailto:iletisim@ahmetbas.com" class="group bg-slate-800/40 border border-slate-800 hover:border-slate-700 p-5 rounded-2xl text-left transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-rose-500/5">
+            <!-- İletişim -->
+            <a href="mailto:iletisim@ahmetbas.com" class="group bg-slate-800/40 border border-slate-800 hover:border-slate-700 p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1">
                 <div class="flex items-center justify-between mb-2">
-                    <div class="text-rose-400 text-xl"><i class="fas fa-envelope"></i></div>
-                    <div class="text-slate-500 group-hover:text-slate-300 transition-colors"><i class="fas fa-paper-plane text-sm"></i></div>
+                    <div class="text-blue-400 text-xl"><i class="fas fa-envelope"></i></div>
+                    <div class="text-slate-500 group-hover:text-slate-300 text-xs">Mesaj Gönder <i class="fas fa-paper-plane ml-1"></i></div>
                 </div>
-                <h3 class="text-lg font-semibold text-slate-200 group-hover:text-white mb-1">İletişime Geçin</h3>
-                <p class="text-sm text-slate-400">Yeni projeler, iş birlikleri veya sadece merhaba demek için bir e-posta gönderin.</p>
+                <h3 class="text-lg font-semibold text-slate-200 group-hover:text-white mb-1">İletişim & İş Birliği</h3>
+                <p class="text-sm text-slate-400">Özel ders talepleri, seminerler veya projeler için benimle doğrudan iletişime geçin.</p>
             </a>
 
         </div>
 
     </main>
 
-    <!-- FOOTER (ALT BİLGİ) -->
-    <footer class="w-full text-center py-6 border-t border-slate-800/60 text-xs text-slate-500 tracking-wide">
-        &copy; 2026 Ahmet Baş. Tüm Hakları Saklıdır. Vercel ile Güçlendirilmiştir.
+    <!-- FOOTER -->
+    <footer class="w-full text-center py-6 border-t border-slate-800/60 text-xs text-slate-500">
+        &copy; 2026 Ahmet Baş. Matematik ile Kalın. Vercel ile Güçlendirilmiştir.
     </footer>
 
 </body>
