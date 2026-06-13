@@ -4,102 +4,178 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ahmet Baş | Matematik Öğretmeni</title>
+    <!-- Tailwind CSS ve FontAwesome İkonları -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { background-color: #0f172a; color: #f8fafc; font-family: 'Inter', sans-serif; }
         .math-gradient { background: linear-gradient(to right, #38bdf8, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between antialiased">
 
+    <!-- ÜST MENÜ (NAVIGASYON) -->
+    <header class="border-b border-slate-800/80 bg-slate-900/50 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="font-bold text-lg tracking-tight flex items-center space-x-2">
+                <span class="text-sky-400"><i class="fas fa-calculator"></i></span>
+                <span>Ahmet Baş</span>
+            </div>
+            <nav class="flex space-x-1">
+                <button onclick="switchTab('home')" id="tab-btn-home" class="px-4 py-2 rounded-xl text-sm font-medium transition-all text-sky-400 bg-slate-800/60">
+                    Ana Sayfa
+                </button>
+                <button onclick="switchTab('materials')" id="tab-btn-materials" class="px-4 py-2 rounded-xl text-sm font-medium transition-all text-slate-400 hover:text-slate-200">
+                    Ders Materyalleri
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ANA İÇERİK ALANI -->
     <main class="max-w-4xl mx-auto px-6 py-12 flex-grow w-full">
         
-        <!-- ÜST KISIM / PROFİL -->
-        <div class="text-center mb-12">
-            <div class="w-24 h-24 bg-gradient-to-tr from-blue-500 to-sky-400 rounded-full mx-auto flex items-center justify-center text-3xl text-white shadow-lg shadow-blue-500/20 mb-4">
-                <i class="fas fa-calculator"></i>
+        <!-- 1. SEKME: ANA SAYFA -->
+        <div id="tab-home" class="tab-content active space-y-12">
+            <!-- Profil Üst Alanı -->
+            <div class="text-center">
+                <div class="w-24 h-24 bg-gradient-to-tr from-blue-500 to-sky-400 rounded-full mx-auto flex items-center justify-center text-3xl text-white shadow-lg shadow-blue-500/20 mb-4">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <h1 class="text-4xl font-extrabold tracking-tight mb-2">Ahmet Baş</h1>
+                <h2 class="text-xl font-semibold math-gradient mb-4">Matematik Öğretmeni & Eğitim İçeriği Üreticisi</h2>
+                <p class="text-slate-400 max-w-xl mx-auto text-base leading-relaxed">
+                    Ortaokul ve lise düzeyinde matematik eğitimleri veriyor, öğrencilerin analitik düşünme becerilerini geliştirecek dinamik içerikler üretiyorum.
+                </p>
             </div>
-            <h1 class="text-4xl font-extrabold tracking-tight mb-2">Ahmet Baş</h1>
-            <h2 class="text-xl font-semibold math-gradient mb-4">Matematik Öğretmeni & Eğitim İçeriği Üreticisi</h2>
-            <p class="text-slate-400 max-w-xl mx-auto text-base leading-relaxed">
-                Ortaokul ve lise düzeyinde matematik eğitimleri veriyor, öğrencilerin analitik düşünme becerilerini geliştirecek dinamik ve dijital içerikler üretiyorum.
-            </p>
+
+            <!-- Haftanın Sorusu -->
+            <div class="bg-slate-800/30 border border-blue-500/20 rounded-2xl p-6 shadow-xl">
+                <div class="flex items-center space-x-3 mb-3">
+                    <span class="flex h-3 w-3 relative">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+                    </span>
+                    <h3 class="text-lg font-bold text-slate-200">🧠 Haftanın Matematik Bulmacası</h3>
+                </div>
+                <p class="text-slate-300 text-sm italic mb-4">
+                    "Bir çiftçi pazar yerine gitmek üzere yola çıkıyor. Yolun 1/3'ünü gittikten sonra mola veriyor. Moladan sonra kalan yolun yarısını gittiğinde geriye 12 km yolu kaldığını fark ediyor. Çiftçinin toplam yolu kaç km'dir?"
+                </p>
+                <div class="text-xs text-sky-400 font-medium">
+                    <i class="fas fa-lightbulb mr-1"></i> Cevabınızı aşağıdaki e-posta veya sosyal medya hesaplarımdan bana ulaştırabilirsiniz!
+                </div>
+            </div>
+
+            <!-- Hızlı Bağlantılar -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="#" target="_blank" class="group bg-slate-800/40 border border-slate-800 hover:border-slate-700 p-5 rounded-2xl transition-all">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="text-rose-500 text-xl"><i class="fab fa-instagram"></i></div>
+                        <span class="text-xs text-slate-500 group-hover:text-slate-300">Takip Et <i class="fas fa-arrow-right ml-1"></i></span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-slate-200 mb-1">Eğitim İçerikleri</h3>
+                    <p class="text-sm text-slate-400">Sosyal medyada paylaştığım pratik matematik ipuçları ve video çözümleri.</p>
+                </a>
+
+                <button onclick="switchTab('materials')" class="group bg-slate-800/40 border border-slate-800 hover:border-slate-700 p-5 rounded-2xl text-left transition-all">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="text-amber-500 text-xl"><i class="fas fa-folder-open"></i></div>
+                        <span class="text-xs text-slate-500 group-hover:text-slate-300">Dökümanları Gör <i class="fas fa-arrow-right ml-1"></i></span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-slate-200 mb-1">Ders Materyalleri</h3>
+                    <p class="text-sm text-slate-400">Sizin için hazırladığım ücretsiz PDF testleri, çalışma kağıtları ve denemeler.</p>
+                </button>
+            </div>
         </div>
 
-        <!-- UZMANLIK VE EĞİTİM SEVİYELERİ -->
-        <div class="mb-10 text-center">
-            <div class="flex flex-wrap justify-center gap-3">
-                <span class="bg-slate-800/90 border border-slate-700 text-slate-300 px-4 py-1.5 rounded-full text-sm font-medium"><i class="fas fa-graduation-cap text-sky-400 mr-2"></i>Ortaokul Matematik</span>
-                <span class="bg-slate-800/90 border border-slate-700 text-slate-300 px-4 py-1.5 rounded-full text-sm font-medium"><i class="fas fa-book-open text-blue-400 mr-2"></i>Lise Matematik</span>
-                <span class="bg-slate-800/90 border border-slate-700 text-slate-300 px-4 py-1.5 rounded-full text-sm font-medium"><i class="fas fa-star text-amber-400 mr-2"></i>LGS & YKS Hazırlık</span>
+        <!-- 2. SEKME: MATERYALLER SAYFASI -->
+        <div id="tab-materials" class="tab-content space-y-8">
+            <div class="border-b border-slate-800 pb-4">
+                <h2 class="text-2xl font-bold text-slate-100">📚 Ders Materyalleri Deposu</h2>
+                <p class="text-sm text-slate-400 mt-1">Öğrencilerim için hazırladığım güncel çalışma kaynakları. Doğrudan tıklayıp indirebilirsiniz.</p>
             </div>
-        </div>
 
-        <!-- İNTERAKTİF BÖLÜM: HAFTANIN SORUSU -->
-        <div class="bg-slate-800/30 border border-blue-500/20 rounded-2xl p-6 mb-10 shadow-xl backdrop-blur-sm">
-            <div class="flex items-center space-x-3 mb-3">
-                <span class="flex h-3 w-3 relative">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
-                </span>
-                <h3 class="text-lg font-bold text-slate-200">🧠 Haftanın Matematik Bulmacası</h3>
-            </div>
-            <p class="text-slate-300 text-sm italic mb-4">
-                "Bir çiftçi pazar yerine gitmek üzere yola çıkıyor. Yolun 1/3'ünü gittikten sonra mola veriyor. Moladan sonra kalan yolun yarısını gittiğinde geriye 12 km yolu kaldığını fark ediyor. Çiftçinin toplam yolu kaç km'dir?"
-            </p>
-            <div class="text-xs text-sky-400 font-medium">
-                <i class="fas fa-lightbulb mr-1"></i> Cevabınızı aşağıdaki e-posta veya sosyal medya butonlarından bana ulaştırabilirsiniz!
-            </div>
-        </div>
-
-        <!-- BAĞLANTILAR VE KARTLAR -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            
-            <!-- Instagram (İçerik Alanı) -->
-            <a href="#" target="_blank" class="group bg-slate-800/40 border border-slate-800 hover:border-slate-700 p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1">
-                <div class="flex items-center justify-between mb-2">
-                    <div class="text-rose-500 text-xl"><i class="fab fa-instagram"></i></div>
-                    <div class="text-slate-500 group-hover:text-slate-300 text-xs">Takip Et <i class="fas fa-arrow-right ml-1"></i></div>
+            <!-- MATERYAL KARTLARI GRUBU -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
+                <!-- 1. Döküman Kartı -->
+                <div class="bg-slate-800/30 border border-slate-800 p-5 rounded-2xl flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="flex items-center space-x-2 text-xs text-sky-400 font-semibold mb-2">
+                            <span class="bg-sky-500/10 px-2 py-0.5 rounded">LGS 2026</span>
+                            <span>• Ortaokul</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-200">Çarpanlar ve Katlar Çalışma Kağıdı</h3>
+                        <p class="text-sm text-slate-400 mt-1">Yeni nesil sorulardan oluşan, kazanım kavrama ve pekiştirme testi.</p>
+                    </div>
+                    <!-- BURADAKİ href= KISMINA DRIVE DOSYA LINKINI KOYUN -->
+                    <a href="BURAYA_1_DOSYANIN_DRIVE_LINKI" target="_blank" class="w-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-center py-2.5 rounded-xl text-sm font-medium transition flex items-center justify-center space-x-2">
+                        <i class="fas fa-cloud-download-alt text-sky-400"></i>
+                        <span>PDF Olarak İndir</span>
+                    </a>
                 </div>
-                <h3 class="text-lg font-semibold text-slate-200 group-hover:text-white mb-1">Eğitim İçerikleri</h3>
-                <p class="text-sm text-slate-400">Sosyal medyada öğrenciler için paylaştığım pratik matematik ipuçları ve soru çözümleri.</p>
-            </a>
 
-            <!-- Google Drive (YENİLENEN KISIM) -->
-            <a href="https://drive.google.com/drive/folders/1xFvYkYBgjq1xBaBffTf6MIEDM0AjpPD_?usp=sharing" target="_blank" class="group bg-slate-800/40 border border-slate-800 hover:border-slate-700 p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1">
-                <div class="flex items-center justify-between mb-2">
-                    <div class="text-amber-500 text-xl"><i class="fas fa-folder-open"></i></div>
-                    <div class="text-slate-500 group-hover:text-slate-300 text-xs">Klasörü Aç <i class="fas fa-arrow-right ml-1"></i></div>
+                <!-- 2. Döküman Kartı -->
+                <div class="bg-slate-800/30 border border-slate-800 p-5 rounded-2xl flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="flex items-center space-x-2 text-xs text-purple-400 font-semibold mb-2">
+                            <span class="bg-purple-500/10 px-2 py-0.5 rounded">YKS TYT</span>
+                            <span>• Lise</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-200">Fonksiyonlar Temel Kavramlar Özet Notu</h3>
+                        <p class="text-sm text-slate-400 mt-1">Fonksiyon çeşitleri ve grafik okuma konularını içeren pratik formül sayfası.</p>
+                    </div>
+                    <!-- BURADAKİ href= KISMINA DRIVE DOSYA LINKINI KOYUN -->
+                    <a href="BURAYA_2_DOSYANIN_DRIVE_LINKI" target="_blank" class="w-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-center py-2.5 rounded-xl text-sm font-medium transition flex items-center justify-center space-x-2">
+                        <i class="fas fa-cloud-download-alt text-purple-400"></i>
+                        <span>Notu İndir</span>
+                    </a>
                 </div>
-                <h3 class="text-lg font-semibold text-slate-200 group-hover:text-white mb-1">Ders Materyalleri</h3>
-                <p class="text-sm text-slate-400">Ödevler, çalışma kağıtları, LGS/YKS denemeleri ve ders notlarının yer aldığı Google Drive klasörü.</p>
-            </a>
 
-            <!-- Online Ders Talebi -->
-            <div class="bg-slate-800/40 border border-slate-800 p-5 rounded-2xl">
-                <div class="text-emerald-400 text-xl mb-2"><i class="fas fa-video"></i></div>
-                <h3 class="text-lg font-semibold text-slate-200 mb-1">Birebir & Online Ders</h3>
-                <p class="text-sm text-slate-400">LGS, YKS hazırlık veya okul derslerine takviye için kişiye özel online matematik ders programları.</p>
+                <!-- 3. Döküman Kartı -->
+                <div class="bg-slate-800/30 border border-slate-800 p-5 rounded-2xl flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="flex items-center space-x-2 text-xs text-emerald-400 font-semibold mb-2">
+                            <span class="bg-emerald-500/10 px-2 py-0.5 rounded">Geometri</span>
+                            <span>• Tüm Seviyeler</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-200">Üçgende Açılar Yeni Nesil Soru Bankası</h3>
+                        <p class="text-sm text-slate-400 mt-1">ÖSYM tarzı katlama ve döndürme sorularından oluşan mini deneme seti.</p>
+                    </div>
+                    <!-- BURADAKİ href= KISMINA DRIVE DOSYA LINKINI KOYUN -->
+                    <a href="BURAYA_3_DOSYANIN_DRIVE_LINKI" target="_blank" class="w-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-center py-2.5 rounded-xl text-sm font-medium transition flex items-center justify-center space-x-2">
+                        <i class="fas fa-cloud-download-alt text-emerald-400"></i>
+                        <span>Soruları İndir</span>
+                    </a>
+                </div>
+
             </div>
-
-            <!-- İletişim -->
-            <a href="mailto:iletisim@ahmetbas.com" class="group bg-slate-800/40 border border-slate-800 hover:border-slate-700 p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1">
-                <div class="flex items-center justify-between mb-2">
-                    <div class="text-blue-400 text-xl"><i class="fas fa-envelope"></i></div>
-                    <div class="text-slate-500 group-hover:text-slate-300 text-xs">Mesaj Gönder <i class="fas fa-paper-plane ml-1"></i></div>
-                </div>
-                <h3 class="text-lg font-semibold text-slate-200 group-hover:text-white mb-1">İletişim & İş Birliği</h3>
-                <p class="text-sm text-slate-400">Özel ders talepleri, seminerler veya projeler için benimle doğrudan iletişime geçin.</p>
-            </a>
-
         </div>
 
     </main>
 
+    <!-- FOOTER -->
     <footer class="w-full text-center py-6 border-t border-slate-800/60 text-xs text-slate-500">
         &copy; 2026 Ahmet Baş. Matematik ile Kalın. Vercel ile Güçlendirilmiştir.
     </footer>
+
+    <!-- SAYFA GEÇİŞ SCRIPTI (ÜCRETSİZ & HIZLI) -->
+    <script>
+        function switchTab(tabName) {
+            // Tüm içerikleri gizle
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            // Tüm buton stillerini sıfırla
+            document.getElementById('tab-btn-home').className = 'px-4 py-2 rounded-xl text-sm font-medium transition-all text-slate-400 hover:text-slate-200';
+            document.getElementById('tab-btn-materials').className = 'px-4 py-2 rounded-xl text-sm font-medium transition-all text-slate-400 hover:text-slate-200';
+            
+            // Seçilen içeriği göster ve butonu aktifleştir
+            document.getElementById('tab-' + tabName).classList.add('active');
+            const activeBtn = document.getElementById('tab-btn-' + tabName);
+            activeBtn.className = 'px-4 py-2 rounded-xl text-sm font-medium transition-all text-sky-400 bg-slate-800/60';
+        }
+    </script>
 
 </body>
 </html>
