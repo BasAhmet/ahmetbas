@@ -1,50 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ahmet Baş | Home</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <title>Ahmet Baş | Portfolyo</title>
+    <!-- Tailwind CSS ve FontAwesome İkonları (Ücretsiz ve Hazır) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <div class="top">
-            <div class="top-circle"></div> <div class="top-baslik">Ahmet Baş</div> 
-            <div class="top-unvan">Matematik Öğretmeni</div>
+<body class="min-h-screen flex flex-col justify-between antialiased">
 
-            <ul>
-                <li><a href="/contact.html">Contact</a></li>
-                <li><a href="/resume.html"><div class="resume">Resume</div></a></li>
-                <li><a href="/index.html">Home</a></li>
-            </ul>
-        </div>
-        <div class="orta0">
-            <div class="orta1">&nbsp;</div>
-            <div class="orta2">
-               <div class="orta2-ust"></div>
-               <div class="orta2-orta"><img src="https://avatars.githubusercontent.com/u/94932629?v=4" alt=""></div>
-               <div class="orta2-alt"></div>
+    <!-- ANA İÇERİK KONTEYNERİ -->
+    <main class="max-w-4xl mx-auto px-6 py-16 flex-grow flex flex-col justify-center items-center text-center">
+        
+        <!-- Profil Alanı -->
+        <div class="mb-8">
+            <!-- Profil Resmi Alanı (İsterseniz src kısmına kendi resim linkinizi koyabilirsiniz) -->
+            <div class="w-24 h-24 bg-gradient-to-tr from-sky-400 to-indigo-500 rounded-full mx-auto flex items-center justify-center text-3xl font-bold shadow-lg shadow-indigo-500/20 mb-4">
+                AB
             </div>
-            <div class="orta3">
-                <div class="orta3-ust"></div>
-                <div class="orta3-orta"><h1>Ahmet Baş</h1>15 yıllık mesleki tecrübeye sahip bir matematik öğretmeniyim. Öğrencilerimi geleceğe hazırlarken, özellikle LGS ile YKS (TYT - AYT) gibi kritik sınav süreçlerinde onların en büyük destekçisi oluyorum. Hedef odaklı çalışma disiplini ve sınav sistemine tam uyumlu rehberlikle, öğrencilerimin başarıya ulaşmasını sağlıyorum.
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-2">
+                Merhaba, Ben <span class="gradient-text">Ahmet Baş</span>
+            </h1>
+            <p class="text-lg text-slate-400 max-w-md mx-auto font-medium">
+                Geliştirici & Tasarımcı. Web teknolojileri üzerinde çalışıyor ve dijital deneyimler üretiyorum.
+            </p>
+        </div>
+
+        <!-- YETENEKLER BÖLÜMÜ -->
+        <div class="mb-12 w-full max-w-lg">
+            <div class="flex flex-wrap justify-center gap-2">
+                <span class="bg-slate-800/80 border border-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm font-medium shadow-sm">HTML5</span>
+                <span class="bg-slate-800/80 border border-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm font-medium shadow-sm">CSS3</span>
+                <span class="bg-slate-800/80 border border-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm font-medium shadow-sm">JavaScript</span>
+                <span class="bg-slate-800/80 border border-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm font-medium shadow-sm">Tailwind CSS</span>
+                <span class="bg-slate-800/80 border border-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm font-medium shadow-sm">Node.js</span>
+                <span class="bg-slate-800/80 border border-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm font-medium shadow-sm">Git & GitHub</span>
+            </div>
+        </div>
+
+        <!-- PROJELER/BAĞLANTILAR BÖLÜMÜ -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl mb-12">
+            
+            <!-- GitHub Kartı -->
+            <a href="https://github.com/ahmetbas" target="_blank" class="group bg-slate-800/40 border border-slate-800 hover:border-slate-700 p-5 rounded-2xl text-left transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-sky-500/5">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="text-sky-400 text-xl"><i class="fab fa-github"></i></div>
+                    <div class="text-slate-500 group-hover:text-slate-300 transition-colors"><i class="fas fa-arrow-up-right-from-square text-sm"></i></div>
                 </div>
-                <div class="orta3-alt"></div> 
+                <h3 class="text-lg font-semibold text-slate-200 group-hover:text-white mb-1">GitHub Profili</h3>
+                <p class="text-sm text-slate-400">Açık kaynaklı projelerimi, kod depolarımı ve çalışmalarımı inceleyin.</p>
+            </a>
+
+            <!-- LinkedIn Kartı -->
+            <a href="#" target="_blank" class="group bg-slate-800/40 border border-slate-800 hover:border-slate-700 p-5 rounded-2xl text-left transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-500/5">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="text-indigo-400 text-xl"><i class="fab fa-linkedin"></i></div>
+                    <div class="text-slate-500 group-hover:text-slate-300 transition-colors"><i class="fas fa-arrow-up-right-from-square text-sm"></i></div>
+                </div>
+                <h3 class="text-lg font-semibold text-slate-200 group-hover:text-white mb-1">LinkedIn</h3>
+                <p class="text-sm text-slate-400">Profesyonel ağım, iş deneyimlerim ve kariyer özetim için bağlantı kurun.</p>
+            </a>
+
+            <!-- Proje Örneği 1 -->
+            <div class="bg-slate-800/40 border border-slate-800 p-5 rounded-2xl text-left">
+                <div class="text-emerald-400 text-xl mb-2"><i class="fas fa-code"></i></div>
+                <h3 class="text-lg font-semibold text-slate-200 mb-1">Web Projesi 1</h3>
+                <p class="text-sm text-slate-400">Vercel üzerinde barındırılan, modern UI/UX prensiplerine uygun geliştirilmiş dinamik web uygulaması.</p>
             </div>
-            <div class="orta4">&nbsp;</div>
-        </div>
-        <div class="footer">
-            <div class="phone" id="footer"><h4>Phone <br></h4>+90(542)-299-34-68</div>
-            <div class="email" id="footer"><h4>Email <br></h4>ahba8184@gmail.com</div>
-            <div class="followMe" id="footer"><h4>Follow Me <br></h4>
-            <a href="https://www.linkedin.com/in/ahmet-ba%C5%9F-softwaretestengineer/" target="_blank">Likedin</a> |
-            <a href="https://github.com/BasAhmet" target="_blank"> Git Hub</a>
-            </div>
-            <div class="copyright" id="footer"><h4>Copyright <br></h4>2023 - Ahmet Baş</div>
+
+            <!-- İletişim / E-posta Kartı -->
+            <a href="mailto:iletisim@ahmetbas.com" class="group bg-slate-800/40 border border-slate-800 hover:border-slate-700 p-5 rounded-2xl text-left transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-rose-500/5">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="text-rose-400 text-xl"><i class="fas fa-envelope"></i></div>
+                    <div class="text-slate-500 group-hover:text-slate-300 transition-colors"><i class="fas fa-paper-plane text-sm"></i></div>
+                </div>
+                <h3 class="text-lg font-semibold text-slate-200 group-hover:text-white mb-1">İletişime Geçin</h3>
+                <p class="text-sm text-slate-400">Yeni projeler, iş birlikleri veya sadece merhaba demek için bir e-posta gönderin.</p>
+            </a>
+
         </div>
 
-    </div>
-    
+    </main>
+
+    <!-- FOOTER (ALT BİLGİ) -->
+    <footer class="w-full text-center py-6 border-t border-slate-800/60 text-xs text-slate-500 tracking-wide">
+        &copy; 2026 Ahmet Baş. Tüm Hakları Saklıdır. Vercel ile Güçlendirilmiştir.
+    </footer>
+
 </body>
 </html>
