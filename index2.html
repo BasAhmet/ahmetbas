@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmet Baş | Matematik Öğretmeni</title>
+    <!-- Tailwind CSS ve FontAwesome İkonları -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #f8fafc; color: #1e293b; font-family: 'Inter', sans-serif; }
+        .math-gradient { background: linear-gradient(to right, #2563eb, #0284c7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .sub-content { display: none; }
+        .sub-content.active { display: block; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-blue-500 selection:text-white">
+
+    <!-- ÜST MENÜ (NAVİGASYON) -->
+    <header class="border-b border-slate-200 bg-white/80 backdrop-blur sticky top-0 z-50 shadow-sm">
+        <div class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="font-bold text-lg tracking-tight flex items-center space-x-2 text-slate-800">
+                <span class="text-blue-600"><i class="fas fa-calculator text-xl"></i></span>
+                <span>Ahmet Baş</span>
+            </div>
+            <nav class="flex space-x-1">
+                <button onclick="switchTab('home')" id="tab-btn-home" class="px-4 py-2 rounded-xl text-sm font-semibold transition-all text-blue-600 bg-blue-50">
+                    Ana Sayfa
+                </button>
+                <button onclick="switchTab('materials')" id="tab-btn-materials" class="px-4 py-2 rounded-xl text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-50">
+                    Ders Materyalleri
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ANA İÇERİK ALANI -->
+    <main class="max-w-4xl mx-auto px-6 py-12 flex-grow w-full">
+        
+        <!-- 1. SEKME: ANA SAYFA -->
+        <div id="tab-home" class="tab-content active space-y-12 animate-fadeIn">
+            
+            <!-- Profil Üst Alanı -->
+            <div class="text-center">
+                <div class="w-32 h-32 mx-auto mb-4 relative group">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-blue-500 to-sky-400 rounded-full opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                    <img src="profil.jpeg" alt="Ahmet Baş" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=math';" class="w-32 h-32 object-cover object-[center_top_20%] rounded-full border-4 border-white relative z-10 shadow-md">
+                </div>
+                <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 mb-1">Ahmet Baş</h1>
+                <h2 class="text-xl font-bold math-gradient mb-4">Matematik Öğretmeni & Eğitim İçeriği Üreticisi</h2>
+                <p class="text-slate-600 max-w-xl mx-auto text-base leading-relaxed font-medium">
+                    Ortaokul ve lise düzeyinde matematik eğitimleri veriyor, öğrencilerin analitik düşünme becerilerini geliştirecek dinamik içerikler üretiyorum.
+                </p>
+            </div>
+
+            <!-- Rozetler / Seviyeler -->
+            <div class="text-center">
+                <div class="flex flex-wrap justify-center gap-2.5">
+                    <span class="bg-blue-50 text-blue-700 border border-blue-100 px-4 py-1.5 rounded-full text-sm font-semibold shadow-sm"><i class="fas fa-graduation-cap mr-2"></i>Ortaokul Matematik</span>
+                    <span class="bg-sky-50 text-sky-700 border border-sky-100 px-4 py-1.5 rounded-full text-sm font-semibold shadow-sm"><i class="fas fa-book-open mr-2"></i>Lise Matematik</span>
+                    <span class="bg-amber-50 text-amber-700 border border-amber-100 px-4 py-1.5 rounded-full text-sm font-semibold shadow-sm"><i class="fas fa-star mr-2"></i>LGS & YKS Hazırlık</span>
+                </div>
+            </div>
+
+            <!-- İnteraktif Bölüm: Haftanın Sorusu -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-md shadow-slate-100 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-2 h-full bg-blue-600"></div>
+                <div class="flex items-center space-x-3 mb-3">
+                    <span class="flex h-2.5 w-2.5 relative">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-600"></span>
+                    </span>
+                    <h3 class="text-lg font-bold text-slate-800">🧠 Haftanın Matematik Bulmacası</h3>
+                </div>
+                <p class="text-slate-700 text-sm leading-relaxed font-medium bg-slate-50 p-4 rounded-xl border border-slate-100 mb-4">
+                    "Bir çiftçi pazar yerine gitmek üzere yola çıkıyor. Yolun 1/3'ünü gittikten sonra mola veriyor. Moladan sonra kalan yolun yarısını gittiğinde geriye 12 km yolu kaldığını fark ediyor. Çiftçinin toplam yolu kaç km'dir?"
+                </p>
+                <div class="text-xs text-blue-600 font-semibold flex items-center">
+                    <i class="fas fa-lightbulb mr-2 text-sm text-amber-500"></i> Cevabınızı aşağıdaki iletişim kanallarından bana ulaştırabilirsiniz!
+                </div>
+            </div>
+
+            <!-- Bağlantılar Giriş Kartları -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="https://www.instagram.com/ahmetbas.math" target="_blank" class="group bg-white border border-slate-200 hover:border-blue-300 p-5 rounded-2xl transition-all shadow-sm shadow-slate-100 hover:shadow-md">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="text-rose-500 bg-rose-50 w-10 h-10 rounded-xl flex items-center justify-center text-lg"><i class="fab fa-instagram"></i></div>
+                        <span class="text-xs font-bold text-slate-400 group-hover:text-blue-600 transition-colors">Takip Et <i class="fas fa-arrow-right ml-1"></i></span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-1">Eğitim İçerikleri</h3>
+                    <p class="text-sm text-slate-500 font-medium">Sosyal medyada paylaştığım pratik matematik ipuçları ve video çözümleri.</p>
+                </a>
+
+                <button onclick="switchTab('materials')" class="group bg-white border border-slate-200 hover:border-blue-300 p-5 rounded-2xl text-left transition-all shadow-sm shadow-slate-100 hover:shadow-md">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="text-amber-500 bg-amber-50 w-10 h-10 rounded-xl flex items-center justify-center text-lg"><i class="fas fa-folder-open"></i></div>
+                        <span class="text-xs font-bold text-slate-400 group-hover:text-blue-600 transition-colors">Dökümanları Gör <i class="fas fa-arrow-right ml-1"></i></span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-1">Ders Materyalleri</h3>
+                    <p class="text-sm text-slate-500 font-medium">Sizin için hazırladığım ücretsiz PDF testleri, çalışma kağıtları ve denemeler.</p>
+                </button>
+
+                <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm shadow-slate-100">
+                    <div class="text-emerald-600 bg-emerald-50 w-10 h-10 rounded-xl flex items-center justify-center text-lg mb-3"><i class="fas fa-video"></i></div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-1">Birebir & Online Ders</h3>
+                    <p class="text-sm text-slate-500 font-medium">LGS, YKS hazırlık veya okul derslerine takviye için kişiye özel online matematik programları.</p>
+                </div>
+
+                <a href="mailto:iletisim@ahmetbas.com" class="group bg-white border border-slate-200 hover:border-blue-300 p-5 rounded-2xl transition-all shadow-sm shadow-slate-100 hover:shadow-md">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="text-blue-600 bg-blue-50 w-10 h-10 rounded-xl flex items-center justify-center text-lg"><i class="fas fa-envelope"></i></div>
+                        <span class="text-xs font-bold text-slate-400 group-hover:text-blue-600 transition-colors">Mesaj Gönder <i class="fas fa-paper-plane ml-1"></i></span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-1">İletişim & İş Birliği</h3>
+                    <p class="text-sm text-slate-500 font-medium">Özel ders talepleri, seminerler veya projeler için benimle doğrudan iletişime geçin.</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- 2. SEKME: MATERYALLER SAYFASI (3 ANA LİNK ALANI) -->
+        <div id="tab-materials" class="tab-content space-y-8 animate-fadeIn">
+            <div class="border-b border-slate-200 pb-4">
+                <h2 class="text-2xl font-bold text-slate-800">📚 Ders Materyalleri Deposu</h2>
+                <p class="text-sm text-slate-500 font-medium mt-1">Lütfen kaynaklarına ulaşmak istediğiniz eğitim kademesini seçin.</p>
+            </div>
+
+            <!-- 3 ANA KATEGORİ LİNKİ -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                
+                <!-- ORTAOKUL LİNKİ (Tıklayınca alt sayfa fonksiyonunu çağırır) -->
+                <button onclick="openSubPage('ortaokul')" class="group bg-white border border-slate-200 hover:border-blue-500 p-6 rounded-2xl text-left transition-all shadow-sm hover:shadow-md flex flex-col justify-between h-40">
+                    <div class="text-blue-600 bg-blue-50 w-10 h-10 rounded-xl flex items-center justify-center text-lg mb-2"><i class="fas fa-graduation-cap"></i></div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-800 group-hover:text-blue-600 transition-colors">Ortaokul</h3>
+                        <p class="text-xs text-slate-500 mt-1">5, 6, 7 ve 8. Sınıf konu testleri ve çalışma kağıtları.</p>
+                    </div>
+                </button>
+
+                <!-- LİSE LİNKİ -->
+                <button onclick="openSubPage('lise')" class="group bg-white border border-slate-200 hover:border-sky-500 p-6 rounded-2xl text-left transition-all shadow-sm hover:shadow-md flex flex-col justify-between h-40">
+                    <div class="text-sky-600 bg-sky-50 w-10 h-10 rounded-xl flex items-center justify-center text-lg mb-2"><i class="fas fa-book-open"></i></div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-800 group-hover:text-sky-600 transition-colors">Lise</h3>
+                        <p class="text-xs text-slate-500 mt-1">9, 10, 11 ve 12. Sınıf müfredat dökümanları.</p>
+                    </div>
+                </button>
+
+                <!-- SINAV HAZIRLIK LİNKİ -->
+                <button onclick="openSubPage('sinavlar')" class="group bg-white border border-slate-200 hover:border-amber-500 p-6 rounded-2xl text-left transition-all shadow-sm hover:shadow-md flex flex-col justify-between h-40">
+                    <div class="text-amber-600 bg-amber-50 w-10 h-10 rounded-xl flex items-center justify-center text-lg mb-2"><i class="fas fa-star"></i></div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-800 group-hover:text-amber-600 transition-colors">LGS & YKS Hazırlık</h3>
+                        <p class="text-xs text-slate-500 mt-1">Sınav tarzı yeni nesil sorular ve deneme sınavları.</p>
+                    </div>
+                </button>
+
+            </div>
+
+            <!-- ==================================================================== -->
+            <!-- DİNAMİK AÇILAN ALT SAYFA: ORTAOKUL SINIF KARTLARI -->
+            <!-- ==================================================================== -->
+            <div id="sub-ortaokul" class="sub-content space-y-6 pt-6 border-t border-slate-200 animate-fadeIn">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-blue-600"><i class="fas fa-chevron-right mr-2"></i>Ortaokul Sınıfları</h3>
+                    <span class="text-xs bg-blue-50 text-blue-600 font-bold px-2.5 py-1 rounded-lg">Lütfen Sınıf Seçin</span>
+                </div>
+                
+                <!-- 5, 6, 7, 8. Sınıf Kartları -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                    
+                    <!-- 5. Sınıf -->
+                    <div class="bg-white border border-slate-200 p-5 rounded-2xl text-center shadow-sm hover:border-blue-300 transition-all">
+                        <div class="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold text-slate-700">5</div>
+                        <h4 class="font-bold text-slate-800 text-sm mb-3">5. Sınıf Matematik</h4>
+                        <a href="DRIVE_5_SINIF_LINKI" target="_blank" class="block w-full bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-700 text-xs font-bold py-2 rounded-xl transition">Dosyaları Gör</a>
+                    </div>
+
+                    <!-- 6. Sınıf -->
+                    <div class="bg-white border border-slate-200 p-5 rounded-2xl text-center shadow-sm hover:border-blue-300 transition-all">
+                        <div class="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold text-slate-700">6</div>
+                        <h4 class="font-bold text-slate-800 text-sm mb-3">6. Sınıf Matematik</h4>
+                        <a href="DRIVE_6_SINIF_LINKI" target="_blank" class="block w-full bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-700 text-xs font-bold py-2 rounded-xl transition">Dosyaları Gör</a>
+                    </div>
+
+                    <!-- 7. Sınıf -->
+                    <div class="bg-white border border-slate-200 p-5 rounded-2xl text-center shadow-sm hover:border-blue-300 transition-all">
+                        <div class="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold text-slate-700">7</div>
+                        <h4 class="font-bold text-slate-800 text-sm mb-3">7. Sınıf Matematik</h4>
+                        <a href="DRIVE_7_SINIF_LINKI" target="_blank" class="block w-full bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-700 text-xs font-bold py-2 rounded-xl transition">Dosyaları Gör</a>
+                    </div>
+
+                    <!-- 8. Sınıf -->
+                    <div class="bg-white border border-slate-200 p-5 rounded-2xl text-center shadow-sm hover:border-blue-300 transition-all bg-gradient-to-b from-white to-blue-50/30 border-blue-100">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold text-blue-700">8</div>
+                        <h4 class="font-bold text-slate-800 text-sm mb-3">8. Sınıf (LGS 2026)</h4>
+                        <a href="DRIVE_8_SINIF_LINKI" target="_blank" class="block w-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2 rounded-xl transition shadow-sm">Dosyaları Gör</a>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- DİNAMİK AÇILAN ALT SAYFA: LİSE (İleride doldurabilmeniz için hazır alan) -->
+            <div id="sub-lise" class="sub-content text-center py-8 text-slate-400 text-sm bg-white border border-slate-200 rounded-2xl">
+                <i class="fas fa-clock text-2xl mb-2 text-slate-300"></i> <br> Lise müfredatı dökümanları çok yakında buraya eklenecektir.
+            </div>
+
+            <!-- DİNAMİK AÇILAN ALT SAYFA: SINAVLAR (İleride doldurabilmeniz için hazır alan) -->
+            <div id="sub-sinavlar" class="sub-content text-center py-8 text-slate-400 text-sm bg-white border border-slate-200 rounded-2xl">
+                <i class="fas fa-clock text-2xl mb-2 text-slate-300"></i> <br> LGS & YKS deneme sınavları çok yakında buraya eklenecektir.
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="w-full text-center py-6 border-t border-slate-200 bg-white text-xs text-slate-400 font-medium tracking-wide">
+        &copy; 2026 Ahmet Baş. Matematik ile Kalın. Vercel ile Güçlendirilmiştir.
+    </footer>
+
+    <!-- SCRIPT KONTROLLERİ -->
+    <script>
+        // Ana Sekme Geçişleri (Ana Sayfa <-> Ders Materyalleri)
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.querySelectorAll('.sub-content').forEach(content => content.classList.remove('active')); // Sekme değişince alt sayfaları kapat
+            
+            document.getElementById('tab-btn-home').className = 'px-4 py-2 rounded-xl text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-50';
+            document.getElementById('tab-btn-materials').className = 'px-4 py-2 rounded-xl text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-50';
+            
+            document.getElementById('tab-' + tabName).classList.add('active');
+            const activeBtn = document.getElementById('tab-btn-' + tabName);
+            activeBtn.className = 'px-4 py-2 rounded-xl text-sm font-semibold transition-all text-blue-600 bg-blue-50';
+        }
+
+        // Materyaller İçi Alt Sayfa Açma Fonksiyonu (Ortaokul, Lise vb.)
+        function openSubPage(subName) {
+            // Önce açık olan tüm alt sayfaları gizle
+            document.querySelectorAll('.sub-content').forEach(content => content.classList.remove('active'));
+            // İstenen alt sayfayı göster
+            document.getElementById('sub-' + subName).classList.add('active');
+            
+            // Tıklayınca otomatik olarak alt sayfa hizasına yumuşakça kaydır
+            document.getElementById('sub-' + subName).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    </script>
+
+</body>
+</html>
