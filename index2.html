@@ -313,6 +313,37 @@
 
     <!-- SCRIPT KONTROLLERİ (HAFİF VE DİNAMİK) -->
     <script>
+        // Sayfa ilk yüklendiğinde harici dosyayı çekip sisteme entegre eden fonksiyon
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('sinavlar.html')
+                .then(response => {
+                    if (!response.ok) throw new Error('Dosya yüklenemedi');
+                    return response.text();
+                })
+                .then(data => {
+                    // Harici HTML'i index.html içindeki boş alana yerleştiriyoruz
+                    document.getElementById('harici-sinav-listesi').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Hata:', error);
+                    document.getElementById('harici-sinav-listesi').innerHTML = '<p class="text-sm text-red-500">Döküman listesi yüklenirken bir hata oluştu.</p>';
+                });
+        });
+
+        // Mevcut showFiles fonksiyonunuz (Değişmedi, aynen kalabilir)
+        function showFiles(className) {
+            // Önce tüm harici veya dahili file-list sınıflarını gizle
+            document.querySelectorAll('.file-list, #harici-sinav-listesi > div').forEach(list => {
+                list.style.display = 'none';
+            });
+            
+            // Tıklanan sınıfa ait div'i bul ve göster
+            const targetList = document.getElementById('list-' + className);
+            if(targetList) {
+                targetList.style.display = 'block';
+                targetList.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
             document.querySelectorAll('.sub-content').forEach(content => content.classList.remove('active'));
