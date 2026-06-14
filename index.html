@@ -14,6 +14,8 @@
         .tab-content.active { display: block; }
         .sub-content { display: none; }
         .sub-content.active { display: block; }
+        .file-list { display: none; }
+        .file-list.active { display: block; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between antialiased selection:bg-blue-500 selection:text-white">
@@ -178,8 +180,26 @@
                     </button>
                 </div>
 
-                <!-- Harici Ortaokul Yuvası -->
-                <div id="harici-ortaokul-listesi" class="space-y-4"></div>
+                <!-- ORTAOKUL DOSYA LİSTELERİ (DİNAMİK) -->
+                <div id="list-class5" class="file-list bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
+                    <h4 class="font-bold text-slate-800 border-b pb-2 flex items-center text-base"><i class="fas fa-folder-open text-blue-500 mr-2"></i> 5. Sınıf Dosya Listesi</h4>
+                    <div id="files-class5" class="space-y-2"></div>
+                </div>
+
+                <div id="list-class6" class="file-list bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
+                    <h4 class="font-bold text-slate-800 border-b pb-2 flex items-center text-base"><i class="fas fa-folder-open text-blue-500 mr-2"></i> 6. Sınıf Dosya Listesi</h4>
+                    <div id="files-class6" class="space-y-2"></div>
+                </div>
+
+                <div id="list-class7" class="file-list bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
+                    <h4 class="font-bold text-slate-800 border-b pb-2 flex items-center text-base"><i class="fas fa-folder-open text-blue-500 mr-2"></i> 7. Sınıf Dosya Listesi</h4>
+                    <div id="files-class7" class="space-y-2"></div>
+                </div>
+
+                <div id="list-class8" class="file-list bg-white border border-blue-200 rounded-2xl p-6 space-y-4 shadow-md bg-gradient-to-b from-white to-blue-50/10">
+                    <h4 class="font-bold text-blue-700 border-b border-blue-100 pb-2 flex items-center text-base"><i class="fas fa-star text-amber-500 mr-2"></i> 8. Sınıf LGS Döküman Deposu</h4>
+                    <div id="files-class8" class="space-y-2"></div>
+                </div>
             </div>
 
             <!-- ==================================================================== -->
@@ -207,8 +227,26 @@
                     </button>
                 </div>
 
-                <!-- Harici Lise Yuvası -->
-                <div id="harici-lise-listesi" class="space-y-4"></div>
+                <!-- LİSE DOSYA LİSTELERİ (DİNAMİK) -->
+                <div id="list-class9" class="file-list bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
+                    <h4 class="font-bold text-slate-800 border-b pb-2 flex items-center text-base"><i class="fas fa-folder-open text-sky-500 mr-2"></i> 9. Sınıf Dosya Listesi</h4>
+                    <div id="files-class9" class="space-y-2"></div>
+                </div>
+
+                <div id="list-class10" class="file-list bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
+                    <h4 class="font-bold text-slate-800 border-b pb-2 flex items-center text-base"><i class="fas fa-folder-open text-sky-500 mr-2"></i> 10. Sınıf Dosya Listesi</h4>
+                    <div id="files-class10" class="space-y-2"></div>
+                </div>
+
+                <div id="list-class11" class="file-list bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
+                    <h4 class="font-bold text-slate-800 border-b pb-2 flex items-center text-base"><i class="fas fa-folder-open text-sky-500 mr-2"></i> 11. Sınıf Dosya Listesi</h4>
+                    <div id="files-class11" class="space-y-2"></div>
+                </div>
+
+                <div id="list-class12" class="file-list bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
+                    <h4 class="font-bold text-slate-800 border-b pb-2 flex items-center text-base"><i class="fas fa-folder-open text-sky-500 mr-2"></i> 12. Sınıf Dosya Listesi</h4>
+                    <div id="files-class12" class="space-y-2"></div>
+                </div>
             </div>
 
             <!-- ==================================================================== -->
@@ -232,8 +270,21 @@
                     </button>
                 </div>
 
-                <!-- Harici Sınav Yuvası -->
-                <div id="harici-sinav-listesi" class="space-y-4"></div>
+                <!-- SINAV HAZIRLIK DOSYA LİSTELERİ (DİNAMİK) -->
+                <div id="list-lgs_prep" class="file-list bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
+                    <h4 class="font-bold text-slate-800 border-b pb-2 flex items-center text-base"><i class="fas fa-folder-open text-amber-500 mr-2"></i> LGS Sayısal Denemeleri</h4>
+                    <div id="files-lgs_prep" class="space-y-2"></div>
+                </div>
+
+                <div id="list-tyt_prep" class="file-list bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
+                    <h4 class="font-bold text-slate-800 border-b pb-2 flex items-center text-base"><i class="fas fa-folder-open text-amber-500 mr-2"></i> TYT Matematik Soru Bankası PDF</h4>
+                    <div id="files-tyt_prep" class="space-y-2"></div>
+                </div>
+
+                <div id="list-ayt_prep" class="file-list bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
+                    <h4 class="font-bold text-slate-800 border-b pb-2 flex items-center text-base"><i class="fas fa-folder-open text-amber-500 mr-2"></i> AYT İleri Düzey Soru Havuzu</h4>
+                    <div id="files-ayt_prep" class="space-y-2"></div>
+                </div>
             </div>
 
         </div>
@@ -241,33 +292,111 @@
 
     <!-- FOOTER -->
     <footer class="w-full text-center py-6 border-t border-slate-200 bg-white text-xs text-slate-400 font-medium tracking-wide">
-        &copy; 2026 Ahmet Baş. Matematik ile Kalın.
+        &copy; 2026 Ahmet Baş. Matematik ile Kalın. Vercel ile Güçlendirilmiştir.
     </footer>
 
-    <!-- SCRIPT KONTROLLERİ (DİNAMİK FETCH ENJEKSİYONU) -->
+    <!-- SCRIPT KONTROLLERİ (DİNAMİK TXT VERİ OKUYUCU) -->
     <script>
-        // Sayfa açıldığında tüm harici dosyaları eşzamanlı çeker
+        // Sayfa açıldığında linkler.txt dosyasını analiz edip sınıflara dağıtan ana motor
         document.addEventListener("DOMContentLoaded", function() {
-            loadExternalComponent('ortaokul.html', 'harici-ortaokul-listesi');
-            loadExternalComponent('lise.html', 'harici-lise-listesi');
-            loadExternalComponent('sinavlar.html', 'harici-sinav-listesi');
-        });
+            const classes = [
+                'class5', 'class6', 'class7', 'class8',
+                'class9', 'class10', 'class11', 'class12',
+                'lgs_prep', 'tyt_prep', 'ayt_prep'
+            ];
 
-        function loadExternalComponent(fileName, targetId) {
-            fetch(fileName)
+            // Önce tüm sınıflara yükleniyor görseli yerleştir
+            classes.forEach(c => {
+                const target = document.getElementById('files-' + c);
+                if (target) {
+                    target.innerHTML = '<p class="text-xs text-slate-400 italic"><i class="fas fa-spinner animate-spin mr-1.5"></i>Dosyalar taranıyor...</p>';
+                }
+            });
+
+            // TXT dosyasını fetch et
+            fetch('linkler.txt')
                 .then(response => {
-                    if (!response.ok) throw new Error(fileName + ' bulunamadı.');
+                    if (!response.ok) throw new Error('linkler.txt dosyası sunucuda bulunamadı.');
                     return response.text();
                 })
-                .then(data => {
-                    document.getElementById(targetId).innerHTML = data;
-                })
-                .catch(err => console.error('Yükleme hatası:', err));
-        }
+                .then(text => {
+                    // Sınıflarda döküman var mı durumunu tutan takipçi
+                    const fileTracker = {};
+                    classes.forEach(c => {
+                        fileTracker[c] = false;
+                        const target = document.getElementById('files-' + c);
+                        if (target) target.innerHTML = ''; // Yükleniyor yazısını temizle
+                    });
 
+                    // Satır satır oku ve ayrıştır
+                    const lines = text.split('\n');
+                    lines.forEach(line => {
+                        line = line.trim();
+                        // Boş satırları veya yorum satırlarını es geç
+                        if (line === '' || line.startsWith('#')) return;
+
+                        const parts = line.split('|').map(p => p.trim());
+                        if (parts.length >= 3) {
+                            const classCode = parts[0];
+                            const fileTitle = parts[1];
+                            const fileUrl = parts[2];
+                            const fileSize = parts[3] || 'Belirtilmedi';
+
+                            const targetContainer = document.getElementById('files-' + classCode);
+                            if (targetContainer) {
+                                fileTracker[classCode] = true;
+                                
+                                // Şık döküman kartını HTML olarak oluştur
+                                const cardHtml = `
+                                    <div class="p-3 bg-slate-50 hover:bg-slate-100/70 rounded-xl flex items-center justify-between border border-slate-100 transition-colors animate-fadeIn">
+                                        <div class="flex-grow pr-4">
+                                            <span class="text-sm font-bold text-slate-800 block">
+                                                <i class="far fa-file-pdf text-rose-500 mr-2 text-base"></i> ${fileTitle}
+                                            </span>
+                                            <span class="text-xs text-slate-400 font-medium ml-6">Boyut: ${fileSize}</span>
+                                        </div>
+                                        <a href="${fileUrl}" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow-sm flex items-center shrink-0">
+                                            <i class="fas fa-cloud-download-alt mr-1.5"></i> PDF İndir
+                                        </a>
+                                    </div>
+                                `;
+                                targetContainer.innerHTML += cardHtml;
+                            }
+                        }
+                    });
+
+                    // Hiç dökümanı olmayan sınıflara otomatik "Hazırlanıyor" uyarısı bas
+                    classes.forEach(c => {
+                        if (!fileTracker[c]) {
+                            const target = document.getElementById('files-' + c);
+                            if (target) {
+                                target.innerHTML = `
+                                    <div class="text-center py-6 text-slate-400 text-sm">
+                                        <i class="fas fa-hourglass-start text-lg mb-1.5 text-slate-300"></i>
+                                        <p class="font-medium">Bu sınıfa ait dökümanlar yakında yüklenecektir.</p>
+                                    </div>
+                                `;
+                            }
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Hata:', error);
+                    classes.forEach(c => {
+                        const target = document.getElementById('files-' + c);
+                        if (target) {
+                            target.innerHTML = '<p class="text-xs text-red-500 italic"><i class="fas fa-exclamation-triangle mr-1"></i>Veritabanı bağlantı hatası.</p>';
+                        }
+                    });
+                });
+        });
+
+        // SEKME GEÇİŞLERİ
         function switchTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+                content.classList.remove('active');
+            });
             document.querySelectorAll('.sub-content').forEach(content => content.classList.remove('active'));
             hideAllFileLists();
             
@@ -282,6 +411,7 @@
             activeBtn.className = 'px-4 py-2 rounded-xl text-sm font-semibold transition-all text-blue-600 bg-blue-50';
         }
 
+        // ALT SAYFALARI AÇMA
         function openSubPage(subName) {
             document.querySelectorAll('.sub-content').forEach(content => content.classList.remove('active'));
             hideAllFileLists();
@@ -289,23 +419,17 @@
             document.getElementById('sub-' + subName).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
+        // LİSTELERİ SIFIRLAMA
         function hideAllFileLists() {
-            // Tüm harici kutuların içindeki listeleri seçer ve gizler
-            const selectors = [
-                '#harici-ortaokul-listesi > div',
-                '#harici-lise-listesi > div',
-                '#harici-sinav-listesi > div'
-            ];
-            document.querySelectorAll(selectors.join(',')).forEach(list => {
-                list.style.display = 'none';
-            });
+            document.querySelectorAll('.file-list').forEach(list => list.classList.remove('active'));
         }
 
+        // TIKLANAN SINIFIN LİSTESİNİ GÖSTERME
         function showFiles(className) {
             hideAllFileLists();
             const targetList = document.getElementById('list-' + className);
             if(targetList) {
-                targetList.style.display = 'block';
+                targetList.classList.add('active');
                 targetList.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
         }
