@@ -1,0 +1,30 @@
+AHMET BAŞ - DERS MATERYALLERİ LİSTESİ
+
+---------------------------------------------------------------------------------
+
+YENİ LİNK EKLEME KURALI:
+
+Her dökümanı yeni bir satıra, aralarına " | " (dikey çizgi) koyarak yazın.
+
+Format: Sınıf Kodu | Dosya Başlığı | Google Drive İndirme Linki | Dosya Boyutu
+
+SINIF KODLARI:
+
+Ortaokul için: class5, class6, class7, class8
+
+Lise için    : class9, class10, class11, class12
+
+Sınavlar için: lgs_prep, tyt_prep, ayt_prep
+
+---------------------------------------------------------------------------------
+
+class5 | Kesirler Kazanım Kavrama Testi | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_1 | 1.4 MB
+class5 | Ondalık Gösterim Çalışma Kağıdı | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_2 | 850 KB
+
+class8 | Çarpanlar ve Katlar - Yeni Nesil Soru Bankası | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_3 | 2.9 MB
+class8 | Kareköklü İfadeler Formül ve Özet Notları | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_4 | 1.1 MB
+
+class11 | Trigonometri-1 İleri Düzey Fasikül | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_5 | 3.5 MB
+
+tyt_prep | TYT Matematik İlk 12 Konu Pratik Kamp Notları | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_6 | 1.8 MB
+lgs_prep | LGS 1. Dönem Genel Tekrar Deneme Sınavı | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_7 | 2.1 MB
