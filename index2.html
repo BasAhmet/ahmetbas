@@ -14,6 +14,8 @@
         .tab-content.active { display: block; }
         .sub-content { display: none; }
         .sub-content.active { display: block; }
+        .file-list { display: none; }
+        .file-list.active { display: block; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between antialiased selection:bg-blue-500 selection:text-white">
@@ -119,17 +121,15 @@
             </div>
         </div>
 
-        <!-- 2. SEKME: MATERYALLER SAYFASI (3 ANA LİNK ALANI) -->
+        <!-- 2. SEKME: MATERYALLER SAYFASI -->
         <div id="tab-materials" class="tab-content space-y-8 animate-fadeIn">
             <div class="border-b border-slate-200 pb-4">
                 <h2 class="text-2xl font-bold text-slate-800">📚 Ders Materyalleri Deposu</h2>
                 <p class="text-sm text-slate-500 font-medium mt-1">Lütfen kaynaklarına ulaşmak istediğiniz eğitim kademesini seçin.</p>
             </div>
 
-            <!-- 3 ANA KATEGORİ LİNKİ -->
+            <!-- 3 ANA KATEGORİ BUTONU -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                
-                <!-- ORTAOKUL LİNKİ (Tıklayınca alt sayfa fonksiyonunu çağırır) -->
                 <button onclick="openSubPage('ortaokul')" class="group bg-white border border-slate-200 hover:border-blue-500 p-6 rounded-2xl text-left transition-all shadow-sm hover:shadow-md flex flex-col justify-between h-40">
                     <div class="text-blue-600 bg-blue-50 w-10 h-10 rounded-xl flex items-center justify-center text-lg mb-2"><i class="fas fa-graduation-cap"></i></div>
                     <div>
@@ -138,7 +138,6 @@
                     </div>
                 </button>
 
-                <!-- LİSE LİNKİ -->
                 <button onclick="openSubPage('lise')" class="group bg-white border border-slate-200 hover:border-sky-500 p-6 rounded-2xl text-left transition-all shadow-sm hover:shadow-md flex flex-col justify-between h-40">
                     <div class="text-sky-600 bg-sky-50 w-10 h-10 rounded-xl flex items-center justify-center text-lg mb-2"><i class="fas fa-book-open"></i></div>
                     <div>
@@ -147,7 +146,6 @@
                     </div>
                 </button>
 
-                <!-- SINAV HAZIRLIK LİNKİ -->
                 <button onclick="openSubPage('sinavlar')" class="group bg-white border border-slate-200 hover:border-amber-500 p-6 rounded-2xl text-left transition-all shadow-sm hover:shadow-md flex flex-col justify-between h-40">
                     <div class="text-amber-600 bg-amber-50 w-10 h-10 rounded-xl flex items-center justify-center text-lg mb-2"><i class="fas fa-star"></i></div>
                     <div>
@@ -155,64 +153,177 @@
                         <p class="text-xs text-slate-500 mt-1">Sınav tarzı yeni nesil sorular ve deneme sınavları.</p>
                     </div>
                 </button>
-
             </div>
 
             <!-- ==================================================================== -->
-            <!-- DİNAMİK AÇILAN ALT SAYFA: ORTAOKUL SINIF KARTLARI -->
+            <!-- 1. ALT SAYFA: ORTAOKUL BÖLÜMÜ -->
             <!-- ==================================================================== -->
-            <div id="sub-ortaokul" class="sub-content space-y-6 pt-6 border-t border-slate-200 animate-fadeIn">
-                <div class="flex items-center justify-between">
-                    <h3 class="text-xl font-bold text-blue-600"><i class="fas fa-chevron-right mr-2"></i>Ortaokul Sınıfları</h3>
-                    <span class="text-xs bg-blue-50 text-blue-600 font-bold px-2.5 py-1 rounded-lg">Lütfen Sınıf Seçin</span>
-                </div>
+            <div id="sub-ortaokul" class="sub-content space-y-6 pt-6 border-t border-slate-200">
+                <h3 class="text-xl font-bold text-blue-600"><i class="fas fa-chevron-right mr-2"></i>Ortaokul Sınıfları</h3>
                 
-                <!-- 5, 6, 7, 8. Sınıf Kartları -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                    
-                    <!-- 5. Sınıf -->
-                    <div class="bg-white border border-slate-200 p-5 rounded-2xl text-center shadow-sm hover:border-blue-300 transition-all">
-                        <div class="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold text-slate-700">5</div>
-                        <h4 class="font-bold text-slate-800 text-sm mb-3">5. Sınıf Matematik</h4>
-                        <a href="DRIVE_5_SINIF_LINKI" target="_blank" class="block w-full bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-700 text-xs font-bold py-2 rounded-xl transition">Dosyaları Gör</a>
-                    </div>
-
-                    <!-- 6. Sınıf -->
-                    <div class="bg-white border border-slate-200 p-5 rounded-2xl text-center shadow-sm hover:border-blue-300 transition-all">
-                        <div class="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold text-slate-700">6</div>
-                        <h4 class="font-bold text-slate-800 text-sm mb-3">6. Sınıf Matematik</h4>
-                        <a href="DRIVE_6_SINIF_LINKI" target="_blank" class="block w-full bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-700 text-xs font-bold py-2 rounded-xl transition">Dosyaları Gör</a>
-                    </div>
-
-                    <!-- 7. Sınıf -->
-                    <div class="bg-white border border-slate-200 p-5 rounded-2xl text-center shadow-sm hover:border-blue-300 transition-all">
-                        <div class="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold text-slate-700">7</div>
-                        <h4 class="font-bold text-slate-800 text-sm mb-3">7. Sınıf Matematik</h4>
-                        <a href="DRIVE_7_SINIF_LINKI" target="_blank" class="block w-full bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-700 text-xs font-bold py-2 rounded-xl transition">Dosyaları Gör</a>
-                    </div>
-
-                    <!-- 8. Sınıf -->
-                    <div class="bg-white border border-slate-200 p-5 rounded-2xl text-center shadow-sm hover:border-blue-300 transition-all bg-gradient-to-b from-white to-blue-50/30 border-blue-100">
+                    <button onclick="showFiles('class5')" class="bg-white border border-slate-200 p-5 rounded-2xl text-center shadow-sm hover:border-blue-500 transition-all group">
+                        <div class="w-12 h-12 bg-slate-50 group-hover:bg-blue-50 group-hover:text-blue-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold text-slate-700 transition-colors">5</div>
+                        <h4 class="font-bold text-slate-800 text-sm">5. Sınıf Matematik</h4>
+                    </button>
+                    <button onclick="showFiles('class6')" class="bg-white border border-slate-200 p-5 rounded-2xl text-center shadow-sm hover:border-blue-500 transition-all group">
+                        <div class="w-12 h-12 bg-slate-50 group-hover:bg-blue-50 group-hover:text-blue-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold text-slate-700 transition-colors">6</div>
+                        <h4 class="font-bold text-slate-800 text-sm">6. Sınıf Matematik</h4>
+                    </button>
+                    <button onclick="showFiles('class7')" class="bg-white border border-slate-200 p-5 rounded-2xl text-center shadow-sm hover:border-blue-500 transition-all group">
+                        <div class="w-12 h-12 bg-slate-50 group-hover:bg-blue-50 group-hover:text-blue-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold text-slate-700 transition-colors">7</div>
+                        <h4 class="font-bold text-slate-800 text-sm">7. Sınıf Matematik</h4>
+                    </button>
+                    <button onclick="showFiles('class8')" class="bg-white border border-blue-200 bg-gradient-to-b from-white to-blue-50/30 p-5 rounded-2xl text-center shadow-sm hover:border-blue-600 transition-all group">
                         <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold text-blue-700">8</div>
-                        <h4 class="font-bold text-slate-800 text-sm mb-3">8. Sınıf (LGS 2026)</h4>
-                        <a href="DRIVE_8_SINIF_LINKI" target="_blank" class="block w-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2 rounded-xl transition shadow-sm">Dosyaları Gör</a>
-                    </div>
+                        <h4 class="font-bold text-slate-800 text-sm">8. Sınıf (LGS)</h4>
+                    </button>
+                </div>
 
+                <!-- ORTAOKUL DOSYA LİSTELERİ -->
+                <div id="list-class5" class="file-list bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
+                    <h4 class="font-bold text-slate-800 border-b pb-2 flex items-center text-base"><i class="fas fa-folder-open text-blue-500 mr-2"></i> 5. Sınıf Dosya Listesi</h4>
+                    <div class="p-3 bg-slate-50 rounded-xl flex items-center justify-between border border-slate-100">
+                        <span class="text-sm font-semibold text-slate-700"><i class="far fa-file-pdf text-red-500 mr-2"></i> Kesirler Kazanım Testi Taslağı</span>
+                        <a href="#" class="bg-slate-400 text-white text-xs font-bold px-4 py-2 rounded-lg cursor-not-allowed">Bağlantı Yok</a>
+                    </div>
+                </div>
+
+                <div id="list-class6" class="file-list bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
+                    <h4 class="font-bold text-slate-800 border-b pb-2 flex items-center text-base"><i class="fas fa-folder-open text-blue-500 mr-2"></i> 6. Sınıf Dosya Listesi</h4>
+                    <div class="p-3 bg-slate-50 rounded-xl flex items-center justify-between border border-slate-100">
+                        <span class="text-sm font-semibold text-slate-700"><i class="far fa-file-pdf text-red-500 mr-2"></i> Çarpanlar ve Katlar Çalışma Notu</span>
+                        <a href="#" class="bg-slate-400 text-white text-xs font-bold px-4 py-2 rounded-lg cursor-not-allowed">Bağlantı Yok</a>
+                    </div>
+                </div>
+
+                <div id="list-class7" class="file-list bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
+                    <h4 class="font-bold text-slate-800 border-b pb-2 flex items-center text-base"><i class="fas fa-folder-open text-blue-500 mr-2"></i> 7. Sınıf Dosya Listesi</h4>
+                    <div class="p-3 bg-slate-50 rounded-xl flex items-center justify-between border border-slate-100">
+                        <span class="text-sm font-semibold text-slate-700"><i class="far fa-file-pdf text-red-500 mr-2"></i> Rasyonel Sayılar Tarama Sınavı</span>
+                        <a href="#" class="bg-slate-400 text-white text-xs font-bold px-4 py-2 rounded-lg cursor-not-allowed">Bağlantı Yok</a>
+                    </div>
+                </div>
+
+                <div id="list-class8" class="file-list bg-white border border-blue-200 rounded-2xl p-6 space-y-4 shadow-md bg-gradient-to-b from-white to-blue-50/10">
+                    <h4 class="font-bold text-blue-700 border-b border-blue-100 pb-2 flex items-center text-base"><i class="fas fa-star text-amber-500 mr-2"></i> 8. Sınıf LGS Döküman Deposu</h4>
+                    <div class="p-3 bg-white rounded-xl flex items-center justify-between border border-slate-200 shadow-sm">
+                        <div>
+                            <span class="text-sm font-bold text-slate-800 block"><i class="far fa-file-pdf text-red-500 mr-1.5"></i> Çarpanlar ve Katlar - Yeni Nesil Test</span>
+                            <span class="text-xs text-slate-400 font-medium ml-6">Örnek Taslak Dosya</span>
+                        </div>
+                        <a href="#" class="bg-slate-400 text-white text-xs font-bold px-4 py-2.5 rounded-xl cursor-not-allowed">Hazırlanıyor</a>
+                    </div>
                 </div>
             </div>
 
-            <!-- DİNAMİK AÇILAN ALT SAYFA: LİSE (İleride doldurabilmeniz için hazır alan) -->
-            <div id="sub-lise" class="sub-content text-center py-8 text-slate-400 text-sm bg-white border border-slate-200 rounded-2xl">
-                <i class="fas fa-clock text-2xl mb-2 text-slate-300"></i> <br> Lise müfredatı dökümanları çok yakında buraya eklenecektir.
+            <!-- ==================================================================== -->
+            <!-- 2. ALT SAYFA: LİSE BÖLÜMÜ -->
+            <!-- ==================================================================== -->
+            <div id="sub-lise" class="sub-content space-y-6 pt-6 border-t border-slate-200">
+                <h3 class="text-xl font-bold text-sky-600"><i class="fas fa-chevron-right mr-2"></i>Lise Sınıfları</h3>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                    <button onclick="showFiles('class9')" class="bg-white border border-slate-200 p-5 rounded-2xl text-center shadow-sm hover:border-sky-500 transition-all group">
+                        <div class="w-12 h-12 bg-slate-50 group-hover:bg-sky-50 group-hover:text-sky-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold text-slate-700 transition-colors">9</div>
+                        <h4 class="font-bold text-slate-800 text-sm">9. Sınıf Matematik</h4>
+                    </button>
+                    <button onclick="showFiles('class10')" class="bg-white border border-slate-200 p-5 rounded-2xl text-center shadow-sm hover:border-sky-500 transition-all group">
+                        <div class="w-12 h-12 bg-slate-50 group-hover:bg-sky-50 group-hover:text-sky-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold text-slate-700 transition-colors">10</div>
+                        <h4 class="font-bold text-slate-800 text-sm">10. Sınıf Matematik</h4>
+                    </button>
+                    <button onclick="showFiles('class11')" class="bg-white border border-slate-200 p-5 rounded-2xl text-center shadow-sm hover:border-sky-500 transition-all group">
+                        <div class="w-12 h-12 bg-slate-50 group-hover:bg-sky-50 group-hover:text-sky-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold text-slate-700 transition-colors">11</div>
+                        <h4 class="font-bold text-slate-800 text-sm">11. Sınıf Matematik</h4>
+                    </button>
+                    <button onclick="showFiles('class12')" class="bg-white border border-slate-200 p-5 rounded-2xl text-center shadow-sm hover:border-sky-500 transition-all group">
+                        <div class="w-12 h-12 bg-slate-50 group-hover:bg-sky-50 group-hover:text-sky-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold text-slate-700 transition-colors">12</div>
+                        <h4 class="font-bold text-slate-800 text-sm">12. Sınıf Matematik</h4>
+                    </button>
+                </div>
+
+                <!-- LİSE DOSYA LİSTELERİ -->
+                <div id="list-class9" class="file-list bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
+                    <h4 class="font-bold text-slate-800 border-b pb-2 flex items-center text-base"><i class="fas fa-folder-open text-sky-500 mr-2"></i> 9. Sınıf Dosya Listesi</h4>
+                    <div class="p-3 bg-slate-50 rounded-xl flex items-center justify-between border border-slate-100">
+                        <span class="text-sm font-semibold text-slate-700"><i class="far fa-file-pdf text-red-500 mr-2"></i> Mantık ve Kümeler Çalışma Kağıdı</span>
+                        <a href="#" class="bg-slate-400 text-white text-xs font-bold px-4 py-2 rounded-lg cursor-not-allowed">Hazırlanıyor</a>
+                    </div>
+                </div>
+
+                <div id="list-class10" class="file-list bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
+                    <h4 class="font-bold text-slate-800 border-b pb-2 flex items-center text-base"><i class="fas fa-folder-open text-sky-500 mr-2"></i> 10. Sınıf Dosya Listesi</h4>
+                    <div class="p-3 bg-slate-50 rounded-xl flex items-center justify-between border border-slate-100">
+                        <span class="text-sm font-semibold text-slate-700"><i class="far fa-file-pdf text-red-500 mr-2"></i> Fonksiyonlar Giriş Testi</span>
+                        <a href="#" class="bg-slate-400 text-white text-xs font-bold px-4 py-2 rounded-lg cursor-not-allowed">Hazırlanıyor</a>
+                    </div>
+                </div>
+
+                <div id="list-class11" class="file-list bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
+                    <h4 class="font-bold text-slate-800 border-b pb-2 flex items-center text-base"><i class="fas fa-folder-open text-sky-500 mr-2"></i> 11. Sınıf Dosya Listesi</h4>
+                    <div class="p-3 bg-slate-50 rounded-xl flex items-center justify-between border border-slate-100">
+                        <span class="text-sm font-semibold text-slate-700"><i class="far fa-file-pdf text-red-500 mr-2"></i> Trigonometri-1 Formül ve Soru Sayfası</span>
+                        <a href="#" class="bg-slate-400 text-white text-xs font-bold px-4 py-2 rounded-lg cursor-not-allowed">Hazırlanıyor</a>
+                    </div>
+                </div>
+
+                <div id="list-class12" class="file-list bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
+                    <h4 class="font-bold text-slate-800 border-b pb-2 flex items-center text-base"><i class="fas fa-folder-open text-sky-500 mr-2"></i> 12. Sınıf Dosya Listesi</h4>
+                    <div class="p-3 bg-slate-50 rounded-xl flex items-center justify-between border border-slate-100">
+                        <span class="text-sm font-semibold text-slate-700"><i class="far fa-file-pdf text-red-500 mr-2"></i> Logaritma ve Diziler Karma Test</span>
+                        <a href="#" class="bg-slate-400 text-white text-xs font-bold px-4 py-2 rounded-lg cursor-not-allowed">Hazırlanıyor</a>
+                    </div>
+                </div>
             </div>
 
-            <!-- DİNAMİK AÇILAN ALT SAYFA: SINAVLAR (İleride doldurabilmeniz için hazır alan) -->
-            <div id="sub-sinavlar" class="sub-content text-center py-8 text-slate-400 text-sm bg-white border border-slate-200 rounded-2xl">
-                <i class="fas fa-clock text-2xl mb-2 text-slate-300"></i> <br> LGS & YKS deneme sınavları çok yakında buraya eklenecektir.
+            <!-- ==================================================================== -->
+            <!-- 3. ALT SAYFA: SINAVLARA HAZIRLIK BÖLÜMÜ -->
+            <!-- ==================================================================== -->
+            <div id="sub-sinavlar" class="sub-content space-y-6 pt-6 border-t border-slate-200">
+                <h3 class="text-xl font-bold text-amber-600"><i class="fas fa-chevron-right mr-2"></i>LGS & YKS Hazırlık Merkezleri</h3>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <button onclick="showFiles('lgs_prep')" class="bg-white border border-slate-200 p-5 rounded-2xl text-center shadow-sm hover:border-amber-500 transition-all group">
+                        <div class="w-12 h-12 bg-slate-50 group-hover:bg-amber-50 group-hover:text-amber-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold text-slate-700 transition-colors"><i class="fas fa-bullseye"></i></div>
+                        <h4 class="font-bold text-slate-800 text-sm">LGS Matematik</h4>
+                    </button>
+                    <button onclick="showFiles('tyt_prep')" class="bg-white border border-slate-200 p-5 rounded-2xl text-center shadow-sm hover:border-amber-500 transition-all group">
+                        <div class="w-12 h-12 bg-slate-50 group-hover:bg-amber-50 group-hover:text-amber-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold text-slate-700 transition-colors"><i class="fas fa-layer-group"></i></div>
+                        <h4 class="font-bold text-slate-800 text-sm">TYT Matematik</h4>
+                    </button>
+                    <button onclick="showFiles('ayt_prep')" class="bg-white border border-slate-200 p-5 rounded-2xl text-center shadow-sm hover:border-amber-500 transition-all group">
+                        <div class="w-12 h-12 bg-slate-50 group-hover:bg-amber-50 group-hover:text-amber-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold text-slate-700 transition-colors"><i class="fas fa-infinity"></i></div>
+                        <h4 class="font-bold text-slate-800 text-sm">AYT Matematik</h4>
+                    </button>
+                </div>
+
+                <!-- SINAV HAZIRLIK DOSYA LİSTELERİ -->
+                <div id="list-lgs_prep" class="file-list bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
+                    <h4 class="font-bold text-slate-800 border-b pb-2 flex items-center text-base"><i class="fas fa-folder-open text-amber-500 mr-2"></i> LGS Sayısal Denemeleri</h4>
+                    <div class="p-3 bg-slate-50 rounded-xl flex items-center justify-between border border-slate-100">
+                        <span class="text-sm font-semibold text-slate-700"><i class="far fa-file-pdf text-red-500 mr-2"></i> LGS 1. Dönem Genel Tekrar Denemesi</span>
+                        <a href="#" class="bg-slate-400 text-white text-xs font-bold px-4 py-2 rounded-lg cursor-not-allowed">Hazırlanıyor</a>
+                    </div>
+                </div>
+
+                <div id="list-tyt_prep" class="file-list bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
+                    <h4 class="font-bold text-slate-800 border-b pb-2 flex items-center text-base"><i class="fas fa-folder-open text-amber-500 mr-2"></i> TYT Matematik Soru Bankası PDF</h4>
+                    <div class="p-3 bg-slate-50 rounded-xl flex items-center justify-between border border-slate-100">
+                        <span class="text-sm font-semibold text-slate-700"><i class="far fa-file-pdf text-red-500 mr-2"></i> İlk 12 Konu Pratik Kamp Notları</span>
+                        <a href="#" class="bg-slate-400 text-white text-xs font-bold px-4 py-2 rounded-lg cursor-not-allowed">Hazırlanıyor</a>
+                    </div>
+                </div>
+
+                <div id="list-ayt_prep" class="file-list bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
+                    <h4 class="font-bold text-slate-800 border-b pb-2 flex items-center text-base"><i class="fas fa-folder-open text-amber-500 mr-2"></i> AYT İleri Düzey Soru Havuzu</h4>
+                    <div class="p-3 bg-slate-50 rounded-xl flex items-center justify-between border border-slate-100">
+                        <span class="text-sm font-semibold text-slate-700"><i class="far fa-file-pdf text-red-500 mr-2"></i> Türev - İntegral Derece Soruları</span>
+                        <a href="#" class="bg-slate-400 text-white text-xs font-bold px-4 py-2 rounded-lg cursor-not-allowed">Hazırlanıyor</a>
+                    </div>
+                </div>
             </div>
 
         </div>
-
     </main>
 
     <!-- FOOTER -->
@@ -220,12 +331,12 @@
         &copy; 2026 Ahmet Baş. Matematik ile Kalın. Vercel ile Güçlendirilmiştir.
     </footer>
 
-    <!-- SCRIPT KONTROLLERİ -->
+    <!-- SCRIPT KONTROLLERİ (HAFİF VE DİNAMİK) -->
     <script>
-        // Ana Sekme Geçişleri (Ana Sayfa <-> Ders Materyalleri)
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            document.querySelectorAll('.sub-content').forEach(content => content.classList.remove('active')); // Sekme değişince alt sayfaları kapat
+            document.querySelectorAll('.sub-content').forEach(content => content.classList.remove('active'));
+            document.querySelectorAll('.file-list').forEach(content => content.classList.remove('active'));
             
             document.getElementById('tab-btn-home').className = 'px-4 py-2 rounded-xl text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-50';
             document.getElementById('tab-btn-materials').className = 'px-4 py-2 rounded-xl text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-50';
@@ -235,15 +346,20 @@
             activeBtn.className = 'px-4 py-2 rounded-xl text-sm font-semibold transition-all text-blue-600 bg-blue-50';
         }
 
-        // Materyaller İçi Alt Sayfa Açma Fonksiyonu (Ortaokul, Lise vb.)
         function openSubPage(subName) {
-            // Önce açık olan tüm alt sayfaları gizle
             document.querySelectorAll('.sub-content').forEach(content => content.classList.remove('active'));
-            // İstenen alt sayfayı göster
+            document.querySelectorAll('.file-list').forEach(content => content.classList.remove('active'));
             document.getElementById('sub-' + subName).classList.add('active');
-            
-            // Tıklayınca otomatik olarak alt sayfa hizasına yumuşakça kaydır
             document.getElementById('sub-' + subName).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function showFiles(className) {
+            document.querySelectorAll('.file-list').forEach(list => list.classList.remove('active'));
+            const targetList = document.getElementById('list-' + className);
+            if(targetList) {
+                targetList.classList.add('active');
+                targetList.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
         }
     </script>
 
