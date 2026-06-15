@@ -6,8 +6,31 @@
     <title>Ahmet Baş | Matematik Öğretmeni</title>
     <!-- Tailwind CSS ve FontAwesome İkonları -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- LATEX / MATHJAX MATEMATİKSEL BİÇİMLENDİRME ENTEGRASYONU -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        console.log("MathJax ilk taramayı tamamladı.");
+                        window.mathJaxReady = true;
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <!-- ÇOKLU TEMA RENK DEĞİŞKENLERİ -->
     <style>
         /* 1. KLASİK AYDINLIK TEMASI */
@@ -177,16 +200,13 @@
                     <img src="profil.jpeg" alt="Ahmet Baş" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=math';" class="w-32 h-32 object-cover object-[center_top_20%] rounded-full border-4 theme-card relative z-10 shadow-md">
                 </div>
                 <h1 class="text-4xl font-extrabold tracking-tight theme-text-title mb-1">Ahmet Baş</h1>
-                <h2 class="text-xl font-bold math-gradient mb-4">Matematik Öğretmeni & Eğitim İçeriği Üreticisi</h2>
-                <p class="theme-text-muted max-w-xl mx-auto text-base leading-relaxed font-medium">
-                    Ortaokul ve lise düzeyinde matematik eğitimleri veriyor, öğrencilerin analitik düşünme becerilerini geliştirecek dinamik içerikler üretiyorum.
-                </p>
-
-                <!-- DÖKÜMANDAN BESLENEN ESTETİK MOTİVASYON SÖZÜ KUTUSU -->
-                <div id="motivation-box" class="mt-6 max-w-md mx-auto p-4 rounded-2xl bg-gradient-to-r from-blue-500/5 to-sky-500/5 border border-blue-500/10 text-center relative overflow-hidden hidden animate-fadeIn shadow-sm">
-                    <span class="absolute -top-1.5 left-2 text-4xl theme-accent-text opacity-10 font-serif">“</span>
-                    <p id="motivation-text" class="text-xs font-bold theme-text-title italic leading-relaxed px-5"></p>
-                    <span class="absolute -bottom-5 right-2 text-4xl theme-accent-text opacity-10 font-serif">”</span>
+                <h2 class="text-xl font-bold math-gradient mb-2">Matematik Öğretmeni & Eğitim İçeriği Üreticisi</h2>
+                
+                <!-- GÜNÜN MOTİVASYON SÖZÜ ALANI -->
+                <div class="max-w-md mx-auto py-1 px-4 mb-4">
+                    <p id="motivational-quote" class="text-xs italic font-semibold theme-text-muted transition-all duration-500 leading-relaxed">
+                        "Matematikle aranı iyi tut, o seni yarı yolda bırakmaz."
+                    </p>
                 </div>
             </div>
 
@@ -199,8 +219,8 @@
                 </div>
             </div>
 
-            <!-- İnteraktif Bölüm: Haftanın Sorusu (Artık Tamamen Dinamik) -->
-            <div id="puzzle-box" class="theme-card border rounded-2xl p-6 shadow-md relative overflow-hidden hidden animate-fadeIn">
+            <!-- İnteraktif Bölüm: Haftanın Sorusu -->
+            <div class="theme-card border rounded-2xl p-6 shadow-md relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-2 h-full theme-btn-accent"></div>
                 <div class="flex items-center space-x-3 mb-3">
                     <span class="flex h-2.5 w-2.5 relative">
@@ -209,11 +229,15 @@
                     </span>
                     <h3 class="text-lg font-bold theme-text-title">🧠 Haftanın Matematik Bulmacası</h3>
                 </div>
-                <p id="puzzle-text" class="theme-text-body text-sm leading-relaxed font-semibold bg-slate-500/5 p-4 rounded-xl border theme-border mb-4">
-                    <!-- Dinamik olarak bulmaca.txt'den yüklenecek -->
+                
+                <!-- SORU METNİ ALANI -->
+                <p id="bulmaca-soru" class="theme-text-body text-sm leading-relaxed font-semibold bg-slate-500/5 p-4 rounded-xl border theme-border mb-4">
+                    Yükleniyor...
                 </p>
-                <div id="puzzle-hint" class="text-xs theme-accent-text font-bold flex items-center">
-                    <!-- Dinamik olarak bulmaca.txt'den yüklenecek -->
+                
+                <!-- İPUCU ALANI -->
+                <div id="bulmaca-ipucu" class="text-xs theme-accent-text font-bold flex items-center">
+                    Yükleniyor...
                 </div>
             </div>
 
@@ -238,11 +262,11 @@
                     <p class="text-sm theme-text-muted font-medium">Sizin için hazırladığım ücretsiz PDF testleri, çalışma kağıtları ve denemeler.</p>
                 </button>
 
-                <!-- Birebir & Online Ders (Artık İnteraktif Modal Açar) -->
-                <button onclick="openLessonModal()" class="group theme-card border p-5 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-emerald-400">
+                <!-- Birebir & Online Ders Kartı (Yeni Detaylı Modalı Açar) -->
+                <button onclick="openOnlineCourseModal()" class="group theme-card border p-5 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-blue-400">
                     <div class="flex items-center justify-between mb-2">
                         <div class="text-emerald-600 bg-emerald-50 w-10 h-10 rounded-xl flex items-center justify-center text-lg"><i class="fas fa-video"></i></div>
-                        <span class="text-xs font-bold theme-text-muted group-hover:theme-accent-text transition-colors">Programı Gör <i class="fas fa-arrow-right ml-1"></i></span>
+                        <span class="text-xs font-bold theme-text-muted group-hover:theme-accent-text transition-colors">Programı İncele <i class="fas fa-arrow-right ml-1"></i></span>
                     </div>
                     <h3 class="text-lg font-bold theme-text-title mb-1">Birebir & Online Ders</h3>
                     <p class="text-sm theme-text-muted font-medium">LGS, YKS hazırlık veya okul derslerine takviye için kişiye özel online matematik programları.</p>
@@ -381,13 +405,88 @@
     </main>
 
     <!-- ==================================================================== -->
-    <!-- SOSYAL MEDYA SEÇİCİ MODAL -->
+    <!-- BİREBİR & ONLINE DERS TANITIM MODAL -->
+    <!-- ==================================================================== -->
+    <div id="online-course-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+        <div class="theme-card border theme-border rounded-3xl max-w-lg w-full p-6 shadow-2xl relative animate-fadeIn max-h-[90vh] overflow-y-auto">
+            <!-- Kapatma Butonu -->
+            <button onclick="closeOnlineCourseModal()" class="absolute top-4 right-4 text-slate-400 hover:text-red-500 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-500/10">
+                <i class="fas fa-times text-lg"></i>
+            </button>
+
+            <!-- Başlık -->
+            <div class="text-center mb-6 border-b theme-border pb-4">
+                <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-3 text-xl">
+                    <i class="fas fa-video"></i>
+                </div>
+                <h3 class="text-xl font-bold theme-text-title">Birebir & Online Matematik Eğitimi</h3>
+                <p class="text-xs theme-text-muted mt-1 font-medium">LGS, YKS ve Okul Derslerine Tam Takviye Sistemimiz</p>
+            </div>
+
+            <!-- İçerik Detayları -->
+            <div class="space-y-5">
+                <!-- 1. Bölüm: İşleyiş -->
+                <div>
+                    <h4 class="text-sm font-bold theme-text-title flex items-center mb-2">
+                        <i class="fas fa-laptop-code text-emerald-500 mr-2"></i> Dersler Nasıl İşleniyor?
+                    </h4>
+                    <p class="text-xs theme-text-muted leading-relaxed font-semibold">
+                        Derslerimiz yüksek çözünürlüklü ekran ve grafik tablet teknolojisi kullanılarak interaktif bir beyaz tahta üzerinde gerçekleştirilir. Öğrenci derse aktif olarak katılır ve çözümleri birlikte yaparız. Her ders sonunda kullanılan dökümanlar PDF olarak öğrenciyle paylaşılır.
+                    </p>
+                </div>
+
+                <!-- 2. Bölüm: Başarı Adımları -->
+                <div>
+                    <h4 class="text-sm font-bold theme-text-title flex items-center mb-2.5">
+                        <i class="fas fa-clipboard-list text-blue-500 mr-2"></i> Gelişim ve Takip Sürecimiz
+                    </h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="p-3 bg-slate-500/5 rounded-xl border theme-border text-center">
+                            <span class="text-xs font-bold theme-text-title block mb-1">1. Seviye Analizi</span>
+                            <span class="text-[10px] theme-text-muted font-medium block">Öğrencinin eksik olduğu kazanımlar ilk derste nokta atışı belirlenir.</span>
+                        </div>
+                        <div class="p-3 bg-slate-500/5 rounded-xl border theme-border text-center">
+                            <span class="text-xs font-bold theme-text-title block mb-1">2. Özel Program</span>
+                            <span class="text-[10px] theme-text-muted font-medium block">Seviyesine uygun kaynak seçimi yapılarak haftalık ödev takipleri yönetilir.</span>
+                        </div>
+                        <div class="p-3 bg-slate-500/5 rounded-xl border theme-border text-center">
+                            <span class="text-xs font-bold theme-text-title block mb-1">3. Veli Raporu</span>
+                            <span class="text-[10px] theme-text-muted font-medium block">Yapılan tarama testleri ve ödev performansları veliye düzenli raporlanır.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Bölüm: Avantajlar -->
+                <div class="p-4 rounded-2xl theme-accent-soft border border-emerald-500/10 flex items-start space-x-3">
+                    <div class="text-emerald-500 text-lg mt-0.5"><i class="fas fa-check-circle"></i></div>
+                    <div>
+                        <h5 class="text-xs font-bold theme-text-title">Eğitim Danışmanlığı Dahil</h5>
+                        <p class="text-[10px] theme-text-muted font-medium mt-1 leading-relaxed">
+                            Öğrencilerimize sadece ders anlatmıyor; sınav motivasyonları, haftalık ders çalışma programı hazırlama ve ders takip koçluğu süreçlerini de beraber yürütüyoruz.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Ön Başvuru Butonu -->
+                <button onclick="triggerApplicationFromModal()" class="w-full theme-btn-accent font-bold py-3 rounded-2xl text-xs shadow-md flex items-center justify-center space-x-2">
+                    <i class="fas fa-file-signature"></i>
+                    <span>Hemen Ön Başvuru Yap</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- SOSYAL MEDYA SEÇİCİ MODAL (YOUTUBE ENTEGRELİ) -->
     <!-- ==================================================================== -->
     <div id="social-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
         <div class="theme-card border theme-border rounded-3xl max-w-md w-full p-6 shadow-2xl relative animate-fadeIn">
+            <!-- Kapatma Butonu -->
             <button onclick="closeSocialModal()" class="absolute top-4 right-4 text-slate-400 hover:text-red-500 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-500/10">
                 <i class="fas fa-times text-lg"></i>
             </button>
+
+            <!-- Başlık -->
             <div class="text-center mb-6">
                 <div class="w-12 h-12 theme-accent-soft theme-accent-text rounded-2xl flex items-center justify-center mx-auto mb-3 text-xl">
                     <i class="fas fa-share-alt"></i>
@@ -395,7 +494,10 @@
                 <h3 class="text-xl font-bold theme-text-title">Eğitim İçerikleri</h3>
                 <p class="text-xs theme-text-muted mt-1 font-medium">Beni takip ederek yeni döküman ve çözümlerden haberdar olun!</p>
             </div>
+
+            <!-- Sosyal Medya Seçenekleri -->
             <div class="space-y-3">
+                <!-- INSTAGRAM SEÇENEĞİ -->
                 <a href="https://www.instagram.com/ahmetbasmath/" target="_blank" class="flex items-center justify-between p-4 bg-gradient-to-r from-pink-500/10 via-red-500/5 to-yellow-500/10 hover:from-pink-500/20 hover:to-yellow-500/20 border border-pink-500/20 rounded-2xl transition-all group shadow-sm">
                     <div class="flex items-center space-x-3.5">
                         <div class="w-11 h-11 bg-gradient-to-tr from-yellow-500 via-pink-500 to-purple-600 rounded-xl flex items-center justify-center text-white text-xl shadow-md"><i class="fab fa-instagram"></i></div>
@@ -406,6 +508,8 @@
                     </div>
                     <span class="text-xs font-bold text-pink-500 group-hover:translate-x-1 transition-transform">Takip Et <i class="fas fa-chevron-right ml-1"></i></span>
                 </a>
+
+                <!-- YOUTUBE SEÇENEĞİ -->
                 <a href="https://www.youtube.com/@ahmetbasmath" target="_blank" class="flex items-center justify-between p-4 bg-red-500/5 hover:bg-red-500/10 border border-red-500/20 rounded-2xl transition-all group shadow-sm">
                     <div class="flex items-center space-x-3.5">
                         <div class="w-11 h-11 bg-red-600 rounded-xl flex items-center justify-center text-white text-xl shadow-md shadow-red-500/20"><i class="fab fa-youtube"></i></div>
@@ -421,79 +525,31 @@
     </div>
 
     <!-- ==================================================================== -->
-    <!-- BİREBİR & ONLİNE DERS DETAY MODALI -->
-    <!-- ==================================================================== -->
-    <div id="lesson-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 overflow-y-auto">
-        <div class="theme-card border theme-border rounded-3xl max-w-lg w-full p-6 shadow-2xl relative animate-fadeIn my-8">
-            <button onclick="closeLessonModal()" class="absolute top-4 right-4 text-slate-400 hover:text-red-500 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-500/10">
-                <i class="fas fa-times text-lg"></i>
-            </button>
-            <div class="text-center mb-6">
-                <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-3 text-xl">
-                    <i class="fas fa-chalkboard-teacher animate-pulse"></i>
-                </div>
-                <h3 class="text-xl font-bold theme-text-title">Birebir & Online Matematik Programı</h3>
-                <p class="text-xs theme-text-muted mt-1 font-medium">Hedefe odaklı, kişiye özel ve tamamen takip odaklı ders planlaması.</p>
-            </div>
-
-            <div class="space-y-4 text-sm font-medium">
-                <div class="p-4 rounded-2xl border theme-border bg-slate-500/5">
-                    <h4 class="font-bold theme-text-title mb-2 flex items-center text-xs uppercase tracking-wider"><i class="fas fa-laptop text-emerald-500 mr-2 text-sm"></i> Derslerin İşleniş Metodu</h4>
-                    <p class="text-xs theme-text-body leading-relaxed">
-                        Online derslerimiz yüksek kaliteli **Grafik Tablet** ve **iPad** teknolojisiyle interaktif akıllı tahtalar üzerinden gerçekleştirilir. Öğrenci dersi pasif izlemek yerine soruları ekranda benimle birlikte çözerek aktif katılım sağlar. Her ders sonunda kullanılan tüm ekran notları PDF olarak paylaşılır.
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 gap-2.5">
-                    <div class="flex items-start space-x-3 p-3 rounded-xl border theme-border">
-                        <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm flex-shrink-0"><i class="fas fa-chart-pie"></i></div>
-                        <div>
-                            <span class="font-bold theme-text-title text-xs block">1. Seviye Analizi</span>
-                            <span class="text-xxs theme-text-muted">Öğrencinin geçmiş yıllara ait konu eksikleri ve güncel seviyesi ilk derste tam olarak tespit edilir.</span>
-                        </div>
-                    </div>
-                    <div class="flex items-start space-x-3 p-3 rounded-xl border theme-border">
-                        <div class="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center text-sm flex-shrink-0"><i class="fas fa-book-reader"></i></div>
-                        <div>
-                            <span class="font-bold theme-text-title text-xs block">2. Kişiye Özel Kaynak Planlaması</span>
-                            <span class="text-xxs theme-text-muted">Öğrencinin hızına uygun yayınlar seçilir ve her dersten sonra haftalık ödevlendirme yapılarak WhatsApp'tan kontrol edilir.</span>
-                        </div>
-                    </div>
-                    <div class="flex items-start space-x-3 p-3 rounded-xl border theme-border">
-                        <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center text-sm flex-shrink-0"><i class="fas fa-user-check"></i></div>
-                        <div>
-                            <span class="font-bold theme-text-title text-xs block">3. Düzenli Veli Bilgilendirme</span>
-                            <span class="text-xxs theme-text-muted">Ayda bir yapılan deneme sınavlarının sonuçları ve öğrencinin ödev/katılım durumları veliye raporlanır.</span>
-                        </div>
-                    </div>
-                </div>
-
-                <button onclick="applyForLesson()" class="w-full theme-btn-accent font-bold py-3 rounded-2xl text-xs shadow-md flex items-center justify-center space-x-2">
-                    <i class="fas fa-file-signature"></i> <span>Hemen Ön Başvuru Formu Doldur</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================================================================== -->
-    <!-- INTERAKTIF ILETISIM MODAL -->
+    <!-- INTERAKTIF ILETISIM MODAL (GMAIL DESTEKLI ÇALIŞAN GERÇEK FORM) -->
     <!-- ==================================================================== -->
     <div id="contact-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
         <div class="theme-card border theme-border rounded-3xl max-w-md w-full p-6 shadow-2xl relative animate-fadeIn">
+            <!-- Kapatma Butonu -->
             <button onclick="closeContactModal()" class="absolute top-4 right-4 text-slate-400 hover:text-red-500 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-500/10">
                 <i class="fas fa-times text-lg"></i>
             </button>
+
+            <!-- Başlık -->
             <div class="text-center mb-6">
                 <div class="w-12 h-12 theme-accent-soft theme-accent-text rounded-2xl flex items-center justify-center mx-auto mb-3 text-xl">
-                    <i class="fas fa-paper-plane animate-pulse"></i>
+                    <i class="fas fa-paper-plane"></i>
                 </div>
                 <h3 class="text-xl font-bold theme-text-title">Benimle İletişime Geçin</h3>
                 <p class="text-xs theme-text-muted mt-1 font-medium">Formu doldurarak direkt e-posta gönderebilir veya hızlı kanalları kullanabilirsiniz.</p>
             </div>
+
+            <!-- Seçenekler Menüsü -->
             <div class="space-y-4">
+                <!-- GERÇEK ÇALIŞAN GMAIL FORMU (Web3Forms Entegrasyonu) -->
                 <form action="https://api.web3forms.com/submit" method="POST" id="email-form" class="space-y-3">
+                    <!-- WEB3FORMS GÜVENLİK ANAHTARI VE YÖNLENDİRME METADATASI -->
                     <input type="hidden" name="access_key" value="7e742e97-4780-4965-bd2b-eeff5ef16be4">
-                    <input type="hidden" name="subject" value="AhmetBas.com üzerinde yeni bir başvuru/mesaj var!">
+                    <input type="hidden" name="subject" value="AhmetBas.com üzerinden yeni mesaj geldi!">
                     <input type="hidden" name="from_name" value="AhmetBaş Portfolyo">
                     <input type="hidden" name="redirect" value="https://ahmetbas.vercel.app/">
 
@@ -515,16 +571,22 @@
                         <i class="fas fa-paper-plane"></i> <span>E-Postayı Gönder</span>
                     </button>
                 </form>
+
                 <div class="relative flex py-1 items-center">
                     <div class="flex-grow border-t theme-border"></div>
                     <span class="flex-shrink mx-3 theme-text-muted text-xxs uppercase tracking-wider font-extrabold">veya</span>
                     <div class="flex-grow border-t theme-border"></div>
                 </div>
+
+                <!-- HIZLI KANALLAR -->
                 <div class="grid grid-cols-2 gap-3">
+                    <!-- WHATSAPP BUTONU -->
                     <a href="https://wa.me/5000000000" target="_blank" class="flex items-center justify-center space-x-1.5 p-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl transition-all shadow-sm font-bold text-xs">
                         <i class="fab fa-whatsapp text-sm"></i>
                         <span>WhatsApp'tan Yaz</span>
                     </a>
+                    
+                    <!-- E-POSTA KOPYALAYICI -->
                     <button onclick="copyMailToClipboard(this)" class="flex items-center justify-center space-x-1.5 p-3 bg-slate-500/5 hover:bg-slate-500/10 border theme-border theme-text-title rounded-2xl transition-all shadow-sm font-bold text-xs">
                         <i class="far fa-copy text-sm"></i>
                         <span>E-Postayı Kopyala</span>
@@ -541,13 +603,13 @@
 
     <!-- INTERAKTIF JAVASCRIPT KONTROLLERİ -->
     <script>
-        // TEMA YÖNETİMİ VE TÜM DİNAMİK MOTORLAR
+        // TEMA YÖNETİMİ
         document.addEventListener("DOMContentLoaded", function() {
             const savedTheme = localStorage.getItem('site-theme') || 'light';
             changeTheme(savedTheme);
             loadAndGenerateLinks();
-            loadMotivationQuote();
-            loadWeeklyPuzzle(); // Yenilik: Sayfa açıldığında bulmacayı dinamik okur
+            loadMotivationalQuote();
+            loadBulmaca();
         });
 
         function toggleThemeDropdown() {
@@ -572,13 +634,13 @@
         // MODAL KONTROLLERİ
         function openContactModal() {
             document.getElementById('contact-modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; 
+            document.body.style.overflow = 'hidden';
         }
 
         function closeContactModal() {
             document.getElementById('contact-modal').classList.add('hidden');
             document.body.style.overflow = '';
-            document.getElementById('contact-message-area').value = '';
+            document.getElementById('contact-message-area').value = "";
         }
 
         function openSocialModal() {
@@ -591,35 +653,37 @@
             document.body.style.overflow = '';
         }
 
-        function openLessonModal() {
-            document.getElementById('lesson-modal').classList.remove('hidden');
+        function openOnlineCourseModal() {
+            document.getElementById('online-course-modal').classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         }
 
-        function closeLessonModal() {
-            document.getElementById('lesson-modal').classList.add('hidden');
+        function closeOnlineCourseModal() {
+            document.getElementById('online-course-modal').classList.add('hidden');
             document.body.style.overflow = '';
         }
 
-        function applyForLesson() {
-            closeLessonModal();
-            document.getElementById('contact-message-area').value = "Merhaba Ahmet Hocam, birebir ve online ders programınız hakkında detaylı bilgi ve seviye analizi randevusu almak istiyorum.";
+        function triggerApplicationFromModal() {
+            closeOnlineCourseModal();
             setTimeout(() => {
                 openContactModal();
+                document.getElementById('contact-message-area').value = "Merhaba Ahmet Hocam, birebir / online matematik dersi programınız hakkında detaylı bilgi ve ön görüşme randevusu almak istiyorum.";
             }, 300);
         }
 
         window.addEventListener('click', function(e) {
             const contactModal = document.getElementById('contact-modal');
             const socialModal = document.getElementById('social-modal');
-            const lessonModal = document.getElementById('lesson-modal');
+            const courseModal = document.getElementById('online-course-modal');
             if (e.target === contactModal) closeContactModal();
             if (e.target === socialModal) closeSocialModal();
-            if (e.target === lessonModal) closeLessonModal();
+            if (e.target === courseModal) closeOnlineCourseModal();
         });
 
+        // E-POSTA KOPYALAYICI FONKSİYON
         function copyMailToClipboard(btnElement) {
             const email = "ahba8184@gmail.com";
+            
             const el = document.createElement('textarea');
             el.value = email;
             document.body.appendChild(el);
@@ -677,95 +741,76 @@
             }
         }
 
-        // AKILLI MOTİVASYON MOTORU
-        function loadMotivationQuote() {
+        // BULLETPROOF JAVASCRIPT LATEX / MATHJAX DERLEYİCİ MOTORU
+        function typesetMath() {
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                window.MathJax.typesetPromise()
+                    .then(() => console.log("Formüller başarıyla derlendi."))
+                    .catch(err => console.error("MathJax derleme hatası:", err));
+            } else {
+                // MathJax henüz yüklenmediyse 150ms sonra tekrar kontrol eder
+                setTimeout(typesetMath, 150);
+            }
+        }
+
+        // DİNAMİK MOTİVASYON SÖZÜ MOTORU
+        function loadMotivationalQuote() {
             fetch('motivasyon.txt')
                 .then(response => {
-                    if (!response.ok) throw new Error('Motivasyon listesi bulunamadı');
+                    if (!response.ok) throw new Error('Yüklenemedi');
                     return response.text();
                 })
                 .then(text => {
-                    const quotes = text.split('\n')
-                                       .map(line => line.trim())
-                                       .filter(line => line.length > 0 && !line.startsWith('#'));
-                    if (quotes.length > 0) {
-                        displayRandomQuote(quotes);
+                    const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0 && !l.startsWith('#'));
+                    if (lines.length > 0) {
+                        const randomLine = lines[Math.floor(Math.random() * lines.length)];
+                        document.getElementById('motivational-quote').innerText = `"${randomLine}"`;
                     }
                 })
                 .catch(err => {
-                    console.warn('Sunucudaki motivasyon.txt okunamadı, yerel fallback yüklendi.');
+                    console.warn('Motivasyon listesi çekilemedi, gömülü söz listesi kullanılıyor.');
                     const fallbackQuotes = [
-                        "Matematikte de hayatta olduğu gibi, her problemin mutlaka bir çözümü vardır.",
-                        "Zor sorular, zihnini en çok geliştiren ve seni ileriye taşıyan fırsatlardır.",
-                        "Bugün yapacağın küçük bir tekrar, yarın kazanacağın büyük başarının ilk adımıdır."
+                        "Bugün çözemediğin soru yarınki başarın olacak.",
+                        "Hatalar, matematiğin en güzel öğrenme yoludur.",
+                        "Bugünkü azmin, yarınki netlerini belirler!",
+                        "Matematikle aranı iyi tut, o seni yarı yolda bırakmaz."
                     ];
-                    displayRandomQuote(fallbackQuotes);
+                    const randomQuote = fallbackQuotes[Math.floor(Math.random() * fallbackQuotes.length)];
+                    document.getElementById('motivational-quote').innerText = `"${randomQuote}"`;
                 });
         }
 
-        function displayRandomQuote(quotesArray) {
-            const randomIndex = Math.floor(Math.random() * quotesArray.length);
-            const quoteBox = document.getElementById('motivation-box');
-            const quoteText = document.getElementById('motivation-text');
-            if (quoteBox && quoteText) {
-                quoteText.textContent = quotesArray[randomIndex];
-                quoteBox.classList.remove('hidden');
-            }
-        }
-
-        // AKILLI HAFTANIN BULMACASI MOTORU (YENİ EKLEME)
-        function loadWeeklyPuzzle() {
+        // DİNAMİK HAFTANIN BULMACASI MOTORU
+        function loadBulmaca() {
             fetch('bulmaca.txt')
                 .then(response => {
-                    if (!response.ok) throw new Error('Bulmaca dosyası bulunamadı');
+                    if (!response.ok) throw new Error('Yüklenemedi');
                     return response.text();
                 })
                 .then(text => {
-                    const lines = text.split('\n');
-                    let question = '';
-                    let hint = '';
-
-                    lines.forEach(line => {
-                        const trimmed = line.trim();
-                        if (trimmed.startsWith('#') || !trimmed) return;
-                        if (trimmed.startsWith('SORU |')) {
-                            question = trimmed.replace('SORU |', '').trim();
-                        } else if (trimmed.startsWith('IPUCU |')) {
-                            hint = trimmed.replace('IPUCU |', '').trim();
-                        }
-                    });
-
-                    if (question) {
-                        displayPuzzle(question, hint);
-                    } else {
-                        useFallbackPuzzle();
-                    }
+                    const parts = text.split('===IPUCU===');
+                    const soru = parts[0] ? parts[0].trim() : '';
+                    const ipucu = parts[1] ? parts[1].trim() : '';
+                    
+                    document.getElementById('bulmaca-soru').innerHTML = soru || "Bulmaca sorusu hazırlanıyor.";
+                    document.getElementById('bulmaca-ipucu').innerHTML = ipucu || "İpucu bulunamadı.";
+                    
+                    // İçerik yüklendi, hemen derleyiciyi çalıştır
+                    typesetMath();
                 })
                 .catch(err => {
-                    console.warn('Sunucudaki bulmaca.txt okunamadı, yerel fallback yükleniyor.');
-                    useFallbackPuzzle();
+                    console.warn('Bulmaca dosyası çekilemedi, gömülü yedek bulmaca yükleniyor.');
+                    const fallbackSoru = "Bir çiftçi pazar yerine gitmek üzere yola çıkıyor. Yolun $\\frac{1}{3}$'ünü gittikten sonra mola veriyor. Moladan sonra kalan yolun yarısını gittiğinde geriye $12\\text{ km}$ yolu kaldığını fark ediyor. Çiftçinin toplam yolu kaç kilometredir?";
+                    const fallbackIpucu = `<i class="fas fa-lightbulb mr-2 text-sm text-amber-500"></i> Çiftçinin toplam yoluna $x$ km diyerek rasyonel sayılarla denklem kurmayı deneyin! Cevabınızı bana iletişim kanallarından ulaştırabilirsiniz.`;
+                    
+                    document.getElementById('bulmaca-soru').innerHTML = fallbackSoru;
+                    document.getElementById('bulmaca-ipucu').innerHTML = fallbackIpucu;
+                    
+                    typesetMath();
                 });
         }
 
-        function displayPuzzle(question, hint) {
-            const puzzleBox = document.getElementById('puzzle-box');
-            const puzzleText = document.getElementById('puzzle-text');
-            const puzzleHint = document.getElementById('puzzle-hint');
-
-            if (puzzleText) puzzleText.innerHTML = question;
-            if (puzzleHint) {
-                puzzleHint.innerHTML = `<i class="fas fa-lightbulb mr-2 text-sm text-amber-500"></i> ${hint || 'Cevabınızı aşağıdaki iletişim kanallarından bana ulaştırabilirsiniz!'}`;
-            }
-            if (puzzleBox) puzzleBox.classList.remove('hidden');
-        }
-
-        function useFallbackPuzzle() {
-            const fallbackQuestion = "Bir çiftçi pazar yerine gitmek üzere yola çıkıyor. Yolun $\\frac{1}{3}$'ünü gittikten sonra mola veriyor. Moladan sonra kalan yolun yarısını gittiğinde geriye $12\\text{ km}$ yolu kaldığını fark ediyor. Çiftçinin toplam yolu kaç kilometredir?";
-            const fallbackHint = "Cevabınızı aşağıdaki iletişim kanallarından bana ulaştırabilirsiniz!";
-            displayPuzzle(fallbackQuestion, fallbackHint);
-        }
-
-        // DÖKÜMAN MOTORU
+        // TXT DOSYASINI OKUYUP DOSYA KARTLARINI DİNAMİK YARATAN AKILLI MOTOR
         function loadAndGenerateLinks() {
             fetch('linkler.txt')
                 .then(response => {
@@ -869,6 +914,9 @@
 
                 targetContainer.appendChild(listDiv);
             });
+            
+            // Tüm listeler ve dinamik içerik oluştuktan sonra formülleri derler
+            typesetMath();
         }
     </script>
 
