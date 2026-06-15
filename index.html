@@ -6,7 +6,7 @@
     <title>Ahmet Baş | Matematik Öğretmeni</title>
     <!-- Tailwind CSS ve FontAwesome İkonları -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <!-- ÇOKLU TEMA RENK DEĞİŞKENLERİ -->
     <style>
@@ -212,14 +212,15 @@
 
             <!-- Bağlantılar Giriş Kartları -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <a href="https://www.instagram.com/ahmetbasmath" target="_blank" class="group theme-card border p-5 rounded-2xl transition-all shadow-sm hover:shadow-md hover:border-blue-400">
+                <!-- Eğitim İçerikleri Kartı (Artık İnteraktif Sosyal Medya Seçiciyi Açar) -->
+                <button onclick="openSocialModal()" class="group theme-card border p-5 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-blue-400">
                     <div class="flex items-center justify-between mb-2">
                         <div class="text-rose-500 bg-rose-50 w-10 h-10 rounded-xl flex items-center justify-center text-lg"><i class="fab fa-instagram"></i></div>
-                        <span class="text-xs font-bold theme-text-muted group-hover:theme-accent-text transition-colors">Takip Et <i class="fas fa-arrow-right ml-1"></i></span>
+                        <span class="text-xs font-bold theme-text-muted group-hover:theme-accent-text transition-colors">Yayınları Gör <i class="fas fa-arrow-right ml-1"></i></span>
                     </div>
                     <h3 class="text-lg font-bold theme-text-title mb-1">Eğitim İçerikleri</h3>
-                    <p class="text-sm theme-text-muted font-medium">Sosyal medyada paylaştığım pratik matematik ipuçları ve video çözümleri.</p>
-                </a>
+                    <p class="text-sm theme-text-muted font-medium">Sosyal mecralarda paylaştığım pratik matematik ipuçları, video çözümleri ve ders anlatımları.</p>
+                </button>
 
                 <button onclick="switchTab('materials')" class="group theme-card border p-5 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-blue-400">
                     <div class="flex items-center justify-between mb-2">
@@ -236,11 +237,10 @@
                     <p class="text-sm theme-text-muted font-medium">LGS, YKS hazırlık veya okul derslerine takviye için kişiye özel online matematik programları.</p>
                 </div>
 
-                <!-- YENİ İNTERAKTİF İLETİŞİM BUTONU (MODAL TETİKLEYİCİ) -->
                 <button onclick="openContactModal()" class="group theme-card border p-5 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-blue-400">
                     <div class="flex items-center justify-between mb-2">
                         <div class="theme-accent-text theme-accent-soft w-10 h-10 rounded-xl flex items-center justify-center text-lg"><i class="fas fa-envelope"></i></div>
-                        <span class="text-xs font-bold theme-text-muted group-hover:theme-accent-text transition-colors">İletişime Geç <i class="fas fa-paper-plane ml-1"></i></span>
+                        <span class="text-xs font-bold theme-text-muted group-hover:theme-accent-text transition-colors">Mesaj Gönder <i class="fas fa-paper-plane ml-1"></i></span>
                     </div>
                     <h3 class="text-lg font-bold theme-text-title mb-1">İletişim & İş Birliği</h3>
                     <p class="text-sm theme-text-muted font-medium">Özel ders talepleri, seminerler veya projeler için benimle doğrudan iletişime geçin.</p>
@@ -370,73 +370,121 @@
     </main>
 
     <!-- ==================================================================== -->
-    <!-- MODAL: GÖZ ALICI İNTERAKTİF İLETİŞİM KUTUSU -->
+    <!-- SOSYAL MEDYA SEÇİCİ MODAL (YOUTUBE ENTEGRELİ YENİ AÇILIR PENCERE) -->
     <!-- ==================================================================== -->
-    <div id="contact-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="theme-card border theme-border w-full max-w-lg rounded-2xl shadow-2xl relative animate-scaleIn overflow-hidden">
-            <!-- Modal Üst Alan -->
-            <div class="flex items-center justify-between p-5 border-b theme-border">
-                <h3 class="text-xl font-bold theme-text-title flex items-center">
-                    <i class="fas fa-comments theme-accent-text mr-2 text-2xl"></i> Benimle İletişime Geçin
-                </h3>
-                <button onclick="closeContactModal()" class="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-slate-500/10 theme-text-muted hover:theme-text-title transition-all">
-                    <i class="fas fa-times text-lg"></i>
-                </button>
+    <div id="social-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+        <div class="theme-card border theme-border rounded-3xl max-w-md w-full p-6 shadow-2xl relative animate-fadeIn">
+            <!-- Kapatma Butonu -->
+            <button onclick="closeSocialModal()" class="absolute top-4 right-4 text-slate-400 hover:text-red-500 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-500/10">
+                <i class="fas fa-times text-lg"></i>
+            </button>
+
+            <!-- Başlık -->
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 theme-accent-soft theme-accent-text rounded-2xl flex items-center justify-center mx-auto mb-3 text-xl">
+                    <i class="fas fa-share-alt"></i>
+                </div>
+                <h3 class="text-xl font-bold theme-text-title">Eğitim İçerikleri</h3>
+                <p class="text-xs theme-text-muted mt-1 font-medium">Beni takip ederek yeni döküman ve çözümlerden haberdar olun!</p>
             </div>
 
-            <div class="p-6 space-y-6">
-                <!-- 1. Bölüm: Hızlı İletişim Butonları (Email Copy & WhatsApp) -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <!-- WhatsApp Butonu -->
-                    <a href="https://wa.me/905422993468" target="_blank" class="flex items-center justify-center space-x-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-xl shadow-sm transition-all text-sm">
-                        <i class="fab fa-whatsapp text-xl"></i>
-                        <span>WhatsApp ile Yaz</span>
-                    </a>
-                    <!-- Email Kopyala Butonu -->
-                    <button onclick="copyToClipboard('ahba8184@gmail.com', this)" class="flex items-center justify-center space-x-2.5 bg-slate-500/5 hover:bg-slate-500/10 border theme-border theme-text-title font-bold py-3 px-4 rounded-xl shadow-sm transition-all text-sm">
-                        <i class="far fa-copy text-lg"></i>
-                        <span id="copy-btn-text">E-postayı Kopyala</span>
-                    </button>
-                </div>
+            <!-- Sosyal Medya Seçenekleri -->
+            <div class="space-y-3">
+                <!-- INSTAGRAM SEÇENEĞİ -->
+                <a href="https://www.instagram.com/ahmetbasmath" target="_blank" class="flex items-center justify-between p-4 bg-gradient-to-r from-pink-500/10 via-red-500/5 to-yellow-500/10 hover:from-pink-500/20 hover:to-yellow-500/20 border border-pink-500/20 rounded-2xl transition-all group shadow-sm">
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-11 h-11 bg-gradient-to-tr from-yellow-500 via-pink-500 to-purple-600 rounded-xl flex items-center justify-center text-white text-xl shadow-md"><i class="fab fa-instagram"></i></div>
+                        <div>
+                            <span class="font-bold theme-text-title text-sm block">Instagram Profilim</span>
+                            <span class="text-xs theme-text-muted">Pratik İpuçları & Günlük Reels</span>
+                        </div>
+                    </div>
+                    <span class="text-xs font-bold text-pink-500 group-hover:translate-x-1 transition-transform">Takip Et <i class="fas fa-chevron-right ml-1"></i></span>
+                </a>
 
-                <!-- Çizgi / Ayraç -->
-                <div class="relative flex py-1 items-center">
-                    <div class="flex-grow border-t theme-border"></div>
-                    <span class="flex-shrink mx-4 theme-text-muted text-xs font-bold uppercase tracking-wider">veya mesaj gönderin</span>
-                    <div class="flex-grow border-t theme-border"></div>
-                </div>
+                <!-- YOUTUBE SEÇENEĞİ -->
+                <!-- YOUTUBE_KANAL_LINKI yazan yere gerçek YouTube kanal adresinizi yapıştırabilirsiniz -->
+                <a href="https://www.youtube.com/@ahmetbasmath" target="_blank" class="flex items-center justify-between p-4 bg-red-500/5 hover:bg-red-500/10 border border-red-500/20 rounded-2xl transition-all group shadow-sm">
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-11 h-11 bg-red-600 rounded-xl flex items-center justify-center text-white text-xl shadow-md shadow-red-500/20"><i class="fab fa-youtube"></i></div>
+                        <div>
+                            <span class="font-bold theme-text-title text-sm block">YouTube Kanalım</span>
+                            <span class="text-xs theme-text-muted">Detaylı Konu Anlatım Videoları</span>
+                        </div>
+                    </div>
+                    <span class="text-xs font-bold text-red-600 group-hover:translate-x-1 transition-transform">Abone Ol <i class="fas fa-chevron-right ml-1"></i></span>
+                </a>
+            </div>
+        </div>
+    </div>
 
-                <!-- 2. Bölüm: İnteraktif İletişim Formu -->
-                <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-extrabold theme-text-title uppercase tracking-wider mb-1.5">Adınız Soyadınız</label>
-                        <input type="text" required class="w-full px-4 py-3 rounded-xl border theme-border theme-card focus:outline-none focus:ring-2 focus:ring-blue-500/30 font-medium text-sm transition-all" placeholder="Ahmet Baş">
+    <!-- ==================================================================== -->
+    <!-- INTERAKTIF ILETISIM MODAL (GMAIL DESTEKLI ÇALIŞAN GERÇEK FORM) -->
+    <!-- ==================================================================== -->
+    <div id="contact-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+        <div class="theme-card border theme-border rounded-3xl max-w-md w-full p-6 shadow-2xl relative animate-fadeIn">
+            <!-- Kapatma Butonu -->
+            <button onclick="closeContactModal()" class="absolute top-4 right-4 text-slate-400 hover:text-red-500 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-500/10">
+                <i class="fas fa-times text-lg"></i>
+            </button>
+
+            <!-- Başlık -->
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 theme-accent-soft theme-accent-text rounded-2xl flex items-center justify-center mx-auto mb-3 text-xl">
+                    <i class="fas fa-paper-plane animate-pulse"></i>
+                </div>
+                <h3 class="text-xl font-bold theme-text-title">Benimle İletişime Geçin</h3>
+                <p class="text-xs theme-text-muted mt-1 font-medium">Formu doldurarak direkt e-posta gönderebilir veya hızlı kanalları kullanabilirsiniz.</p>
+            </div>
+
+            <!-- Seçenekler Menüsü -->
+            <div class="space-y-4">
+                <!-- GERÇEK ÇALIŞAN GMAIL FORMU (Web3Forms Entegrasyonu) -->
+                <form action="https://api.web3forms.com/submit" method="POST" id="email-form" class="space-y-3">
+                    <!-- WEB3FORMS GÜVENLİK ANAHTARI VE YÖNLENDİRME METADATASI -->
+                    <input type="hidden" name="access_key" value="7e742e97-4780-4965-bd2b-eeff5ef16be4">
+                    <input type="hidden" name="subject" value="AhmetBas.com üzerinden yeni mesaj geldi!">
+                    <input type="hidden" name="from_name" value="AhmetBaş Portfolyo">
+                    <!-- Başarılı gönderimden sonra ziyaretçiyi yönlendireceğimiz site -->
+                    <input type="hidden" name="redirect" value="https://ahmetbas.vercel.app/">
+
+                    <div class="grid grid-cols-2 gap-2.5">
+                        <div>
+                            <label class="block text-xs font-bold theme-text-title mb-1">Adınız Soyadınız</label>
+                            <input type="text" name="name" required placeholder="Ahmet Baş" class="w-full px-3 py-2 rounded-xl border theme-border theme-card text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none font-medium">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold theme-text-title mb-1">E-Posta Adresiniz</label>
+                            <input type="email" name="email" required placeholder="örnek@gmail.com" class="w-full px-3 py-2 rounded-xl border theme-border theme-card text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none font-medium">
+                        </div>
                     </div>
                     <div>
-                        <label class="block text-xs font-extrabold theme-text-title uppercase tracking-wider mb-1.5">E-posta Adresiniz</label>
-                        <input type="email" required class="w-full px-4 py-3 rounded-xl border theme-border theme-card focus:outline-none focus:ring-2 focus:ring-blue-500/30 font-medium text-sm transition-all" placeholder="ahmet@example.com">
+                        <label class="block text-xs font-bold theme-text-title mb-1">Mesajınız</label>
+                        <textarea name="message" required rows="3" placeholder="Özel ders veya iş birliği talebinizi yazın..." class="w-full px-3 py-2 rounded-xl border theme-border theme-card text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none font-medium resize-none"></textarea>
                     </div>
-                    <div>
-                        <label class="block text-xs font-extrabold theme-text-title uppercase tracking-wider mb-1.5">Mesajınız</label>
-                        <textarea required rows="4" class="w-full px-4 py-3 rounded-xl border theme-border theme-card focus:outline-none focus:ring-2 focus:ring-blue-500/30 font-medium text-sm transition-all resize-none" placeholder="Özel ders talepleri, sorular veya iş birliği önerileriniz..."></textarea>
-                    </div>
-                    <button type="submit" class="w-full theme-btn-accent font-bold py-3.5 rounded-xl transition-all shadow-md flex items-center justify-center space-x-2 text-sm">
-                        <i class="fas fa-paper-plane"></i>
-                        <span>Mesajı Gönder</span>
+                    <button type="submit" class="w-full theme-btn-accent font-bold py-2.5 rounded-xl text-xs shadow-md flex items-center justify-center space-x-1.5">
+                        <i class="fas fa-paper-plane"></i> <span>E-Postayı Gönder</span>
                     </button>
                 </form>
 
-                <!-- Başarı Mesajı Alanı (Başlangıçta gizli) -->
-                <div id="form-success-alert" class="hidden text-center py-8 space-y-4 animate-scaleIn">
-                    <div class="w-16 h-16 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center mx-auto text-3xl">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div>
-                        <h4 class="text-lg font-bold theme-text-title">Mesajınız Başarıyla İletildi!</h4>
-                        <p class="text-xs theme-text-muted font-medium mt-1">Gerekli kontrollerin ardından e-posta adresinize en kısa sürede dönüş sağlayacağım.</p>
-                    </div>
-                    <button onclick="resetContactForm()" class="theme-accent-soft theme-accent-text font-bold text-xs px-4 py-2 rounded-xl transition-all">
-                        Yeni Mesaj Gönder
+                <div class="relative flex py-1 items-center">
+                    <div class="flex-grow border-t theme-border"></div>
+                    <span class="flex-shrink mx-3 theme-text-muted text-xxs uppercase tracking-wider font-extrabold">veya</span>
+                    <div class="flex-grow border-t theme-border"></div>
+                </div>
+
+                <!-- HIZLI KANALLAR -->
+                <div class="grid grid-cols-2 gap-3">
+                    <!-- WHATSAPP BUTONU -->
+                    <a href="https://wa.me/05422993468" target="_blank" class="flex items-center justify-center space-x-1.5 p-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl transition-all shadow-sm font-bold text-xs">
+                        <i class="fab fa-whatsapp text-sm"></i>
+                        <span>WhatsApp'tan Yaz</span>
+                    </a>
+                    
+                    <!-- E-POSTA KOPYALAYICI -->
+                    <button onclick="copyMailToClipboard(this)" class="flex items-center justify-center space-x-1.5 p-3 bg-slate-500/5 hover:bg-slate-500/10 border theme-border theme-text-title rounded-2xl transition-all shadow-sm font-bold text-xs">
+                        <i class="far fa-copy text-sm"></i>
+                        <span>E-Postayı Kopyala</span>
                     </button>
                 </div>
             </div>
@@ -445,7 +493,7 @@
 
     <!-- FOOTER -->
     <footer class="w-full text-center py-6 border-t theme-border theme-card text-xs theme-text-muted font-medium tracking-wide">
-        &copy; 2026 Ahmet Baş. Matematik ile Kalın. Vercel ile Güçlendirilmiştir.
+        &copy; 2026 Ahmet Baş. Matematik ile Kalın.
     </footer>
 
     <!-- INTERAKTIF JAVASCRIPT KONTROLLERİ -->
@@ -454,8 +502,6 @@
         document.addEventListener("DOMContentLoaded", function() {
             const savedTheme = localStorage.getItem('site-theme') || 'light';
             changeTheme(savedTheme);
-            
-            // Linkler.txt dosyasını dinamik oku ve render et (Gelişmiş Fallback Mekanizmalı)
             loadAndGenerateLinks();
         });
 
@@ -467,10 +513,7 @@
         function changeTheme(themeName) {
             document.body.setAttribute('data-theme', themeName);
             localStorage.setItem('site-theme', themeName);
-            
-            // Açılır menüyü kapat
-            const dropdown = document.getElementById('theme-dropdown');
-            if (dropdown) dropdown.classList.add('hidden');
+            document.getElementById('theme-dropdown').classList.add('hidden');
         }
 
         window.addEventListener('click', function(e) {
@@ -480,6 +523,58 @@
                 dropdown.classList.add('hidden');
             }
         });
+
+        // MODAL KONTROLLERİ (İLETİŞİM & SOSYAL MEDYA)
+        function openContactModal() {
+            document.getElementById('contact-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Arka plan kaymasını engelle
+        }
+
+        function closeContactModal() {
+            document.getElementById('contact-modal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function openSocialModal() {
+            document.getElementById('social-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSocialModal() {
+            document.getElementById('social-modal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // Tıklamayla pencerelerin dışına basıldığında modalı kapat
+        window.addEventListener('click', function(e) {
+            const contactModal = document.getElementById('contact-modal');
+            const socialModal = document.getElementById('social-modal');
+            if (e.target === contactModal) closeContactModal();
+            if (e.target === socialModal) closeSocialModal();
+        });
+
+        // E-POSTA KOPYALAYICI FONKSİYON
+        function copyMailToClipboard(btnElement) {
+            const email = "ahba8184@gmail.com";
+            
+            // iFrame kısıtlamalarına karşı güvenli kopyalama yöntemi
+            const el = document.createElement('textarea');
+            el.value = email;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+            // Butonu başarıyla güncelleyen görsel feedback
+            const originalHTML = btnElement.innerHTML;
+            btnElement.className = "flex items-center justify-center space-x-1.5 p-3 bg-emerald-500 text-white rounded-2xl transition-all shadow-sm font-bold text-xs";
+            btnElement.innerHTML = `<i class="fas fa-check text-sm"></i> <span>Kopyalandı!</span>`;
+            
+            setTimeout(() => {
+                btnElement.className = "flex items-center justify-center space-x-1.5 p-3 bg-slate-500/5 hover:bg-slate-500/10 border theme-border theme-text-title rounded-2xl transition-all shadow-sm font-bold text-xs";
+                btnElement.innerHTML = originalHTML;
+            }, 2500);
+        }
 
         // SEKME GEÇİŞLERİ (HOME <-> MATERIALS)
         function switchTab(tabName) {
@@ -521,160 +616,50 @@
             }
         }
 
-        // MODAL YÖNETİMİ
-        function openContactModal() {
-            const modal = document.getElementById('contact-modal');
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; // Arka planın kaydırılmasını engelle
-        }
-
-        function closeContactModal() {
-            const modal = document.getElementById('contact-modal');
-            modal.classList.add('hidden');
-            document.body.style.overflow = 'auto'; // Kaydırmayı geri aç
-            resetContactForm();
-        }
-
-        // Tıklanan yer modal dışıysa modalı kapat
-        window.addEventListener('click', function(e) {
-            const modal = document.getElementById('contact-modal');
-            if (e.target === modal) {
-                closeContactModal();
-            }
-        });
-
-        // PANOLARA KOPYALAMA İŞLEVİ (EMAIL COPY)
-        function copyToClipboard(text, btn) {
-            navigator.clipboard.writeText(text).then(() => {
-                const btnText = document.getElementById('copy-btn-text');
-                btn.classList.remove('bg-slate-500/5', 'theme-text-title');
-                btn.classList.add('bg-emerald-600', 'text-white');
-                btnText.innerText = "Kopyalandı! ✓";
-                
-                setTimeout(() => {
-                    btn.classList.remove('bg-emerald-600', 'text-white');
-                    btn.classList.add('bg-slate-500/5', 'theme-text-title');
-                    btnText.innerText = "E-postayı Kopyala";
-                }, 2000);
-            }).catch(err => {
-                console.error("Kopyalama başarısız oldu:", err);
-            });
-        }
-
-        // FORM GÖNDERME KONTROLÜ (GMAİL ENTEGRASYONLU WEB3FORMS MOTORU)
-        function handleFormSubmit(event) {
-            event.preventDefault(); // Sayfa yenilenmesini engelle
-
-            const form = event.target;
-            const submitBtn = form.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.innerHTML;
-
-            // Gönderiliyor Efekti
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner animate-spin"></i> <span>Gönderiliyor...</span>';
-
-            const name = form.elements[0].value;
-            const email = form.elements[1].value;
-            const message = form.elements[2].value;
-
-            // GERÇEK E-POSTA GÖNDERİMİ
-            // NOT: Formun çalışması için https://web3forms.com adresinden ahba8184@gmail.com adresinizle
-            // ücretsiz alacağınız Access Key'i aşağıdaki "BURAYA_KEY_GELECEK" yerine yazmanız yeterlidir!
-            fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    access_key: "16cc1c37-b84a-4d1a-8bd2-95f98db9cc09", 
-                    name: name,
-                    email: email,
-                    message: message,
-                    subject: "AhmetBas.com - Yeni İletişim Mesajı"
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Başarılıysa onay ekranına geçiş yap
-                    form.classList.add('hidden');
-                    document.getElementById('form-success-alert').classList.remove('hidden');
-                } else {
-                    alert("Bir sorun oluştu, lütfen daha sonra tekrar deneyin.");
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalBtnText;
-                }
-            })
-            .catch(error => {
-                console.error("Hata:", error);
-                // Çevrimdışı/Yerel test durumu için simülasyon başarısı (Vercel dışındayken hata vermemesi için)
-                form.classList.add('hidden');
-                document.getElementById('form-success-alert').classList.remove('hidden');
-            });
-        }
-
-        function resetContactForm() {
-            document.getElementById('contact-form').reset();
-            document.getElementById('contact-form').classList.remove('hidden');
-            document.getElementById('form-success-alert').classList.add('hidden');
-        }
-
-        // ÖNİZLEME/SANDBOX GÜVENLİK SINIRI İÇİN YEDEK (FALLBACK) VERİ SETİ
-        const FALLBACK_LINKS = `# AHMET BAŞ - DERS MATERYALLERİ LİSTESİ
-class5 | Kesirler Kazanım Kavrama Testi | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_1 | 1.4 MB
-class5 | Ondalık Gösterim Çalışma Kağıdı | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_2 | 850 KB
-class8 | 2026 LGS Matematik Soruları ve Çözümleri | https://drive.google.com/file/d/17SrsxuWtvDVo_6AyL6BOdgQVEn6Io0Gw/view?usp=sharing | 2.1 MB
-class8 | Kareköklü İfadeler Formül ve Özet Notları | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_4 | 1.1 MB
-class11 | Trigonometri-1 İleri Düzey Fasikül | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_5 | 3.5 MB
-tyt_prep | TYT Matematik İlk 12 Konu Pratik Kamp Notları | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_6 | 1.8 MB
-lgs_prep | LGS 1. Dönem Genel Tekrar Deneme Sınavı | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_7 | 2.1 MB`;
-
-        // TXT DOSYASINI OKUYUP DOSYA KARTLARINI DİNAMİK YARATAN GÜVENLİ MOTOR
+        // TXT DOSYASINI OKUYUP DOSYA KARTLARINI DİNAMİK YARATAN AKILLI MOTOR
         function loadAndGenerateLinks() {
-            let fetchPromise;
-            try {
-                fetchPromise = fetch('linkler.txt');
-            } catch (e) {
-                fetchPromise = Promise.reject(e);
-            }
-
-            fetchPromise
+            fetch('linkler.txt')
                 .then(response => {
                     if (!response.ok) throw new Error('Yüklenemedi');
                     return response.text();
                 })
                 .then(text => {
-                    processAndBuild(text);
+                    const lines = text.split('\n');
+                    const collections = {};
+
+                    lines.forEach(line => {
+                        if (!line.trim() || line.startsWith('#')) return;
+                        const parts = line.split('|').map(p => p.trim());
+                        if (parts.length >= 3) {
+                            const [targetClass, title, url, size] = parts;
+                            const fileSize = size || 'Belirtilmedi';
+
+                            if (!collections[targetClass]) {
+                                collections[targetClass] = [];
+                            }
+                            collections[targetClass].push({ title, url, fileSize });
+                        }
+                    });
+
+                    buildDOMLists(collections);
                 })
                 .catch(err => {
-                    console.warn("Önizleme/Sandbox modunda relative fetch engellendi. Varsayılan dökümanlar yükleniyor.", err);
-                    processAndBuild(FALLBACK_LINKS);
+                    console.warn('Sunucudaki linkler.txt bulunamadı, yerel fallback listesi yükleniyor.');
+                    // Yerel önizleme fallback listesi (Vercel dışındaki önizleme ortamları için)
+                    const fallbackData = {
+                        'class8': [
+                            { title: '2026 LGS Matematik Soruları ve Çözümleri', url: 'https://drive.google.com/file/d/17SrsxuWtvDVo_6AyL6BOdgQVEn6Io0Gw/view?usp=sharing', fileSize: '2.1 MB' }
+                        ],
+                        'class5': [
+                            { title: 'Kesirler Kazanım Kavrama Testi - 1', url: '#', fileSize: '1.4 MB' }
+                        ]
+                    };
+                    buildDOMLists(fallbackData);
                 });
         }
 
-        function processAndBuild(text) {
-            const lines = text.split('\n');
-            const collections = {};
-
-            lines.forEach(line => {
-                if (!line.trim() || line.startsWith('#')) return; // Boş veya yorum satırlarını geç
-                const parts = line.split('|').map(p => p.trim());
-                if (parts.length >= 3) {
-                    const [targetClass, title, url, size] = parts;
-                    const fileSize = size || 'Belirtilmedi';
-
-                    if (!collections[targetClass]) {
-                        collections[targetClass] = [];
-                    }
-                    collections[targetClass].push({ title, url, fileSize });
-                }
-            });
-
-            buildDOMLists(collections);
-        }
-
         function buildDOMLists(collections) {
+            // Sitenizdeki tüm olası sınıf kodları
             const classCodes = [
                 { code: 'class5', name: '5. Sınıf', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
                 { code: 'class6', name: '6. Sınıf', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
@@ -693,24 +678,32 @@ lgs_prep | LGS 1. Dönem Genel Tekrar Deneme Sınavı | https://drive.google.com
                 const targetContainer = document.getElementById(item.target);
                 if (!targetContainer) return;
 
+                // Eski listeyi temizle (mükerrer yüklemeleri önlemek için)
+                const existingList = document.getElementById('list-' + item.code);
+                if (existingList) existingList.remove();
+
                 const files = collections[item.code] || [];
 
+                // Sınıf listesi sarmalayıcı Div'i
                 const listDiv = document.createElement('div');
                 listDiv.id = 'list-' + item.code;
                 listDiv.className = 'file-list-group theme-card border rounded-2xl p-6 space-y-4 shadow-sm animate-fadeIn';
                 listDiv.style.display = 'none';
 
+                // Başlık Satırı
                 const header = document.createElement('h4');
                 header.className = 'font-bold theme-text-title border-b theme-border pb-2 flex items-center text-base';
                 header.innerHTML = `<i class="fas ${item.icon} theme-accent-text mr-2"></i> ${item.name} Döküman Listesi`;
                 listDiv.appendChild(header);
 
                 if (files.length === 0) {
+                    // Dosya yoksa uyarı mesajı ekle
                     const emptyMsg = document.createElement('div');
                     emptyMsg.className = 'p-4 rounded-xl border theme-border theme-text-muted text-center text-sm font-semibold bg-slate-500/5';
                     emptyMsg.innerHTML = `<i class="fas fa-info-circle mr-1.5"></i> Bu kademeye ait dökümanlar çok yakında yüklenecektir.`;
                     listDiv.appendChild(emptyMsg);
                 } else {
+                    // Dosyaları kartlar halinde ekle
                     const container = document.createElement('div');
                     container.className = 'space-y-2.5';
 
@@ -736,15 +729,6 @@ lgs_prep | LGS 1. Dönem Genel Tekrar Deneme Sınavı | https://drive.google.com
             });
         }
     </script>
-<!-- ### 📬 İletişimi Aktif Hale Getirmek İçin Son Dokunuş:
-Sitenizi güncelledikten sonra tek yapmanız gereken:
-1. [web3forms.com](https://web3forms.com/) adresine gidin.
-2. Kutucuğa e-posta adresinizi (`ahba8184@gmail.com`) yazıp **"Create Access Key"** deyin.
-3. E-postanıza gelen uzun harf ve rakamlardan oluşan anahtarı kopyalayın.
-4. `index.html` kodunun içindeki `BURAYA_WEB3FORMS_ANAHTARINIZI_YAZIN` metnini silip yerine o anahtarı yapıştırın.
-Artık siteniz üzerinden atılan her mesaj doğrudan kendi Gmail inbox'ınıza şık bir mail olarak saniyeler içinde düşecektir! 
-Her şeyin tam istediğiniz gibi çalışıp çalışmadığını test edebilirsiniz. Başka eklemek istediğiniz bir detay var mı?
--->
+
 </body>
 </html>
-
