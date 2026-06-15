@@ -1,5 +1,12 @@
-SORU | Soru: Bir çiftçi pazar yerine gitmek üzere yola çıkıyor. Yolun $\frac{1}{3}$'ünü gittikten sonra mola veriyor. Moladan sonra kalan yolun yarısını gittiğinde geriye $12\text{ km}$ yolu kaldığını fark ediyor. Çiftçinin toplam yolu kaç kilometredir?
-IPUCU |  İpucu: Moladan önceki ve sonraki oranları basit bir şema çizerek saniyeler içinde çözebilirsiniz! Cevaplarınızı WhatsApp üzerinden bekliyorum.
+AHMET BAŞ - HAFTALIK MATEMATİK BULMACALARI
 
-SORU | Soru: Bu deneme amaçlıdır.
-IPUCU | İpucu: Bu da deneme amaçlının ipucudur.
+---------------------------------------------------------------------------------
+
+Format: SORU | [Soru Metni]
+
+IPUCU | [İpucu Metni]
+
+---------------------------------------------------------------------------------
+
+SORU | Bir çiftçi pazar yerine gitmek üzere yola çıkıyor. Yolun $\frac{1}{3}$'ünü gittikten sonra mola veriyor. Moladan sonra kalan yolun yarısını gittiğinde geriye $12\text{ km}$ yolu kaldığını fark ediyor. Çiftçinin toplam yolu kaç kilometredir?
+IPUCU | Moladan önceki ve sonraki oranları basit bir şema çizerek saniyeler içinde çözebilirsiniz! Cevaplarınızı WhatsApp üzerinden bekliyorum.
