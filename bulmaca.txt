@@ -1,16 +1,3 @@
-AHMET BAŞ - HAFTANIN MATEMATİK BULMACASI VERİTABANI
-
----------------------------------------------------------------------------------
-
-YENİ SORU EKLEME KURALI:
-
-Soru metnini "SORU |" ile başlayarak tek satırda yazın.
-
-İpucu veya yönlendirme metnini "IPUCU |" ile başlayarak tek satırda yazın.
-
-Başında '#' veya '---' olan satırlar sistem tarafından otomatik olarak temizlenir.
-
----------------------------------------------------------------------------------
 
 SORU | Bir çiftçi pazar yerine gitmek üzere yola çıkıyor. Yolun $\frac{1}{3}$'ünü gittikten sonra mola veriyor. Moladan sonra kalan yolun yarısını gittiğinde geriye $12\text{ km}$ yolu kaldığını fark ediyor. Çiftçinin toplam yolu kaç kilometredir?
 
