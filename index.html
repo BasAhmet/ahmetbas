@@ -434,7 +434,7 @@
                     </p>
                 </div>
 
-                <!-- 2. Bölüm: Success -->
+                <!-- 2. Bölüm: Süreç -->
                 <div>
                     <h4 class="text-sm font-bold theme-text-title flex items-center mb-2.5">
                         <i class="fas fa-clipboard-list text-blue-500 mr-2"></i> Gelişim ve Takip Sürecimiz
@@ -546,7 +546,6 @@
             <div class="space-y-4">
                 <!-- GERÇEK ÇALIŞAN GMAIL FORMU (Web3Forms Entegrasyonu) -->
                 <form action="https://api.web3forms.com/submit" method="POST" id="email-form" class="space-y-3">
-                    <!-- WEB3FORMS GÜVENLİK ANAHTARI VE YÖNLENDİRME METADATASI -->
                     <input type="hidden" name="access_key" value="7e742e97-4780-4965-bd2b-eeff5ef16be4">
                     <input type="hidden" name="subject" value="AhmetBas.com üzerinden yeni mesaj geldi!">
                     <input type="hidden" name="from_name" value="AhmetBaş Portfolyo">
@@ -579,8 +578,8 @@
 
                 <!-- HIZLI KANALLAR -->
                 <div class="grid grid-cols-2 gap-3">
-                    <!-- WHATSAPP BUTONU -->
-                    <a href="https://wa.me/05422993468" target="_blank" class="flex items-center justify-center space-x-1.5 p-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl transition-all shadow-sm font-bold text-xs">
+                    <!-- GÜNCEL WHATSAPP BUTONU (AKTİF TELEFON ENTEGRELİ) -->
+                    <a href="https://wa.me/905422993468" target="_blank" class="flex items-center justify-center space-x-1.5 p-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl transition-all shadow-sm font-bold text-xs">
                         <i class="fab fa-whatsapp text-sm"></i>
                         <span>WhatsApp'tan Yaz</span>
                     </a>
@@ -608,7 +607,7 @@
             try {
                 savedTheme = localStorage.getItem('site-theme') || 'light';
             } catch (e) {
-                console.warn('LocalStorage erişimi engellenmiş, varsayılan tema etkinleştirildi.');
+                console.warn('LocalStorage erişimi kısıtlı.');
             }
             changeTheme(savedTheme);
             loadAndGenerateLinks();
@@ -747,7 +746,7 @@
             }
         }
 
-        // AKILLI SAYAÇLI JAVASCRIPT LATEX / MATHJAX DERLEYİCİ MOTORU
+        // LATEX DERLEYİCİ MOTORU
         let mathJaxRetries = 0;
         function typesetMath() {
             if (window.MathJax && window.MathJax.typesetPromise) {
@@ -756,18 +755,15 @@
             } else if (mathJaxRetries < 30) {
                 mathJaxRetries++;
                 setTimeout(typesetMath, 150);
-            } else {
-                console.warn("MathJax kütüphanesi yüklenemedi. Formüller ham haliyle kalacak.");
             }
         }
 
-        // HTML İÇERİK KORUMA SÜZGECİ (Vercel Custom 404 Bug Önleyici)
         function isHTML(text) {
             const clean = text.trim().toLowerCase();
             return clean.startsWith('<!doctype html') || clean.startsWith('<html') || clean.includes('<body') || clean.includes('</div>');
         }
 
-        // DİNAMİK MOTİVASYON SÖZÜ MOTORU
+        // MOTİVASYON SÖZÜ MOTORU
         function loadMotivationalQuote() {
             fetch('motivasyon.txt')
                 .then(response => {
@@ -775,7 +771,7 @@
                     return response.text();
                 })
                 .then(text => {
-                    if (isHTML(text)) throw new Error('Vercel 404 HTML hatası.');
+                    if (isHTML(text)) throw new Error('Geçersiz TXT formatı.');
                     const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0 && !l.startsWith('#'));
                     if (lines.length > 0) {
                         const randomLine = lines[Math.floor(Math.random() * lines.length)];
@@ -785,7 +781,6 @@
                     }
                 })
                 .catch(err => {
-                    console.warn('Motivasyon listesi çekilemedi, gömülü söz listesi kullanılıyor:', err.message);
                     const fallbackQuotes = [
                         "Bugün çözemediğin soru yarınki başarın olacak.",
                         "Hatalar, matematiğin en güzel öğrenme yoludur.",
@@ -797,7 +792,7 @@
                 });
         }
 
-        // DİNAMİK HAFTANIN BULMACASI MOTORU
+        // AKILLI EN GÜNCEL BULMACA SEÇİCİ MOTOR
         function loadBulmaca() {
             fetch('bulmaca.txt')
                 .then(response => {
@@ -805,55 +800,49 @@
                     return response.text();
                 })
                 .then(text => {
-                    if (isHTML(text)) throw new Error('Vercel 404 HTML hatası.');
+                    if (isHTML(text)) throw new Error('Geçersiz TXT formatı.');
                     
-                    let soru = "";
-                    let ipucu = "";
-                    
-                    // Satır satır okuma ve akıllı ayrıştırma işlemi
                     const lines = text.split('\n');
-                    let soruLines = [];
-                    let ipucuLines = [];
-                    
+                    const questions = [];
+                    let currentQuestion = null;
+                    let currentIpucu = null;
+
                     lines.forEach(line => {
                         const trimmed = line.trim();
-                        
-                        // Yorum satırlarını, süsleme çizgilerini ve boş satırları atla
-                        if (!trimmed || trimmed.startsWith('#') || trimmed.startsWith('---') || trimmed.includes('VERİTABANI') || trimmed.includes('KURAL:')) {
-                            return;
-                        }
-                        
-                        // "SORU |" ve "IPUCU |" etiketlerini yakala ve ayır
-                        if (trimmed.includes('SORU |')) {
-                            soruLines.push(trimmed.substring(trimmed.indexOf('SORU |') + 6).trim());
-                        } else if (trimmed.includes('IPUCU |')) {
-                            ipucuLines.push(trimmed.substring(trimmed.indexOf('IPUCU |') + 7).trim());
-                        } else {
-                            // Eğer prefix yoksa ama içerik varsa, ipucu henüz başlamadıysa soruya, başladıysa ipucuna ekle
-                            if (ipucuLines.length === 0) {
-                                soruLines.push(trimmed);
-                            } else {
-                                ipucuLines.push(trimmed);
+                        if (!trimmed || trimmed.startsWith('#')) return;
+
+                        if (trimmed.startsWith('SORU |')) {
+                            // Eğer yeni bir soru satırı geldiyse ve önceki soru yarım kaldıysa kaydet
+                            if (currentQuestion) {
+                                questions.push({ soru: currentQuestion, ipucu: currentIpucu });
                             }
+                            currentQuestion = trimmed.replace('SORU |', '').trim();
+                            currentIpucu = null;
+                        } else if (trimmed.startsWith('IPUCU |')) {
+                            currentIpucu = trimmed.replace('IPUCU |', '').trim();
                         }
                     });
-                    
-                    soru = soruLines.join('<br>').trim();
-                    ipucu = ipucuLines.join('<br>').trim();
-                    
-                    if (!soru) {
-                        throw new Error('Soru ayrıştırılamadı.');
+
+                    // En son taranan soruyu da listeye ekle
+                    if (currentQuestion) {
+                        questions.push({ soru: currentQuestion, ipucu: currentIpucu });
                     }
-                    
-                    document.getElementById('bulmaca-soru').innerHTML = soru;
-                    document.getElementById('bulmaca-ipucu').innerHTML = ipucu || `<i class="fas fa-lightbulb mr-2 text-sm text-amber-500"></i> İpucu bulunamadı.`;
+
+                    if (questions.length > 0) {
+                        // HER ZAMAN EN SONDAKİ (EN GÜNCEL) SORUYU SEÇER
+                        const latest = questions[questions.length - 1];
+                        document.getElementById('bulmaca-soru').innerHTML = latest.soru;
+                        document.getElementById('bulmaca-ipucu').innerHTML = latest.ipucu || `<i class="fas fa-lightbulb mr-2 text-sm text-amber-500"></i> Bu soru için ipucu bulunmamaktadır. Cevaplarınızı bana ulaştırın!`;
+                    } else {
+                        throw new Error('Geçerli soru bloğu bulunamadı.');
+                    }
                     
                     typesetMath();
                 })
                 .catch(err => {
-                    console.warn('Bulmaca dosyası çekilemedi veya ayrıştırılamadı, yedek bulmaca yükleniyor:', err.message);
+                    console.warn('Bulmaca dosyası okunamadı, gömülü soru yükleniyor:', err.message);
                     const fallbackSoru = "Bir çiftçi pazar yerine gitmek üzere yola çıkıyor. Yolun $\\frac{1}{3}$'ünü gittikten sonra mola veriyor. Moladan sonra kalan yolun yarısını gittiğinde geriye $12\\text{ km}$ yolu kaldığını fark ediyor. Çiftçinin toplam yolu kaç kilometredir?";
-                    const fallbackIpucu = `<i class="fas fa-lightbulb mr-2 text-sm text-amber-500"></i> Çiftçinin toplam yoluna $x$ km diyerek rasyonel sayılarla denklem kurmayı deneyin! Cevabınızı bana iletişim kanallarından ulaştırabilirsiniz.`;
+                    const fallbackIpucu = `<i class="fas fa-lightbulb mr-2 text-sm text-amber-500"></i> Çiftçinin toplam yoluna $x$ km diyerek rasyonel sayılarla denklem kurmayı deneyin! Cevabınızı bana WhatsApp üzerinden ulaştırabilirsiniz.`;
                     
                     document.getElementById('bulmaca-soru').innerHTML = fallbackSoru;
                     document.getElementById('bulmaca-ipucu').innerHTML = fallbackIpucu;
@@ -862,7 +851,7 @@
                 });
         }
 
-        // TXT DOSYASINI OKUYUP DOSYA KARTLARINI DİNAMİK YARATAN AKILLI MOTOR
+        // DÖKÜMAN LİNKLERİ MOTORU
         function loadAndGenerateLinks() {
             fetch('linkler.txt')
                 .then(response => {
@@ -870,7 +859,7 @@
                     return response.text();
                 })
                 .then(text => {
-                    if (isHTML(text)) throw new Error('Vercel 404 HTML hatası.');
+                    if (isHTML(text)) throw new Error('Geçersiz TXT formatı.');
                     const lines = text.split('\n');
                     const collections = {};
 
@@ -891,13 +880,9 @@
                     buildDOMLists(collections);
                 })
                 .catch(err => {
-                    console.warn('Sunucudaki linkler.txt bulunamadı veya geçersiz, yedek liste yükleniyor:', err.message);
                     const fallbackData = {
                         'class8': [
                             { title: '2026 LGS Matematik Soruları ve Çözümleri', url: 'https://drive.google.com/file/d/17SrsxuWtvDVo_6AyL6BOdgQVEn6Io0Gw/view?usp=sharing', fileSize: '2.1 MB' }
-                        ],
-                        'class5': [
-                            { title: 'Kesirler Kazanım Kavrama Testi - 1', url: '#', fileSize: '1.4 MB' }
                         ]
                     };
                     buildDOMLists(fallbackData);
