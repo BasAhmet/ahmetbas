@@ -22,7 +22,6 @@
             startup: {
                 pageReady: () => {
                     return MathJax.startup.defaultPageReady().then(() => {
-                        console.log("MathJax ilk taramayı tamamladı.");
                         window.mathJaxReady = true;
                     });
                 }
@@ -205,7 +204,7 @@
                 <!-- GÜNÜN MOTİVASYON SÖZÜ ALANI -->
                 <div class="max-w-md mx-auto py-1 px-4 mb-4">
                     <p id="motivational-quote" class="text-xs italic font-semibold theme-text-muted transition-all duration-500 leading-relaxed">
-                        "Matematikle aranı iyi tut, o seni yarı yolda bırakmaz."
+                        "Bugün çözemediğin soru yarınki başarın olacak."
                     </p>
                 </div>
             </div>
@@ -311,7 +310,7 @@
                 <button onclick="openSubPage('sinavlar')" class="group theme-card border p-6 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-amber-500 flex flex-col justify-between h-40">
                     <div class="text-amber-500 bg-amber-50 w-10 h-10 rounded-xl flex items-center justify-center text-lg mb-2"><i class="fas fa-star"></i></div>
                     <div>
-                        <h3 class="text-lg font-bold theme-text-title group-hover:text-amber-600 transition-colors">LGS & YKS Hazırlık</h3>
+                        <h3 class="text-lg font-bold theme-text-title group-hover:theme-accent-text transition-colors">LGS & YKS Hazırlık</h3>
                         <p class="text-xs theme-text-muted mt-1">Sınav tarzı yeni nesil sorular ve deneme sınavları.</p>
                     </div>
                 </button>
@@ -435,7 +434,7 @@
                     </p>
                 </div>
 
-                <!-- 2. Bölüm: Başarı Adımları -->
+                <!-- 2. Bölüm: Success -->
                 <div>
                     <h4 class="text-sm font-bold theme-text-title flex items-center mb-2.5">
                         <i class="fas fa-clipboard-list text-blue-500 mr-2"></i> Gelişim ve Takip Sürecimiz
@@ -477,7 +476,7 @@
     </div>
 
     <!-- ==================================================================== -->
-    <!-- SOSYAL MEDYA SEÇİCİ MODAL (YOUTUBE ENTEGRELİ) -->
+    <!-- SOSYAL MEDYA SEÇİCİ MODAL -->
     <!-- ==================================================================== -->
     <div id="social-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
         <div class="theme-card border theme-border rounded-3xl max-w-md w-full p-6 shadow-2xl relative animate-fadeIn">
@@ -605,7 +604,12 @@
     <script>
         // TEMA YÖNETİMİ
         document.addEventListener("DOMContentLoaded", function() {
-            const savedTheme = localStorage.getItem('site-theme') || 'light';
+            let savedTheme = 'light';
+            try {
+                savedTheme = localStorage.getItem('site-theme') || 'light';
+            } catch (e) {
+                console.warn('LocalStorage erişimi engellenmiş, varsayılan tema etkinleştirildi.');
+            }
             changeTheme(savedTheme);
             loadAndGenerateLinks();
             loadMotivationalQuote();
@@ -619,7 +623,9 @@
 
         function changeTheme(themeName) {
             document.body.setAttribute('data-theme', themeName);
-            localStorage.setItem('site-theme', themeName);
+            try {
+                localStorage.setItem('site-theme', themeName);
+            } catch (e) {}
             document.getElementById('theme-dropdown').classList.add('hidden');
         }
 
@@ -741,16 +747,24 @@
             }
         }
 
-        // BULLETPROOF JAVASCRIPT LATEX / MATHJAX DERLEYİCİ MOTORU
+        // AKILLI SAYAÇLI JAVASCRIPT LATEX / MATHJAX DERLEYİCİ MOTORU
+        let mathJaxRetries = 0;
         function typesetMath() {
             if (window.MathJax && window.MathJax.typesetPromise) {
                 window.MathJax.typesetPromise()
-                    .then(() => console.log("Formüller başarıyla derlendi."))
                     .catch(err => console.error("MathJax derleme hatası:", err));
-            } else {
-                // MathJax henüz yüklenmediyse 150ms sonra tekrar kontrol eder
+            } else if (mathJaxRetries < 30) {
+                mathJaxRetries++;
                 setTimeout(typesetMath, 150);
+            } else {
+                console.warn("MathJax kütüphanesi yüklenemedi. Formüller ham haliyle kalacak.");
             }
+        }
+
+        // HTML İÇERİK KORUMA SÜZGECİ (Vercel Custom 404 Bug Önleyici)
+        function isHTML(text) {
+            const clean = text.trim().toLowerCase();
+            return clean.startsWith('<!doctype html') || clean.startsWith('<html') || clean.includes('<body') || clean.includes('</div>');
         }
 
         // DİNAMİK MOTİVASYON SÖZÜ MOTORU
@@ -761,14 +775,17 @@
                     return response.text();
                 })
                 .then(text => {
+                    if (isHTML(text)) throw new Error('Vercel 404 HTML hatası.');
                     const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0 && !l.startsWith('#'));
                     if (lines.length > 0) {
                         const randomLine = lines[Math.floor(Math.random() * lines.length)];
                         document.getElementById('motivational-quote').innerText = `"${randomLine}"`;
+                    } else {
+                        throw new Error('Dosya boş.');
                     }
                 })
                 .catch(err => {
-                    console.warn('Motivasyon listesi çekilemedi, gömülü söz listesi kullanılıyor.');
+                    console.warn('Motivasyon listesi çekilemedi, gömülü söz listesi kullanılıyor:', err.message);
                     const fallbackQuotes = [
                         "Bugün çözemediğin soru yarınki başarın olacak.",
                         "Hatalar, matematiğin en güzel öğrenme yoludur.",
@@ -788,6 +805,7 @@
                     return response.text();
                 })
                 .then(text => {
+                    if (isHTML(text)) throw new Error('Vercel 404 HTML hatası.');
                     const parts = text.split('===IPUCU===');
                     const soru = parts[0] ? parts[0].trim() : '';
                     const ipucu = parts[1] ? parts[1].trim() : '';
@@ -795,11 +813,10 @@
                     document.getElementById('bulmaca-soru').innerHTML = soru || "Bulmaca sorusu hazırlanıyor.";
                     document.getElementById('bulmaca-ipucu').innerHTML = ipucu || "İpucu bulunamadı.";
                     
-                    // İçerik yüklendi, hemen derleyiciyi çalıştır
                     typesetMath();
                 })
                 .catch(err => {
-                    console.warn('Bulmaca dosyası çekilemedi, gömülü yedek bulmaca yükleniyor.');
+                    console.warn('Bulmaca dosyası çekilemedi, yedek bulmaca yükleniyor:', err.message);
                     const fallbackSoru = "Bir çiftçi pazar yerine gitmek üzere yola çıkıyor. Yolun $\\frac{1}{3}$'ünü gittikten sonra mola veriyor. Moladan sonra kalan yolun yarısını gittiğinde geriye $12\\text{ km}$ yolu kaldığını fark ediyor. Çiftçinin toplam yolu kaç kilometredir?";
                     const fallbackIpucu = `<i class="fas fa-lightbulb mr-2 text-sm text-amber-500"></i> Çiftçinin toplam yoluna $x$ km diyerek rasyonel sayılarla denklem kurmayı deneyin! Cevabınızı bana iletişim kanallarından ulaştırabilirsiniz.`;
                     
@@ -818,6 +835,7 @@
                     return response.text();
                 })
                 .then(text => {
+                    if (isHTML(text)) throw new Error('Vercel 404 HTML hatası.');
                     const lines = text.split('\n');
                     const collections = {};
 
@@ -838,7 +856,7 @@
                     buildDOMLists(collections);
                 })
                 .catch(err => {
-                    console.warn('Sunucudaki linkler.txt bulunamadı, yerel fallback listesi yükleniyor.');
+                    console.warn('Sunucudaki linkler.txt bulunamadı veya geçersiz, yedek liste yükleniyor:', err.message);
                     const fallbackData = {
                         'class8': [
                             { title: '2026 LGS Matematik Soruları ve Çözümleri', url: 'https://drive.google.com/file/d/17SrsxuWtvDVo_6AyL6BOdgQVEn6Io0Gw/view?usp=sharing', fileSize: '2.1 MB' }
@@ -915,7 +933,6 @@
                 targetContainer.appendChild(listDiv);
             });
             
-            // Tüm listeler ve dinamik içerik oluştuktan sonra formülleri derler
             typesetMath();
         }
     </script>
