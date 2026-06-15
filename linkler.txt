@@ -19,12 +19,23 @@ Sınavlar için: lgs_prep, tyt_prep, ayt_prep
 ---------------------------------------------------------------------------------
 
 class5 | Kesirler Kazanım Kavrama Testi | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_1 | 1.4 MB
-class5 | Ondalık Gösterim Çalışma Kağıdı | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_2 | 850 KB
+
+class6 | Ondalık Gösterim Çalışma Kağıdı | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_2 | 850 KB
+
+class7 | Ondalık Gösterim Çalışma Kağıdı | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_2 | 850 KB
 
 class8 | Çarpanlar ve Katlar - Yeni Nesil Soru Bankası | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_3 | 2.9 MB
-class8 | Kareköklü İfadeler Formül ve Özet Notları | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_4 | 1.1 MB
+
+class9 | Kareköklü İfadeler Formül ve Özet Notları | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_4 | 1.1 MB
+
+class10 | Kareköklü İfadeler Formül ve Özet Notları | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_4 | 1.1 MB
 
 class11 | Trigonometri-1 İleri Düzey Fasikül | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_5 | 3.5 MB
 
-tyt_prep | TYT Matematik İlk 12 Konu Pratik Kamp Notları | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_6 | 1.8 MB
+class12 | Kareköklü İfadeler Formül ve Özet Notları | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_4 | 1.1 MB
+
 lgs_prep | 2026 LGS Matematik Soruları ve Cevap Anahtarı | https://drive.google.com/file/d/17SrsxuWtvDVo_6AyL6BOdgQVEn6Io0Gw/view?usp=sharing | 11.7 MB
+
+tyt_prep | TYT Matematik İlk 12 Konu Pratik Kamp Notları | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_6 | 1.8 MB
+
+ayt_prep | Kareköklü İfadeler Formül ve Özet Notları | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_4 | 1.1 MB
