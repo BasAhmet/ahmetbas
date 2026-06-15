@@ -1,17 +1,3 @@
-AHMET BAŞ - GÜNÜN MOTİVASYON SÖZLERİ LİSTESİ
-
----------------------------------------------------------------------------------
-
-YENİ SÖZ EKLEME KURALI:
-
-Her motivasyon sözünü yeni bir satıra yazın.
-
-Başında '#' olan satırlar sistem tarafından okunmaz, bilgi amaçlıdır.
-
-İstediğiniz kadar satır ekleyebilirsiniz!
-
----------------------------------------------------------------------------------
-
 Zor sorular, zihnini en çok geliştiren ve seni ileriye taşıyan fırsatlardır.
 Bugün yapacağın küçük bir tekrar, yarın kazanacağın büyük başarının ilk adımıdır.
 Matematikte de hayatta olduğu gibi, her problemin mutlaka bir çözümü vardır.
