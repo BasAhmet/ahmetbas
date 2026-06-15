@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmet Baş | Matematik Öğretmeni</title>
+    <!-- Tailwind CSS ve FontAwesome İkonları -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- ÇOKLU TEMA RENK DEĞİŞKENLERİ -->
+    <style>
+        /* 1. KLASİK AYDINLIK TEMASI */
+        body[data-theme="light"] {
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --text-title: #0f172a;
+            --text-body: #334155;
+            --text-muted: #64748b;
+            --border-ui: #e2e8f0;
+            --accent-soft: #eff6ff;
+            --accent-color: #2563eb;
+            --accent-border: #bfdbfe;
+            --btn-accent: #2563eb;
+            --btn-accent-hover: #1d4ed8;
+            --btn-accent-text: #ffffff;
+            --header-bg: rgba(255, 255, 255, 0.85);
+        }
+
+        /* 2. GECE MAVİSİ TEMASI (DARK MODE) */
+        body[data-theme="dark"] {
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --text-title: #f8fafc;
+            --text-body: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border-ui: #334155;
+            --accent-soft: #1e1b4b;
+            --accent-color: #818cf8;
+            --accent-border: #312e81;
+            --btn-accent: #6366f1;
+            --btn-accent-hover: #4f46e5;
+            --btn-accent-text: #ffffff;
+            --header-bg: rgba(30, 41, 59, 0.85);
+        }
+
+        /* 3. AKADEMİ YEŞİLİ TEMASI */
+        body[data-theme="emerald"] {
+            --bg-body: #f4fbf7;
+            --bg-card: #ffffff;
+            --text-title: #064e3b;
+            --text-body: #0f766e;
+            --text-muted: #115e59;
+            --border-ui: #ccfbf1;
+            --accent-soft: #f0fdf4;
+            --accent-color: #059669;
+            --accent-border: #a7f3d0;
+            --btn-accent: #059669;
+            --btn-accent-hover: #047857;
+            --btn-accent-text: #ffffff;
+            --header-bg: rgba(255, 255, 255, 0.85);
+        }
+
+        /* 4. SICAK GÜN BATIMI TEMASI */
+        body[data-theme="sunset"] {
+            --bg-body: #fffbeb;
+            --bg-card: #ffffff;
+            --text-title: #7c2d12;
+            --text-body: #9a3412;
+            --text-muted: #b45309;
+            --border-ui: #ffedd5;
+            --accent-soft: #fff7ed;
+            --accent-color: #ea580c;
+            --accent-border: #fed7aa;
+            --btn-accent: #ea580c;
+            --btn-accent-hover: #ca8a04;
+            --btn-accent-text: #ffffff;
+            --header-bg: rgba(255, 255, 255, 0.85);
+        }
+
+        /* TEMA ÖZEL SINIFLARI (TAILWIND İLE BÜTÜNLEŞİK) */
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-body);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .theme-header {
+            background-color: var(--header-bg);
+            border-color: var(--border-ui);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .theme-card {
+            background-color: var(--bg-card);
+            border-color: var(--border-ui);
+            color: var(--text-body);
+            transition: all 0.3s ease;
+        }
+        .theme-text-title { color: var(--text-title); transition: color 0.3s ease; }
+        .theme-text-body { color: var(--text-body); transition: color 0.3s ease; }
+        .theme-text-muted { color: var(--text-muted); transition: color 0.3s ease; }
+        .theme-border { border-color: var(--border-ui); transition: border-color 0.3s ease; }
+        .theme-accent-soft { background-color: var(--accent-soft); transition: background-color 0.3s ease; }
+        .theme-accent-text { color: var(--accent-color); transition: color 0.3s ease; }
+        .theme-btn-accent {
+            background-color: var(--btn-accent);
+            color: var(--btn-accent-text);
+            transition: all 0.3s ease;
+        }
+        .theme-btn-accent:hover {
+            background-color: var(--btn-accent-hover);
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .sub-content { display: none; }
+        .sub-content.active { display: block; }
+    </style>
+</head>
+<body data-theme="light" class="min-h-screen flex flex-col justify-between antialiased selection:bg-blue-500 selection:text-white">
+
+    <!-- ÜST MENÜ (NAVİGASYON) -->
+    <header class="border-b theme-header backdrop-blur sticky top-0 z-50 shadow-sm">
+        <div class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="font-bold text-lg tracking-tight flex items-center space-x-2 theme-text-title">
+                <span class="theme-accent-text"><i class="fas fa-calculator text-xl"></i></span>
+                <span>Ahmet Baş</span>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <nav class="flex space-x-1">
+                    <button onclick="switchTab('home')" id="tab-btn-home" class="px-3.5 py-1.5 rounded-xl text-sm font-semibold transition-all theme-accent-text theme-accent-soft">
+                        Ana Sayfa
+                    </button>
+                    <button onclick="switchTab('materials')" id="tab-btn-materials" class="px-3.5 py-1.5 rounded-xl text-sm font-semibold transition-all theme-text-muted hover:theme-text-title hover:bg-slate-100/50">
+                        Ders Materyalleri
+                    </button>
+                </nav>
+
+                <!-- ŞIK RENK MODU SEÇİCİ (DROPDOWN) -->
+                <div class="relative inline-block text-left">
+                    <button onclick="toggleThemeDropdown()" id="theme-menu-btn" class="w-9 h-9 flex items-center justify-center rounded-xl border theme-border theme-card theme-text-muted hover:theme-text-title transition-all" title="Renk Temasını Değiştir">
+                        <i class="fas fa-palette text-sm"></i>
+                    </button>
+                    <!-- Açılır Menü -->
+                    <div id="theme-dropdown" class="hidden absolute right-0 mt-2 w-48 rounded-xl shadow-lg theme-card border theme-border z-50 py-1.5 animate-fadeIn">
+                        <button onclick="changeTheme('light')" class="w-full px-4 py-2 text-left text-xs font-bold flex items-center space-x-2.5 hover:bg-slate-100/50">
+                            <span class="w-3.5 h-3.5 rounded-full bg-blue-500 border border-white shadow-sm"></span>
+                            <span>☀️ Klasik Aydınlık</span>
+                        </button>
+                        <button onclick="changeTheme('dark')" class="w-full px-4 py-2 text-left text-xs font-bold flex items-center space-x-2.5 hover:bg-slate-100/50">
+                            <span class="w-3.5 h-3.5 rounded-full bg-indigo-900 border border-white shadow-sm"></span>
+                            <span>🌙 Gece Mavisi</span>
+                        </button>
+                        <button onclick="changeTheme('emerald')" class="w-full px-4 py-2 text-left text-xs font-bold flex items-center space-x-2.5 hover:bg-slate-100/50">
+                            <span class="w-3.5 h-3.5 rounded-full bg-emerald-600 border border-white shadow-sm"></span>
+                            <span>🌲 Akademi Yeşili</span>
+                        </button>
+                        <button onclick="changeTheme('sunset')" class="w-full px-4 py-2 text-left text-xs font-bold flex items-center space-x-2.5 hover:bg-slate-100/50">
+                            <span class="w-3.5 h-3.5 rounded-full bg-orange-500 border border-white shadow-sm"></span>
+                            <span>🍁 Gün Batımı</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ANA İÇERİK ALANI -->
+    <main class="max-w-4xl mx-auto px-6 py-12 flex-grow w-full">
+        
+        <!-- 1. SEKME: ANA SAYFA -->
+        <div id="tab-home" class="tab-content active space-y-12 animate-fadeIn">
+            
+            <!-- Profil Üst Alanı -->
+            <div class="text-center">
+                <div class="w-32 h-32 mx-auto mb-4 relative group">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-blue-500 to-sky-400 rounded-full opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                    <img src="profil.jpeg" alt="Ahmet Baş" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=math';" class="w-32 h-32 object-cover object-[center_top_20%] rounded-full border-4 theme-card relative z-10 shadow-md">
+                </div>
+                <h1 class="text-4xl font-extrabold tracking-tight theme-text-title mb-1">Ahmet Baş</h1>
+                <h2 class="text-xl font-bold text-slate-700 mb-4">Matematik Öğretmeni & Eğitim İçeriği Üreticisi</h2>
+                <p class="theme-text-muted max-w-xl mx-auto text-base leading-relaxed font-medium">
+                    Ortaokul ve lise düzeyinde matematik eğitimleri veriyor, öğrencilerin analitik düşünme becerilerini geliştirecek dinamik içerikler üretiyorum.
+                </p>
+            </div>
+
+            <!-- Rozetler / Seviyeler -->
+            <div class="text-center">
+                <div class="flex flex-wrap justify-center gap-2.5">
+                    <span class="theme-accent-soft theme-accent-text border theme-border px-4 py-1.5 rounded-full text-sm font-bold shadow-sm"><i class="fas fa-graduation-cap mr-2"></i>Ortaokul Matematik</span>
+                    <span class="theme-accent-soft theme-accent-text border theme-border px-4 py-1.5 rounded-full text-sm font-bold shadow-sm"><i class="fas fa-book-open mr-2"></i>Lise Matematik</span>
+                    <span class="theme-accent-soft theme-accent-text border theme-border px-4 py-1.5 rounded-full text-sm font-bold shadow-sm"><i class="fas fa-star mr-2"></i>LGS & YKS Hazırlık</span>
+                </div>
+            </div>
+
+            <!-- İnteraktif Bölüm: Haftanın Sorusu -->
+            <div class="theme-card border rounded-2xl p-6 shadow-md relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-2 h-full theme-btn-accent"></div>
+                <div class="flex items-center space-x-3 mb-3">
+                    <span class="flex h-2.5 w-2.5 relative">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full theme-accent-text opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 theme-btn-accent"></span>
+                    </span>
+                    <h3 class="text-lg font-bold theme-text-title">🧠 Haftanın Matematik Bulmacası</h3>
+                </div>
+                <p class="theme-text-body text-sm leading-relaxed font-semibold bg-slate-500/5 p-4 rounded-xl border theme-border mb-4">
+                    "Bir çiftçi pazar yerine gitmek üzere yola çıkıyor. Yolun 1/3'ünü gittikten sonra mola veriyor. Moladan sonra kalan yolun yarısını gittiğinde geriye 12 km yolu kaldığını fark ediyor. Çiftçinin toplam yolu kaç km'dir?"
+                </p>
+                <div class="text-xs theme-accent-text font-bold flex items-center">
+                    <i class="fas fa-lightbulb mr-2 text-sm text-amber-500"></i> Cevabınızı aşağıdaki iletişim kanallarından bana ulaştırabilirsiniz!
+                </div>
+            </div>
+
+            <!-- Bağlantılar Giriş Kartları -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="https://www.instagram.com/ahmetbas.math" target="_blank" class="group theme-card border p-5 rounded-2xl transition-all shadow-sm hover:shadow-md hover:border-blue-400">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="text-rose-500 bg-rose-50 w-10 h-10 rounded-xl flex items-center justify-center text-lg"><i class="fab fa-instagram"></i></div>
+                        <span class="text-xs font-bold theme-text-muted group-hover:theme-accent-text transition-colors">Takip Et <i class="fas fa-arrow-right ml-1"></i></span>
+                    </div>
+                    <h3 class="text-lg font-bold theme-text-title mb-1">Eğitim İçerikleri</h3>
+                    <p class="text-sm theme-text-muted font-medium">Sosyal medyada paylaştığım pratik matematik ipuçları ve video çözümleri.</p>
+                </a>
+
+                <button onclick="switchTab('materials')" class="group theme-card border p-5 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-blue-400">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="text-amber-500 bg-amber-50 w-10 h-10 rounded-xl flex items-center justify-center text-lg"><i class="fas fa-folder-open"></i></div>
+                        <span class="text-xs font-bold theme-text-muted group-hover:theme-accent-text transition-colors">Dökümanları Gör <i class="fas fa-arrow-right ml-1"></i></span>
+                    </div>
+                    <h3 class="text-lg font-bold theme-text-title mb-1">Ders Materyalleri</h3>
+                    <p class="text-sm theme-text-muted font-medium">Sizin için hazırladığım ücretsiz PDF testleri, çalışma kağıtları ve denemeler.</p>
+                </button>
+
+                <div class="theme-card border p-5 rounded-2xl shadow-sm">
+                    <div class="text-emerald-600 bg-emerald-50 w-10 h-10 rounded-xl flex items-center justify-center text-lg mb-3"><i class="fas fa-video"></i></div>
+                    <h3 class="text-lg font-bold theme-text-title mb-1">Birebir & Online Ders</h3>
+                    <p class="text-sm theme-text-muted font-medium">LGS, YKS hazırlık veya okul derslerine takviye için kişiye özel online matematik programları.</p>
+                </div>
+
+                <a href="mailto:iletisim@ahmetbas.com" class="group theme-card border p-5 rounded-2xl transition-all shadow-sm hover:shadow-md hover:border-blue-400">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="theme-accent-text theme-accent-soft w-10 h-10 rounded-xl flex items-center justify-center text-lg"><i class="fas fa-envelope"></i></div>
+                        <span class="text-xs font-bold theme-text-muted group-hover:theme-accent-text transition-colors">Mesaj Gönder <i class="fas fa-paper-plane ml-1"></i></span>
+                    </div>
+                    <h3 class="text-lg font-bold theme-text-title mb-1">İletişim & İş Birliği</h3>
+                    <p class="text-sm theme-text-muted font-medium">Özel ders talepleri, seminerler veya projeler için benimle doğrudan iletişime geçin.</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- 2. SEKME: MATERYALLER SAYFASI -->
+        <div id="tab-materials" class="tab-content space-y-8 animate-fadeIn">
+            <div class="border-b theme-border pb-4">
+                <h2 class="text-2xl font-bold theme-text-title">📚 Ders Materyalleri Deposu</h2>
+                <p class="text-sm theme-text-muted font-medium mt-1">Lütfen kaynaklarına ulaşmak istediğiniz döküman kademesini seçin.</p>
+            </div>
+
+            <!-- 3 ANA KATEGORİ BUTONU -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <button onclick="openSubPage('ortaokul')" class="group theme-card border p-6 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-blue-500 flex flex-col justify-between h-40">
+                    <div class="theme-accent-text theme-accent-soft w-10 h-10 rounded-xl flex items-center justify-center text-lg mb-2"><i class="fas fa-graduation-cap"></i></div>
+                    <div>
+                        <h3 class="text-lg font-bold theme-text-title group-hover:theme-accent-text transition-colors">Ortaokul</h3>
+                        <p class="text-xs theme-text-muted mt-1">5, 6, 7 ve 8. Sınıf konu testleri ve çalışma kağıtları.</p>
+                    </div>
+                </button>
+
+                <button onclick="openSubPage('lise')" class="group theme-card border p-6 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-sky-500 flex flex-col justify-between h-40">
+                    <div class="text-sky-500 bg-sky-50 w-10 h-10 rounded-xl flex items-center justify-center text-lg mb-2"><i class="fas fa-book-open"></i></div>
+                    <div>
+                        <h3 class="text-lg font-bold theme-text-title group-hover:text-sky-500 transition-colors">Lise</h3>
+                        <p class="text-xs theme-text-muted mt-1">9, 10, 11 ve 12. Sınıf müfredat dökümanları.</p>
+                    </div>
+                </button>
+
+                <button onclick="openSubPage('sinavlar')" class="group theme-card border p-6 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-amber-500 flex flex-col justify-between h-40">
+                    <div class="text-amber-500 bg-amber-50 w-10 h-10 rounded-xl flex items-center justify-center text-lg mb-2"><i class="fas fa-star"></i></div>
+                    <div>
+                        <h3 class="text-lg font-bold theme-text-title group-hover:text-amber-600 transition-colors">LGS & YKS Hazırlık</h3>
+                        <p class="text-xs theme-text-muted mt-1">Sınav tarzı yeni nesil sorular ve deneme sınavları.</p>
+                    </div>
+                </button>
+            </div>
+
+            <!-- ==================================================================== -->
+            <!-- 1. ALT SAYFA: ORTAOKUL BÖLÜMÜ -->
+            <!-- ==================================================================== -->
+            <div id="sub-ortaokul" class="sub-content space-y-6 pt-6 border-t theme-border">
+                <h3 class="text-xl font-bold theme-accent-text"><i class="fas fa-chevron-right mr-2"></i>Ortaokul Sınıfları</h3>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                    <button onclick="showFiles('class5')" class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-blue-500 transition-all group">
+                        <div class="w-12 h-12 bg-slate-500/5 group-hover:theme-accent-soft group-hover:theme-accent-text rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold theme-text-title transition-colors">5</div>
+                        <h4 class="font-bold theme-text-body text-sm">5. Sınıf Matematik</h4>
+                    </button>
+                    <button onclick="showFiles('class6')" class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-blue-500 transition-all group">
+                        <div class="w-12 h-12 bg-slate-500/5 group-hover:theme-accent-soft group-hover:theme-accent-text rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold theme-text-title transition-colors">6</div>
+                        <h4 class="font-bold theme-text-body text-sm">6. Sınıf Matematik</h4>
+                    </button>
+                    <button onclick="showFiles('class7')" class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-blue-500 transition-all group">
+                        <div class="w-12 h-12 bg-slate-500/5 group-hover:theme-accent-soft group-hover:theme-accent-text rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold theme-text-title transition-colors">7</div>
+                        <h4 class="font-bold theme-text-body text-sm">7. Sınıf Matematik</h4>
+                    </button>
+                    <button onclick="showFiles('class8')" class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-blue-600 transition-all group relative overflow-hidden">
+                        <div class="absolute inset-x-0 bottom-0 h-1 theme-btn-accent"></div>
+                        <div class="w-12 h-12 theme-accent-soft theme-accent-text rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold transition-colors">8</div>
+                        <h4 class="font-bold theme-text-title text-sm">8. Sınıf (LGS)</h4>
+                    </button>
+                </div>
+
+                <!-- Harici Ortaokul Listeleri Yuvası -->
+                <div id="harici-ortaokul-listesi" class="space-y-3"></div>
+            </div>
+
+            <!-- ==================================================================== -->
+            <!-- 2. ALT SAYFA: LİSE BÖLÜMÜ -->
+            <!-- ==================================================================== -->
+            <div id="sub-lise" class="sub-content space-y-6 pt-6 border-t theme-border">
+                <h3 class="text-xl font-bold text-sky-500"><i class="fas fa-chevron-right mr-2"></i>Lise Sınıfları</h3>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                    <button onclick="showFiles('class9')" class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-sky-500 transition-all group">
+                        <div class="w-12 h-12 bg-slate-500/5 group-hover:bg-sky-50 group-hover:text-sky-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold theme-text-title transition-colors">9</div>
+                        <h4 class="font-bold theme-text-body text-sm">9. Sınıf Matematik</h4>
+                    </button>
+                    <button onclick="showFiles('class10')" class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-sky-500 transition-all group">
+                        <div class="w-12 h-12 bg-slate-500/5 group-hover:bg-sky-50 group-hover:text-sky-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold theme-text-title transition-colors">10</div>
+                        <h4 class="font-bold theme-text-body text-sm">10. Sınıf Matematik</h4>
+                    </button>
+                    <button onclick="showFiles('class11')" class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-sky-500 transition-all group">
+                        <div class="w-12 h-12 bg-slate-500/5 group-hover:bg-sky-50 group-hover:text-sky-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold theme-text-title transition-colors">11</div>
+                        <h4 class="font-bold theme-text-body text-sm">11. Sınıf Matematik</h4>
+                    </button>
+                    <button onclick="showFiles('class12')" class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-sky-500 transition-all group">
+                        <div class="w-12 h-12 bg-slate-500/5 group-hover:bg-sky-50 group-hover:text-sky-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold theme-text-title transition-colors">12</div>
+                        <h4 class="font-bold theme-text-body text-sm">12. Sınıf Matematik</h4>
+                    </button>
+                </div>
+
+                <!-- Harici Lise Listeleri Yuvası -->
+                <div id="harici-lise-listesi" class="space-y-3"></div>
+            </div>
+
+            <!-- ==================================================================== -->
+            <!-- 3. ALT SAYFA: SINAVLARA HAZIRLIK BÖLÜMÜ -->
+            <!-- ==================================================================== -->
+            <div id="sub-sinavlar" class="sub-content space-y-6 pt-6 border-t theme-border">
+                <h3 class="text-xl font-bold text-amber-600"><i class="fas fa-chevron-right mr-2"></i>LGS & YKS Hazırlık Merkezleri</h3>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <button onclick="showFiles('lgs_prep')" class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-amber-500 transition-all group">
+                        <div class="w-12 h-12 bg-slate-500/5 group-hover:bg-amber-50 group-hover:text-amber-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold theme-text-title transition-colors"><i class="fas fa-bullseye"></i></div>
+                        <h4 class="font-bold theme-text-title text-sm">LGS Matematik</h4>
+                    </button>
+                    <button onclick="showFiles('tyt_prep')" class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-amber-500 transition-all group">
+                        <div class="w-12 h-12 bg-slate-500/5 group-hover:bg-amber-50 group-hover:text-amber-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold theme-text-title transition-colors"><i class="fas fa-layer-group"></i></div>
+                        <h4 class="font-bold theme-text-title text-sm">TYT Matematik</h4>
+                    </button>
+                    <button onclick="showFiles('ayt_prep')" class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-amber-500 transition-all group">
+                        <div class="w-12 h-12 bg-slate-500/5 group-hover:bg-amber-50 group-hover:text-amber-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold theme-text-title transition-colors"><i class="fas fa-infinity"></i></div>
+                        <h4 class="font-bold theme-text-title text-sm">AYT Matematik</h4>
+                    </button>
+                </div>
+
+                <!-- Harici Sınav Listeleri Yuvası -->
+                <div id="harici-sinav-listesi" class="space-y-3"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="w-full text-center py-6 border-t theme-border theme-card text-xs theme-text-muted font-medium tracking-wide">
+        &copy; 2026 Ahmet Baş. Matematik ile Kalın. Vercel ile Güçlendirilmiştir.
+    </footer>
+
+    <!-- INTERAKTIF JAVASCRIPT KONTROLLERİ -->
+    <script>
+        // TEMA YÖNETİMİ
+        document.addEventListener("DOMContentLoaded", function() {
+            const savedTheme = localStorage.getItem('site-theme') || 'light';
+            changeTheme(savedTheme);
+            
+            // Linkler.txt dosyasını dinamik oku ve render et (Gelişmiş Error-Catcher ile)
+            loadAndGenerateLinks();
+        });
+
+        function toggleThemeDropdown() {
+            const dropdown = document.getElementById('theme-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        function changeTheme(themeName) {
+            document.body.setAttribute('data-theme', themeName);
+            localStorage.setItem('site-theme', themeName);
+            
+            // Açılır menüyü kapat
+            const dropdown = document.getElementById('theme-dropdown');
+            if (dropdown) dropdown.classList.add('hidden');
+        }
+
+        window.addEventListener('click', function(e) {
+            const btn = document.getElementById('theme-menu-btn');
+            const dropdown = document.getElementById('theme-dropdown');
+            if (btn && !btn.contains(e.target) && dropdown && !dropdown.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        // SEKME GEÇİŞLERİ (HOME <-> MATERIALS)
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.querySelectorAll('.sub-content').forEach(content => content.classList.remove('active'));
+            hideAllFileLists();
+            
+            document.getElementById('tab-btn-home').className = 'px-3.5 py-1.5 rounded-xl text-sm font-semibold transition-all theme-text-muted hover:theme-text-title hover:bg-slate-100/50';
+            document.getElementById('tab-btn-materials').className = 'px-3.5 py-1.5 rounded-xl text-sm font-semibold transition-all theme-text-muted hover:theme-text-title hover:bg-slate-100/50';
+            
+            const targetTab = document.getElementById('tab-' + tabName);
+            targetTab.classList.remove('hidden');
+            targetTab.classList.add('active');
+            
+            const activeBtn = document.getElementById('tab-btn-' + tabName);
+            activeBtn.className = 'px-3.5 py-1.5 rounded-xl text-sm font-semibold transition-all theme-accent-text theme-accent-soft';
+        }
+
+        function openSubPage(subName) {
+            document.querySelectorAll('.sub-content').forEach(content => content.classList.remove('active'));
+            hideAllFileLists();
+            document.getElementById('sub-' + subName).classList.add('active');
+            document.getElementById('sub-' + subName).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function hideAllFileLists() {
+            document.querySelectorAll('.file-list-group').forEach(list => {
+                list.style.display = 'none';
+            });
+        }
+
+        function showFiles(className) {
+            hideAllFileLists();
+            const targetList = document.getElementById('list-' + className);
+            if(targetList) {
+                targetList.style.display = 'block';
+                targetList.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        // ÖNİZLEME/SANDBOX GÜVENLİK SINIRI İÇİN YEDEK (FALLBACK) VERİ SETİ
+        const FALLBACK_LINKS = `# AHMET BAŞ - DERS MATERYALLERİ LİSTESİ
+class5 | Kesirler Kazanım Kavrama Testi | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_1 | 1.4 MB
+class5 | Ondalık Gösterim Çalışma Kağıdı | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_2 | 850 KB
+class8 | 2026 LGS Matematik Soruları ve Çözümleri | https://drive.google.com/file/d/17SrsxuWtvDVo_6AyL6BOdgQVEn6Io0Gw/view?usp=sharing | 2.1 MB
+class8 | Kareköklü İfadeler Formül ve Özet Notları | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_4 | 1.1 MB
+class11 | Trigonometri-1 İleri Düzey Fasikül | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_5 | 3.5 MB
+tyt_prep | TYT Matematik İlk 12 Konu Pratik Kamp Notları | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_6 | 1.8 MB
+lgs_prep | LGS 1. Dönem Genel Tekrar Deneme Sınavı | https://drive.google.com/uc?export=download&id=ORNEK_DRIVE_ID_7 | 2.1 MB`;
+
+        // TXT DOSYASINI OKUYUP DOSYA KARTLARINI DİNAMİK YARATAN GÜVENLİ MOTOR
+        function loadAndGenerateLinks() {
+            let fetchPromise;
+            try {
+                // Iframe ve sandbox URL engellerine karşı fetch'i güvenli sarmalıyoruz
+                fetchPromise = fetch('linkler.txt');
+            } catch (e) {
+                fetchPromise = Promise.reject(e);
+            }
+
+            fetchPromise
+                .then(response => {
+                    if (!response.ok) throw new Error('Yüklenemedi');
+                    return response.text();
+                })
+                .then(text => {
+                    processAndBuild(text);
+                })
+                .catch(err => {
+                    console.warn("Önizleme/Sandbox modunda relative fetch engellendi. Varsayılan dökümanlar yükleniyor.", err);
+                    // Ağ veya Iframe CORS kısıtı olduğunda hemen gömülü listeyi devreye sok
+                    processAndBuild(FALLBACK_LINKS);
+                });
+        }
+
+        function processAndBuild(text) {
+            const lines = text.split('\n');
+            const collections = {};
+
+            lines.forEach(line => {
+                if (!line.trim() || line.startsWith('#')) return; // Boş veya yorum satırlarını geç
+                const parts = line.split('|').map(p => p.trim());
+                if (parts.length >= 3) {
+                    const [targetClass, title, url, size] = parts;
+                    const fileSize = size || 'Belirtilmedi';
+
+                    if (!collections[targetClass]) {
+                        collections[targetClass] = [];
+                    }
+                    collections[targetClass].push({ title, url, fileSize });
+                }
+            });
+
+            // Listeleri HTML içine inşa et
+            buildDOMLists(collections);
+        }
+
+        function buildDOMLists(collections) {
+            // Sitedeki tüm olası sınıf kodları
+            const classCodes = [
+                { code: 'class5', name: '5. Sınıf', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
+                { code: 'class6', name: '6. Sınıf', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
+                { code: 'class7', name: '7. Sınıf', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
+                { code: 'class8', name: '8. Sınıf (LGS)', target: 'harici-ortaokul-listesi', icon: 'fa-star text-amber-500 animate-pulse' },
+                { code: 'class9', name: '9. Sınıf', target: 'harici-lise-listesi', icon: 'fa-folder-open' },
+                { code: 'class10', name: '10. Sınıf', target: 'harici-lise-listesi', icon: 'fa-folder-open' },
+                { code: 'class11', name: '11. Sınıf', target: 'harici-lise-listesi', icon: 'fa-folder-open' },
+                { code: 'class12', name: '12. Sınıf', target: 'harici-lise-listesi', icon: 'fa-folder-open' },
+                { code: 'lgs_prep', name: 'LGS Matematik Hazırlık', target: 'harici-sinav-listesi', icon: 'fa-bullseye' },
+                { code: 'tyt_prep', name: 'TYT Matematik Hazırlık', target: 'harici-sinav-listesi', icon: 'fa-layer-group' },
+                { code: 'ayt_prep', name: 'AYT Matematik Hazırlık', target: 'harici-sinav-listesi', icon: 'fa-infinity' }
+            ];
+
+            classCodes.forEach(item => {
+                const targetContainer = document.getElementById(item.target);
+                if (!targetContainer) return;
+
+                const files = collections[item.code] || [];
+
+                // Sınıf listesi sarmalayıcı Div'i
+                const listDiv = document.createElement('div');
+                listDiv.id = 'list-' + item.code;
+                listDiv.className = 'file-list-group theme-card border rounded-2xl p-6 space-y-4 shadow-sm animate-fadeIn';
+                listDiv.style.display = 'none';
+
+                // Başlık Satırı
+                const header = document.createElement('h4');
+                header.className = 'font-bold theme-text-title border-b theme-border pb-2 flex items-center text-base';
+                header.innerHTML = `<i class="fas ${item.icon} theme-accent-text mr-2"></i> ${item.name} Döküman Listesi`;
+                listDiv.appendChild(header);
+
+                if (files.length === 0) {
+                    // Dosya yoksa uyarı mesajı ekle
+                    const emptyMsg = document.createElement('div');
+                    emptyMsg.className = 'p-4 rounded-xl border theme-border theme-text-muted text-center text-sm font-semibold bg-slate-500/5';
+                    emptyMsg.innerHTML = `<i class="fas fa-info-circle mr-1.5"></i> Bu kademeye ait dökümanlar çok yakında yüklenecektir.`;
+                    listDiv.appendChild(emptyMsg);
+                } else {
+                    // Dosyaları kartlar halinde ekle
+                    const container = document.createElement('div');
+                    container.className = 'space-y-2.5';
+
+                    files.forEach(file => {
+                        const fileRow = document.createElement('div');
+                        fileRow.className = 'p-3 bg-slate-500/5 hover:bg-slate-500/10 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between border theme-border transition-all gap-3';
+                        fileRow.innerHTML = `
+                            <div class="flex items-start space-x-3">
+                                <div class="text-red-500 text-lg mt-0.5"><i class="far fa-file-pdf"></i></div>
+                                <div>
+                                    <span class="text-sm font-bold theme-text-title block leading-tight">${file.title}</span>
+                                    <span class="text-xs theme-text-muted font-medium">Dosya Boyutu: ${file.fileSize}</span>
+                                </div>
+                            </div>
+                            <a href="${file.url}" target="_blank" class="theme-btn-accent text-center py-2 px-4 rounded-xl text-xs font-bold transition shadow-sm whitespace-nowrap"><i class="fas fa-cloud-download-alt mr-1"></i> Görüntüle / İndir</a>
+                        `;
+                        container.appendChild(fileRow);
+                    });
+                    listDiv.appendChild(container);
+                }
+
+                targetContainer.appendChild(listDiv);
+            });
+        }
+    </script>
+
+</body>
+</html>
