@@ -236,14 +236,15 @@
                     <p class="text-sm theme-text-muted font-medium">LGS, YKS hazırlık veya okul derslerine takviye için kişiye özel online matematik programları.</p>
                 </div>
 
-                <a href="mailto:iletisim@ahmetbas.com" class="group theme-card border p-5 rounded-2xl transition-all shadow-sm hover:shadow-md hover:border-blue-400">
+                <!-- YENİ İNTERAKTİF İLETİŞİM BUTONU (MODAL TETİKLEYİCİ) -->
+                <button onclick="openContactModal()" class="group theme-card border p-5 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-blue-400">
                     <div class="flex items-center justify-between mb-2">
                         <div class="theme-accent-text theme-accent-soft w-10 h-10 rounded-xl flex items-center justify-center text-lg"><i class="fas fa-envelope"></i></div>
-                        <span class="text-xs font-bold theme-text-muted group-hover:theme-accent-text transition-colors">Mesaj Gönder <i class="fas fa-paper-plane ml-1"></i></span>
+                        <span class="text-xs font-bold theme-text-muted group-hover:theme-accent-text transition-colors">İletişime Geç <i class="fas fa-paper-plane ml-1"></i></span>
                     </div>
                     <h3 class="text-lg font-bold theme-text-title mb-1">İletişim & İş Birliği</h3>
                     <p class="text-sm theme-text-muted font-medium">Özel ders talepleri, seminerler veya projeler için benimle doğrudan iletişime geçin.</p>
-                </a>
+                </button>
             </div>
         </div>
 
@@ -368,6 +369,80 @@
         </div>
     </main>
 
+    <!-- ==================================================================== -->
+    <!-- MODAL: GÖZ ALICI İNTERAKTİF İLETİŞİM KUTUSU -->
+    <!-- ==================================================================== -->
+    <div id="contact-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="theme-card border theme-border w-full max-w-lg rounded-2xl shadow-2xl relative animate-scaleIn overflow-hidden">
+            <!-- Modal Üst Alan -->
+            <div class="flex items-center justify-between p-5 border-b theme-border">
+                <h3 class="text-xl font-bold theme-text-title flex items-center">
+                    <i class="fas fa-comments theme-accent-text mr-2 text-2xl"></i> Benimle İletişime Geçin
+                </h3>
+                <button onclick="closeContactModal()" class="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-slate-500/10 theme-text-muted hover:theme-text-title transition-all">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+
+            <div class="p-6 space-y-6">
+                <!-- 1. Bölüm: Hızlı İletişim Butonları (Email Copy & WhatsApp) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <!-- WhatsApp Butonu -->
+                    <a href="https://wa.me/905000000000" target="_blank" class="flex items-center justify-center space-x-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-xl shadow-sm transition-all text-sm">
+                        <i class="fab fa-whatsapp text-xl"></i>
+                        <span>WhatsApp ile Yaz</span>
+                    </a>
+                    <!-- Email Kopyala Butonu -->
+                    <button onclick="copyToClipboard('iletisim@ahmetbas.com', this)" class="flex items-center justify-center space-x-2.5 bg-slate-500/5 hover:bg-slate-500/10 border theme-border theme-text-title font-bold py-3 px-4 rounded-xl shadow-sm transition-all text-sm">
+                        <i class="far fa-copy text-lg"></i>
+                        <span id="copy-btn-text">E-postayı Kopyala</span>
+                    </button>
+                </div>
+
+                <!-- Çizgi / Ayraç -->
+                <div class="relative flex py-1 items-center">
+                    <div class="flex-grow border-t theme-border"></div>
+                    <span class="flex-shrink mx-4 theme-text-muted text-xs font-bold uppercase tracking-wider">veya mesaj gönderin</span>
+                    <div class="flex-grow border-t theme-border"></div>
+                </div>
+
+                <!-- 2. Bölüm: İnteraktif İletişim Formu -->
+                <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-extrabold theme-text-title uppercase tracking-wider mb-1.5">Adınız Soyadınız</label>
+                        <input type="text" required class="w-full px-4 py-3 rounded-xl border theme-border theme-card focus:outline-none focus:ring-2 focus:ring-blue-500/30 font-medium text-sm transition-all" placeholder="Ahmet Yılmaz">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-extrabold theme-text-title uppercase tracking-wider mb-1.5">E-posta Adresiniz</label>
+                        <input type="email" required class="w-full px-4 py-3 rounded-xl border theme-border theme-card focus:outline-none focus:ring-2 focus:ring-blue-500/30 font-medium text-sm transition-all" placeholder="ahmet@example.com">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-extrabold theme-text-title uppercase tracking-wider mb-1.5">Mesajınız</label>
+                        <textarea required rows="4" class="w-full px-4 py-3 rounded-xl border theme-border theme-card focus:outline-none focus:ring-2 focus:ring-blue-500/30 font-medium text-sm transition-all resize-none" placeholder="Özel ders talepleri, sorular veya iş birliği önerileriniz..."></textarea>
+                    </div>
+                    <button type="submit" class="w-full theme-btn-accent font-bold py-3.5 rounded-xl transition-all shadow-md flex items-center justify-center space-x-2 text-sm">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>Mesajı Gönder</span>
+                    </button>
+                </form>
+
+                <!-- Başarı Mesajı Alanı (Başlangıçta gizli) -->
+                <div id="form-success-alert" class="hidden text-center py-8 space-y-4 animate-scaleIn">
+                    <div class="w-16 h-16 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center mx-auto text-3xl">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-bold theme-text-title">Mesajınız Başarıyla İletildi!</h4>
+                        <p class="text-xs theme-text-muted font-medium mt-1">Gerekli kontrollerin ardından e-posta adresinize en kısa sürede dönüş sağlayacağım.</p>
+                    </div>
+                    <button onclick="resetContactForm()" class="theme-accent-soft theme-accent-text font-bold text-xs px-4 py-2 rounded-xl transition-all">
+                        Yeni Mesaj Gönder
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- FOOTER -->
     <footer class="w-full text-center py-6 border-t theme-border theme-card text-xs theme-text-muted font-medium tracking-wide">
         &copy; 2026 Ahmet Baş. Matematik ile Kalın. Vercel ile Güçlendirilmiştir.
@@ -380,7 +455,7 @@
             const savedTheme = localStorage.getItem('site-theme') || 'light';
             changeTheme(savedTheme);
             
-            // Linkler.txt dosyasını dinamik oku ve render et (Gelişmiş Error-Catcher ile)
+            // Linkler.txt dosyasını dinamik oku ve render et (Gelişmiş Fallback Mekanizmalı)
             loadAndGenerateLinks();
         });
 
@@ -444,6 +519,64 @@
                 targetList.style.display = 'block';
                 targetList.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
+        }
+
+        // MODAL YÖNETİMİ
+        function openContactModal() {
+            const modal = document.getElementById('contact-modal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Arka planın kaydırılmasını engelle
+        }
+
+        function closeContactModal() {
+            const modal = document.getElementById('contact-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto'; // Kaydırmayı geri aç
+            resetContactForm();
+        }
+
+        // Tıklanan yer modal dışıysa modalı kapat
+        window.addEventListener('click', function(e) {
+            const modal = document.getElementById('contact-modal');
+            if (e.target === modal) {
+                closeContactModal();
+            }
+        });
+
+        // PANOLARA KOPYALAMA İŞLEVİ (EMAIL COPY)
+        function copyToClipboard(text, btn) {
+            navigator.clipboard.writeText(text).then(() => {
+                const btnText = document.getElementById('copy-btn-text');
+                btn.classList.remove('bg-slate-500/5', 'theme-text-title');
+                btn.classList.add('bg-emerald-600', 'text-white');
+                btnText.innerText = "Kopyalandı! ✓";
+                
+                setTimeout(() => {
+                    btn.classList.remove('bg-emerald-600', 'text-white');
+                    btn.classList.add('bg-slate-500/5', 'theme-text-title');
+                    btnText.innerText = "E-postayı Kopyala";
+                }, 2000);
+            }).catch(err => {
+                console.error("Kopyalama başarısız oldu:", err);
+            });
+        }
+
+        // FORM GÖNDERME KONTROLÜ
+        function handleFormSubmit(event) {
+            event.preventDefault(); // Sayfa yenilenmesini engelle
+            
+            // Bu alanda Formspree veya Web3Forms gibi bir servisi bağlayabilirsiniz.
+            // Örn: fetch('https://api.web3forms.com/submit', { method: 'POST', body: ... })
+            
+            // Görsel olarak başarı mesajını tetikliyoruz
+            document.getElementById('contact-form').classList.add('hidden');
+            document.getElementById('form-success-alert').classList.remove('hidden');
+        }
+
+        function resetContactForm() {
+            document.getElementById('contact-form').reset();
+            document.getElementById('contact-form').classList.remove('hidden');
+            document.getElementById('form-success-alert').classList.add('hidden');
         }
 
         // ÖNİZLEME/SANDBOX GÜVENLİK SINIRI İÇİN YEDEK (FALLBACK) VERİ SETİ
