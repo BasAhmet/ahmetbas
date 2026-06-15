@@ -181,6 +181,15 @@
                 <p class="theme-text-muted max-w-xl mx-auto text-base leading-relaxed font-medium">
                     Ortaokul ve lise düzeyinde matematik eğitimleri veriyor, öğrencilerin analitik düşünme becerilerini geliştirecek dinamik içerikler üretiyorum.
                 </p>
+
+                <!-- ==================================================================== -->
+                <!-- YENİ EKLEME: ESTETİK GÜNÜN MOTİVASYON SÖZÜ ALANI -->
+                <!-- ==================================================================== -->
+                <div id="motivation-box" class="mt-6 max-w-md mx-auto p-4 rounded-2xl bg-gradient-to-r from-blue-500/5 to-sky-500/5 border border-blue-500/10 text-center relative overflow-hidden hidden animate-fadeIn shadow-sm">
+                    <span class="absolute -top-1.5 left-2 text-4xl theme-accent-text opacity-10 font-serif">“</span>
+                    <p id="motivation-text" class="text-xs font-bold theme-text-title italic leading-relaxed px-5"></p>
+                    <span class="absolute -bottom-5 right-2 text-4xl theme-accent-text opacity-10 font-serif">”</span>
+                </div>
             </div>
 
             <!-- Rozetler / Seviyeler -->
@@ -265,7 +274,7 @@
                     <div class="theme-accent-text theme-accent-soft w-10 h-10 rounded-xl flex items-center justify-center text-lg mb-2"><i class="fas fa-graduation-cap"></i></div>
                     <div>
                         <h3 class="text-lg font-bold theme-text-title group-hover:theme-accent-text transition-colors">Ortaokul</h3>
-                        <p class="text-xs theme-text-muted mt-1">5, 6, 7 ve 8. Sınıf konu testleri ve çalışma kağıtları.</p>
+                        <p class="text-xs theme-text-muted mt-1">5, 6, 7 ve 8. Sınıf konu testleri and çalışma kağıtları.</p>
                     </div>
                 </button>
 
@@ -389,7 +398,7 @@
                 <p class="text-xs theme-text-muted mt-1 font-medium">Beni takip ederek yeni döküman ve çözümlerden haberdar olun!</p>
             </div>
             <div class="space-y-3">
-                <a href="https://www.instagram.com/ahmetbas.math" target="_blank" class="flex items-center justify-between p-4 bg-gradient-to-r from-pink-500/10 via-red-500/5 to-yellow-500/10 hover:from-pink-500/20 hover:to-yellow-500/20 border border-pink-500/20 rounded-2xl transition-all group shadow-sm">
+                <a href="https://www.instagram.com/ahmetbasmath/" target="_blank" class="flex items-center justify-between p-4 bg-gradient-to-r from-pink-500/10 via-red-500/5 to-yellow-500/10 hover:from-pink-500/20 hover:to-yellow-500/20 border border-pink-500/20 rounded-2xl transition-all group shadow-sm">
                     <div class="flex items-center space-x-3.5">
                         <div class="w-11 h-11 bg-gradient-to-tr from-yellow-500 via-pink-500 to-purple-600 rounded-xl flex items-center justify-center text-white text-xl shadow-md"><i class="fab fa-instagram"></i></div>
                         <div>
@@ -399,7 +408,7 @@
                     </div>
                     <span class="text-xs font-bold text-pink-500 group-hover:translate-x-1 transition-transform">Takip Et <i class="fas fa-chevron-right ml-1"></i></span>
                 </a>
-                <a href="YOUTUBE_KANAL_LINKI" target="_blank" class="flex items-center justify-between p-4 bg-red-500/5 hover:bg-red-500/10 border border-red-500/20 rounded-2xl transition-all group shadow-sm">
+                <a href="https://www.youtube.com/@ahmetbasmath" target="_blank" class="flex items-center justify-between p-4 bg-red-500/5 hover:bg-red-500/10 border border-red-500/20 rounded-2xl transition-all group shadow-sm">
                     <div class="flex items-center space-x-3.5">
                         <div class="w-11 h-11 bg-red-600 rounded-xl flex items-center justify-center text-white text-xl shadow-md shadow-red-500/20"><i class="fab fa-youtube"></i></div>
                         <div>
@@ -414,7 +423,7 @@
     </div>
 
     <!-- ==================================================================== -->
-    <!-- BİREBİR & ONLİNE DERS DETAY MODALI (YENİ EKLEME) -->
+    <!-- BİREBİR & ONLİNE DERS DETAY MODALI -->
     <!-- ==================================================================== -->
     <div id="lesson-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 overflow-y-auto">
         <div class="theme-card border theme-border rounded-3xl max-w-lg w-full p-6 shadow-2xl relative animate-fadeIn my-8">
@@ -546,6 +555,7 @@
             const savedTheme = localStorage.getItem('site-theme') || 'light';
             changeTheme(savedTheme);
             loadAndGenerateLinks();
+            loadMotivationQuote(); // Yenilik: Sayfa açıldığında sözü getirir
         });
 
         function toggleThemeDropdown() {
@@ -576,10 +586,10 @@
         function closeContactModal() {
             document.getElementById('contact-modal').classList.add('hidden');
             document.body.style.overflow = '';
-            // Mesaj alanını temizle (varsayılan taslağa geri dön)
             document.getElementById('contact-message-area').value = '';
         }
 
+        // SOSYAL MODAL KONTROLÜ
         function openSocialModal() {
             document.getElementById('social-modal').classList.remove('hidden');
             document.body.style.overflow = 'hidden';
@@ -590,6 +600,7 @@
             document.body.style.overflow = '';
         }
 
+        // BİREBİR DERS MODAL KONTROLÜ
         function openLessonModal() {
             document.getElementById('lesson-modal').classList.remove('hidden');
             document.body.style.overflow = 'hidden';
@@ -600,19 +611,18 @@
             document.body.style.overflow = '';
         }
 
-        // Derse Başvuru Yapma Aksiyonu
+        // Derse Başvurma tetikleyicisi
         function applyForLesson() {
-            // Önce ders modalını kapat
             closeLessonModal();
-            // İletişim modalındaki mesaj alanına taslak metni yaz
+            // İletişim formundaki mesaj alanını doldur
             document.getElementById('contact-message-area').value = "Merhaba Ahmet Hocam, birebir ve online ders programınız hakkında detaylı bilgi ve seviye analizi randevusu almak istiyorum.";
-            // İletişim modalını aç
+            // Küçük bir beklemeden sonra iletişim formunu aç
             setTimeout(() => {
                 openContactModal();
-            }, 300); // Küçük bir geçiş gecikmesi
+            }, 300);
         }
 
-        // Tıklamayla pencerelerin dışına basıldığında modalı kapat
+        // Modal dışına tıklandığında kapatma algılayıcısı
         window.addEventListener('click', function(e) {
             const contactModal = document.getElementById('contact-modal');
             const socialModal = document.getElementById('social-modal');
@@ -673,13 +683,52 @@
             });
         }
 
-        // DÖKÜMAN GÖSTERİMİ
         function showFiles(className) {
             hideAllFileLists();
             const targetList = document.getElementById('list-' + className);
             if(targetList) {
                 targetList.style.display = 'block';
                 targetList.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        // AKILLI MOTİVASYON MOTORU
+        function loadMotivationQuote() {
+            fetch('motivasyon.txt')
+                .then(response => {
+                    if (!response.ok) throw new Error('Motivasyon listesi bulunamadı');
+                    return response.text();
+                })
+                .then(text => {
+                    // Satırları ayır, temizle ve yorum satırlarını/boş satırları filtrele
+                    const quotes = text.split('\n')
+                                       .map(line => line.trim())
+                                       .filter(line => line.length > 0 && !line.startsWith('#'));
+                    if (quotes.length > 0) {
+                        displayRandomQuote(quotes);
+                    }
+                })
+                .catch(err => {
+                    console.warn('Sunucudaki motivasyon.txt okunamadı, yerel fallback yüklendi.');
+                    // Yerel yedek söz listesi
+                    const fallbackQuotes = [
+                        "Matematikte de hayatta olduğu gibi, her problemin mutlaka bir çözümü vardır.",
+                        "Zor sorular, zihnini en çok geliştiren ve seni ileriye taşıyan fırsatlardır.",
+                        "Bugün yapacağın küçük bir tekrar, yarın kazanacağın büyük başarının ilk adımıdır.",
+                        "Hata yapmak, öğrenme yolculuğunun en doğal ve en öğretici parçasıdır.",
+                        "Her büyük başarı, hata yapmaktan ve tekrar denemekten korkmayanların eseridir."
+                    ];
+                    displayRandomQuote(fallbackQuotes);
+                });
+        }
+
+        function displayRandomQuote(quotesArray) {
+            const randomIndex = Math.floor(Math.random() * quotesArray.length);
+            const quoteBox = document.getElementById('motivation-box');
+            const quoteText = document.getElementById('motivation-text');
+            if (quoteBox && quoteText) {
+                quoteText.textContent = quotesArray[randomIndex];
+                quoteBox.classList.remove('hidden'); // Kutuyu görünür yap
             }
         }
 
@@ -789,14 +838,6 @@
             });
         }
     </script>
-```
-eof
 
-### 🚀 Bu Güncelleme ile Ne Değişti?
-1. **Pürüzsüz Modallar Arası Geçiş:** Veli "Birebir & Online Ders" modalındaki **"Ön Başvuru Yap"** butonuna bastığında, ders tanıtım modalı otomatik olarak kapanır ve doğrudan **E-Posta Formu** açılır.
-2. **Kişiselleştirilmiş Form Mesajı:** Form açıldığında içindeki mesaj alanına otomatik olarak velinin göndermek isteyeceği *"Merhaba Ahmet Hocam, birebir ve online ders programınız hakkında detaylı bilgi ve seviye analizi randevusu almak istiyorum."* taslak mesajı yazılır. Veliye sadece adı-soyadı ve mailini yazıp "Gönder" tuşuna basmak kalır.
-3. **Estetik ve Tasarım:** Modal tasarımı, tüm cihazlarda (mobil öncelikli) harika görünecek şekilde scroll barlarla ve ideal iç boşluklarla optimize edildi. Seçtiğiniz renk temalarıyla da pürüzsüz şekilde uyumludur.
-
-Siteniz artık adeta kurumsal bir eğitim akademisi havasına büründü! Yeni modülünüzü nasıl buldunuz? Eklemek veya değiştirmek istediğiniz başka bir yer var mı?
 </body>
 </html>
