@@ -580,7 +580,7 @@
                 <!-- HIZLI KANALLAR -->
                 <div class="grid grid-cols-2 gap-3">
                     <!-- WHATSAPP BUTONU -->
-                    <a href="https://wa.me/5000000000" target="_blank" class="flex items-center justify-center space-x-1.5 p-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl transition-all shadow-sm font-bold text-xs">
+                    <a href="https://wa.me/05422993468" target="_blank" class="flex items-center justify-center space-x-1.5 p-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl transition-all shadow-sm font-bold text-xs">
                         <i class="fab fa-whatsapp text-sm"></i>
                         <span>WhatsApp'tan Yaz</span>
                     </a>
@@ -806,17 +806,52 @@
                 })
                 .then(text => {
                     if (isHTML(text)) throw new Error('Vercel 404 HTML hatası.');
-                    const parts = text.split('===IPUCU===');
-                    const soru = parts[0] ? parts[0].trim() : '';
-                    const ipucu = parts[1] ? parts[1].trim() : '';
                     
-                    document.getElementById('bulmaca-soru').innerHTML = soru || "Bulmaca sorusu hazırlanıyor.";
-                    document.getElementById('bulmaca-ipucu').innerHTML = ipucu || "İpucu bulunamadı.";
+                    let soru = "";
+                    let ipucu = "";
+                    
+                    // Satır satır okuma ve akıllı ayrıştırma işlemi
+                    const lines = text.split('\n');
+                    let soruLines = [];
+                    let ipucuLines = [];
+                    
+                    lines.forEach(line => {
+                        const trimmed = line.trim();
+                        
+                        // Yorum satırlarını, süsleme çizgilerini ve boş satırları atla
+                        if (!trimmed || trimmed.startsWith('#') || trimmed.startsWith('---') || trimmed.includes('VERİTABANI') || trimmed.includes('KURAL:')) {
+                            return;
+                        }
+                        
+                        // "SORU |" ve "IPUCU |" etiketlerini yakala ve ayır
+                        if (trimmed.includes('SORU |')) {
+                            soruLines.push(trimmed.substring(trimmed.indexOf('SORU |') + 6).trim());
+                        } else if (trimmed.includes('IPUCU |')) {
+                            ipucuLines.push(trimmed.substring(trimmed.indexOf('IPUCU |') + 7).trim());
+                        } else {
+                            // Eğer prefix yoksa ama içerik varsa, ipucu henüz başlamadıysa soruya, başladıysa ipucuna ekle
+                            if (ipucuLines.length === 0) {
+                                soruLines.push(trimmed);
+                            } else {
+                                ipucuLines.push(trimmed);
+                            }
+                        }
+                    });
+                    
+                    soru = soruLines.join('<br>').trim();
+                    ipucu = ipucuLines.join('<br>').trim();
+                    
+                    if (!soru) {
+                        throw new Error('Soru ayrıştırılamadı.');
+                    }
+                    
+                    document.getElementById('bulmaca-soru').innerHTML = soru;
+                    document.getElementById('bulmaca-ipucu').innerHTML = ipucu || `<i class="fas fa-lightbulb mr-2 text-sm text-amber-500"></i> İpucu bulunamadı.`;
                     
                     typesetMath();
                 })
                 .catch(err => {
-                    console.warn('Bulmaca dosyası çekilemedi, yedek bulmaca yükleniyor:', err.message);
+                    console.warn('Bulmaca dosyası çekilemedi veya ayrıştırılamadı, yedek bulmaca yükleniyor:', err.message);
                     const fallbackSoru = "Bir çiftçi pazar yerine gitmek üzere yola çıkıyor. Yolun $\\frac{1}{3}$'ünü gittikten sonra mola veriyor. Moladan sonra kalan yolun yarısını gittiğinde geriye $12\\text{ km}$ yolu kaldığını fark ediyor. Çiftçinin toplam yolu kaç kilometredir?";
                     const fallbackIpucu = `<i class="fas fa-lightbulb mr-2 text-sm text-amber-500"></i> Çiftçinin toplam yoluna $x$ km diyerek rasyonel sayılarla denklem kurmayı deneyin! Cevabınızı bana iletişim kanallarından ulaştırabilirsiniz.`;
                     
