@@ -4,9 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ahmet Baş | Matematik Öğretmeni</title>
+    
     <!-- Tailwind CSS ve FontAwesome İkonları -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-87MVS0ZGXZ');
+</script>
     
     <!-- LATEX / MATHJAX MATEMATİKSEL BİÇİMLENDİRME ENTEGRASYONU -->
     <script>
@@ -600,7 +610,7 @@
 
     <!-- FOOTER -->
     <footer class="w-full text-center py-6 border-t theme-border theme-card text-xs theme-text-muted font-medium tracking-wide">
-        &copy; 2026 Ahmet Baş. Matematik ile Kalın. Vercel ile Güçlendirilmiştir.
+        &copy; 2026 Ahmet Baş. Matematik ile Kalın.
     </footer>
 
     <!-- INTERAKTIF JAVASCRIPT KONTROLLERİ -->
@@ -952,7 +962,7 @@
                                     <span class="text-xs theme-text-muted font-medium">Dosya Boyutu: ${file.fileSize}</span>
                                 </div>
                             </div>
-                            <a href="${file.url}" target="_blank" class="theme-btn-accent text-center py-2 px-4 rounded-xl text-xs font-bold transition shadow-sm whitespace-nowrap"><i class="fas fa-cloud-download-alt mr-1"></i> Görüntüle / İndir</a>
+                            <a href="${file.url}" target="_blank" onclick="gtag('event', 'file_download', {'file_name': '${file.title}'});" class="theme-btn-accent text-center py-2 px-4 rounded-xl text-xs font-bold transition shadow-sm whitespace-nowrap"><i class="fas fa-cloud-download-alt mr-1"></i> Görüntüle / İndir</a>
                         `;
                         container.appendChild(fileRow);
                     });
