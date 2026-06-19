@@ -901,17 +901,21 @@
                     // YENİ İPUCU MANTIĞI
                         const ipucuEl = document.getElementById('bulmaca-ipucu');
 
-                    // 'w-full' ve 'flex justify-end' kullanarak metni kutu içerisinde sağa sabitledik
-                    const whatsappMetni = '<div class="w-full flex justify-end mt-2 !text-right"><span class="text-sm text-slate-500 italic">Cevaplarınızı WhatsApp üzerinden bekliyorum.</span></div>';
+                    // flex-col (dikey dizilim) ve items-end (içeriği sağa yasla) kullanıyoruz
+                    const whatsappMetni = `
+                        <div class="flex flex-col items-end mt-4">
+                            <span class="text-sm text-slate-500 italic text-right">
+                                Cevaplarınızı WhatsApp üzerinden bekliyorum.
+                            </span>
+                        </div>
+                    `;
                     
                     if (latest.ipucu) {
                         ipucuEl.innerHTML = latest.ipucu + "<br>" + whatsappMetni;
                     } else {
                         ipucuEl.innerHTML = "Bu hafta için bir ipucu eklenmemiş. Kendine güveniyorsan çözmeye başla!<br>" + whatsappMetni;
                     }
-
-            }
-                    
+            } 
                     typesetMath();
                 })
                 .catch(err => {
