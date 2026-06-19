@@ -900,11 +900,15 @@
     
     // YENİ İPUCU MANTIĞI
     const ipucuEl = document.getElementById('bulmaca-ipucu');
-    if (latest.ipucu) {
-        ipucuEl.innerHTML = latest.ipucu + "<br>Cevaplarınızı WhatsApp üzerinden bekliyorum.";
-    } else {
-        ipucuEl.innerHTML = "Bu hafta için bir ipucu eklenmemiş. Kendine güveniyorsan çözmeye başla!<br>Cevaplarınızı WhatsApp üzerinden bekliyorum.";
-    }
+// Metni bir kapsayıcı (div) içine alıp text-right sınıfı ekledik
+const whatsappMetni = '<div style="text-align: right; font-size: 0.9em; margin-top: 10px;">Cevaplarınızı WhatsApp üzerinden bekliyorum.</div>';
+
+if (latest.ipucu) {
+    ipucuEl.innerHTML = latest.ipucu + "<br>" + whatsappMetni;
+} else {
+    ipucuEl.innerHTML = "Bu hafta için bir ipucu eklenmemiş. Kendine güveniyorsan çözmeye başla!<br>" + whatsappMetni;
+}
+    
 }
                     
                     typesetMath();
