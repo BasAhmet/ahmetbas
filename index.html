@@ -901,11 +901,14 @@
                     // YENİ İPUCU MANTIĞI
                         const ipucuEl = document.getElementById('bulmaca-ipucu');
                     // flex-col (dikey dizilim) ve items-end (içeriği sağa yasla) kullanıyoruz
-                    const whatsappMetni = '<div style="text-align: right !important; width: 100% !important; display: block !important;">' +
-                      '<span style="font-size: 0.875rem; color: #64748b; font-style: italic;">' +
-                      'Cevaplarınızı WhatsApp üzerinden bekliyorum.' +
-                      '</span>' +
-                      '</div>';
+                    // !text-right ve !important kullanarak tüm hizalama kurallarını eziyoruz
+                    const whatsappMetni = `
+                        <div style="width: 100%; display: block; text-align: right !important; margin-top: 20px;">
+                            <span style="display: inline-block; text-align: right !important; color: #64748b; font-style: italic; font-size: 0.875rem;">
+                                Cevaplarınızı WhatsApp üzerinden bekliyorum.
+                            </span>
+                        </div>
+                    `;
                     
                     if (latest.ipucu) {
                         ipucuEl.innerHTML = latest.ipucu + "<br>" + whatsappMetni;
