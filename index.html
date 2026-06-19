@@ -903,12 +903,10 @@
                     // flex-col (dikey dizilim) ve items-end (içeriği sağa yasla) kullanıyoruz
                     // !text-right ve !important kullanarak tüm hizalama kurallarını eziyoruz
                     const whatsappMetni = `
-                        <div style="width: 100%; display: block; text-align: right !important; margin-top: 20px;">
-                            <span style="display: inline-block; text-align: right !important; color: #64748b; font-style: italic; font-size: 0.875rem;">
+                            <div style="margin-left: auto; width: fit-content; margin-top: 20px; text-align: right; color: #64748b; font-style: italic; font-size: 0.875rem;">
                                 Cevaplarınızı WhatsApp üzerinden bekliyorum.
-                            </span>
-                        </div>
-                    `;
+                            </div>
+                        `;
                     
                     if (latest.ipucu) {
                         ipucuEl.innerHTML = latest.ipucu + "<br>" + whatsappMetni;
