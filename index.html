@@ -900,15 +900,12 @@
                 
                     // YENİ İPUCU MANTIĞI
                         const ipucuEl = document.getElementById('bulmaca-ipucu');
-
                     // flex-col (dikey dizilim) ve items-end (içeriği sağa yasla) kullanıyoruz
-                    const whatsappMetni = `
-                        <div class="flex flex-col items-end mt-4">
-                            <span class="text-sm text-slate-500 italic text-right">
-                                Cevaplarınızı WhatsApp üzerinden bekliyorum.
-                            </span>
-                        </div>
-                    `;
+                    const whatsappMetni = '<div style="display: block; width: 100%; text-align: right; margin-top: 15px;">' +
+                      '<span style="font-size: 0.875rem; color: #64748b; font-style: italic;">' +
+                      'Cevaplarınızı WhatsApp üzerinden bekliyorum.' +
+                      '</span>' +
+                      '</div>';
                     
                     if (latest.ipucu) {
                         ipucuEl.innerHTML = latest.ipucu + "<br>" + whatsappMetni;
