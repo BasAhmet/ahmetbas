@@ -280,14 +280,17 @@
         Yükleniyor...
     </p>
     
-    <div id="bulmaca-ipucu-container" class="flex items-start space-x-3 p-4 bg-amber-500/5 border border-amber-500/20 rounded-xl">
-        <div class="text-amber-500 mt-0.5">
-            <i class="fas fa-lightbulb text-lg"></i>
-        </div>
-        <div id="bulmaca-ipucu" class="text-xs theme-text-muted font-medium leading-relaxed max-w-xs w-full">
-            Yükleniyor...
-        </div>
+<!-- Genişlik sınırını (max-w-md) dış kutuya taşıdık -->
+<div id="bulmaca-ipucu-container" class="flex items-start space-x-3 p-4 bg-amber-500/5 border border-amber-500/20 rounded-xl max-w-md w-full">
+    <div class="text-amber-500 mt-0.5">
+        <i class="fas fa-lightbulb text-lg"></i>
     </div>
+    <!-- İç kutuyu serbest bıraktık, böylece çerçeveye tam sığacak -->
+    <div id="bulmaca-ipucu" class="text-xs theme-text-muted font-medium leading-relaxed w-full">
+        Yükleniyor...
+    </div>
+</div>
+
 </div>
 
             <!-- Bağlantılar Giriş Kartları -->
