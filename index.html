@@ -49,7 +49,25 @@
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
+    <style>
+        /* Yukarı Çık Oku Stili */
+        #scrollToTopBtn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: none;
+            background-color: #2563eb;
+            color: white;
+            padding: 1rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 50;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        #scrollToTopBtn:hover { transform: scale(1.1); background-color: #1d4ed8; }
+    </style>
+    
     <!-- ÇOKLU TEMA RENK DEĞİŞKENLERİ -->
     <style>
         /* 1. KLASİK AYDINLIK TEMASI */
@@ -214,6 +232,11 @@
             </div>
         </div>
     </header>
+    
+    <!-- Yukarı Çık Butonu -->
+    <button id="scrollToTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <!-- ANA İÇERİK ALANI -->
     <main class="max-w-4xl mx-auto px-6 py-12 flex-grow w-full">
@@ -636,6 +659,17 @@
     </footer>
 
     <!-- INTERAKTIF JAVASCRIPT KONTROLLERİ -->
+    <script>
+        // Sayfa kaydırma kontrolü
+        window.onscroll = function() {
+            const btn = document.getElementById("scrollToTopBtn");
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                btn.style.display = "block";
+            } else {
+                btn.style.display = "none";
+            }
+        };
+    </script>
     <script>
         // TEMA YÖNETİMİ
         document.addEventListener("DOMContentLoaded", function() {
