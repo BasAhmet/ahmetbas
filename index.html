@@ -193,9 +193,6 @@
                     <button onclick="switchTab('materials')" id="tab-btn-materials" class="px-3.5 py-1.5 rounded-xl text-sm font-semibold transition-all theme-text-muted hover:theme-text-title hover:bg-slate-100/50">
                         Ders Materyalleri
                     </button>
-                    <button onclick="openOnlineCourseModal()" id="tab-btn-materials" class="px-3.5 py-1.5 rounded-xl text-sm font-semibold transition-all theme-text-muted hover:theme-text-title hover:bg-slate-100/50">
-                        Birebir<br>Online Ders
-                    </button>
                 </nav>
 
                 <!-- ŞIK RENK MODU SEÇİCİ (DROPDOWN) -->
@@ -901,9 +898,9 @@
     // YENİ İPUCU MANTIĞI
     const ipucuEl = document.getElementById('bulmaca-ipucu');
     if (latest.ipucu) {
-        ipucuEl.innerHTML = latest.ipucu;
+        ipucuEl.innerHTML = latest.ipucu <br>" Cevaplarınızı WhatsApp üzerinden bekliyorum.";
     } else {
-        ipucuEl.innerHTML = "Bu hafta için bir ipucu eklenmemiş. Kendine güveniyorsan çözmeye başla!";
+        ipucuEl.innerHTML = "Bu hafta için bir ipucu eklenmemiş. Kendine güveniyorsan çözmeye başla!"<br>" Cevaplarınızı WhatsApp üzerinden bekliyorum.";
     }
 }
                     
