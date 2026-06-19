@@ -902,7 +902,7 @@
                         const ipucuEl = document.getElementById('bulmaca-ipucu');
                     // flex-col (dikey dizilim) ve items-end (içeriği sağa yasla) kullanıyoruz
                     // !text-right ve !important kullanarak tüm hizalama kurallarını eziyoruz
-                    const whatsappMetni = `Cevaplarınızı WhatsApp üzerinden bekliyorum.`;
+                    const whatsappMetni = `<p style="font-style: italic; text-align: right;"> Cevaplarınızı WhatsApp üzerinden bekliyorum.</p>`;
                     
                     if (latest.ipucu) {
                         ipucuEl.innerHTML = latest.ipucu + "<br>" + whatsappMetni;
