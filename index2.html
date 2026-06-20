@@ -1054,17 +1054,15 @@
         function filterFiles() {
             const input = document.getElementById('fileSearch');
             const filter = input.value.toLowerCase();
-            
-            // Tüm dosya satırlarını seçiyoruz (Sitenizdeki dosya listeleme yapısına göre class ismini kontrol edin)
-            // Eğer dosyalarınızın ortak bir sınıfı varsa (örneğin 'file-item') onu kullanın.
+            // Sadece dosya satırlarını filtrele
             const fileItems = document.querySelectorAll('.file-item'); 
-        
+    
             fileItems.forEach(item => {
                 const text = item.textContent.toLowerCase();
                 if (text.includes(filter)) {
-                    item.style.display = "flex"; // Veya 'block'
+                    item.style.display = "flex"; // Görünür yap
                 } else {
-                    item.style.display = "none";
+                    item.style.display = "none"; // Gizle
                 }
             });
         }
