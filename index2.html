@@ -197,15 +197,14 @@
                         Ders Materyalleri
                     </button>
                 </nav>
-                <div class="max-w-4xl mx-auto px-6 mt-4 mb-6">
-                    <div class="relative">
-                        <input type="text" id="fileSearch" placeholder="Dosya adı veya konu ara..." 
-                               onkeyup="filterFiles()"
-                               class="w-full px-5 py-3 rounded-2xl border theme-border theme-card shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
-                        <span class="absolute right-5 top-3.5 theme-text-muted">
-                            <i class="fas fa-search"></i>
-                        </span>
-                    </div>
+
+                <div id="search-container" class="max-w-4xl mx-auto px-6 mt-4">
+                    <input type="text" id="fileSearch" placeholder="Dosya veya konu ara..." 
+                           onkeyup="filterFiles()"
+                           class="w-full px-4 py-3 rounded-xl border theme-border theme-card text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                </div>               
+                <div id="content-area" class="max-w-4xl mx-auto px-6 mt-6">
+                    ...
                 </div>
 
                 <!-- ŞIK RENK MODU SEÇİCİ (DROPDOWN) -->
