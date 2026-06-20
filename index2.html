@@ -196,15 +196,17 @@
                     <button onclick="switchTab('materials')" id="tab-btn-materials" class="px-3.5 py-1.5 rounded-xl text-sm font-semibold transition-all theme-text-muted hover:theme-text-title hover:bg-slate-100/50">
                         Ders Materyalleri
                     </button>
-                    <div class="relative mt-6 mb-4">
-                    <input type="text" id="fileSearch" placeholder="Dosya veya konu ara... (örn: Trigonometri)" 
-                           onkeyup="filterFiles()"
-                           class="w-full px-4 py-3 rounded-xl border theme-border theme-card text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
-                    <span class="absolute right-4 top-3.5 text-slate-400">
-                        <i class="fas fa-search"></i>
-                    </span>
-                    </div>
                 </nav>
+                <div class="max-w-4xl mx-auto px-6 mt-4 mb-6">
+                    <div class="relative">
+                        <input type="text" id="fileSearch" placeholder="Dosya adı veya konu ara..." 
+                               onkeyup="filterFiles()"
+                               class="w-full px-5 py-3 rounded-2xl border theme-border theme-card shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                        <span class="absolute right-5 top-3.5 theme-text-muted">
+                            <i class="fas fa-search"></i>
+                        </span>
+                    </div>
+                </div>
 
                 <!-- ŞIK RENK MODU SEÇİCİ (DROPDOWN) -->
                 <div class="relative inline-block text-left">
