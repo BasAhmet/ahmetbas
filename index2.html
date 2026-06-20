@@ -198,13 +198,6 @@
                         Ders Materyalleri
                     </button>
                 </nav>
-
-                <div id="search-container" class="max-w-4xl mx-auto px-6 mt-4">
-                    <input type="text" id="fileSearch" placeholder="Dosya veya konu ara..." 
-                           onkeyup="filterFiles()"
-                           class="w-full px-4 py-3 rounded-xl border theme-border theme-card text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
-                </div>
-
                 <!-- ŞIK RENK MODU SEÇİCİ (DROPDOWN) -->
                 <div class="relative inline-block text-left">
                     <button onclick="toggleThemeDropdown()" id="theme-menu-btn" class="w-9 h-9 flex items-center justify-center rounded-xl border theme-border theme-card theme-text-muted hover:theme-text-title transition-all" title="Renk Temasını Değiştir">
@@ -231,6 +224,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div id="search-container" class="max-w-4xl mx-auto px-6 mt-4">
+            <input type="text" id="fileSearch" placeholder="Dosya veya konu ara..." 
+                  onkeyup="filterFiles()"
+                class="w-full px-4 py-3 rounded-xl border theme-border theme-card text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
         </div>
         </div>
     </header>
