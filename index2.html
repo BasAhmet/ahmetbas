@@ -1053,15 +1053,15 @@
         function filterFiles() {
             const input = document.getElementById('fileSearch');
             const filter = input.value.toLowerCase();
-            // Sadece dosya satırlarını filtrele
+            // Sayfadaki tüm .file-item sınıflarını bul
             const fileItems = document.querySelectorAll('.file-item'); 
-    
+        
             fileItems.forEach(item => {
-                const text = item.textContent.toLowerCase();
-                if (text.includes(filter)) {
-                    item.style.display = "flex"; // Görünür yap
+                // Eğer aranan kelime dosya adında geçiyorsa göster, geçmiyorsa gizle
+                if (item.textContent.toLowerCase().includes(filter)) {
+                    item.style.display = "flex"; 
                 } else {
-                    item.style.display = "none"; // Gizle
+                    item.style.display = "none";
                 }
             });
         }
