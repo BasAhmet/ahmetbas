@@ -388,3 +388,6 @@ function buildSingleDOMList(classCode, files) {
         window.showFiles = showFiles;
         window.filterFiles = filterFiles;
 
+        window.loadClassLinks = loadClassLinks; 
+        window.loadLinksForClass = loadClassLinks; // HTML'deki ismiyle eşleşmesi için
+
