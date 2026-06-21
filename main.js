@@ -306,7 +306,7 @@ function loadClassLinks(classCode) {
         });
 }
 
-// Tek bir sınıfı render eden yeni yardımcı fonksiyon
+// Tek bir sınıfı render eden düzeltilmiş fonksiyon
 function buildSingleDOMList(classCode, files) {
     const classInfo = {
         'class5': { name: '5. Sınıf', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
@@ -323,6 +323,8 @@ function buildSingleDOMList(classCode, files) {
     };
 
     const item = classInfo[classCode];
+    if (!item) return; // Hatalı classCode gelirse durdur
+
     const targetContainer = document.getElementById(item.target);
     const existingList = document.getElementById('list-' + classCode);
     if (existingList) existingList.remove();
@@ -331,18 +333,17 @@ function buildSingleDOMList(classCode, files) {
     listDiv.id = 'list-' + classCode;
     listDiv.className = 'file-list-group theme-card border rounded-2xl p-6 space-y-4 shadow-sm animate-fadeIn';
 
-        let htmlContent = '<ul class="space-y-2">';
-            files.forEach(file => {
-                htmlContent += `
-                <li class="file-item flex items-center justify-between p-3 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 transition-colors">
-                    <span class="text-sm font-medium theme-text-body">${file.title}</span>
-                    <a href="${file.url}" target="_blank" class="text-blue-600 font-bold text-xs hover:underline">İndir</a>
-                </li>`;
-            });
-            htmlContent += '</ul>';
-            
-            listDiv.innerHTML = htmlContent;
-        
+    let htmlContent = '<ul class="space-y-2">';
+    files.forEach(file => {
+        htmlContent += `
+        <li class="file-item flex items-center justify-between p-3 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 transition-colors">
+            <span class="text-sm font-medium theme-text-body">${file.title}</span>
+            <a href="${file.url}" target="_blank" class="text-blue-600 font-bold text-xs hover:underline">İndir</a>
+        </li>`;
+    });
+    htmlContent += '</ul>';
+    
+    listDiv.innerHTML = htmlContent;
     targetContainer.appendChild(listDiv);
     typesetMath();
 }
