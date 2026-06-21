@@ -395,7 +395,8 @@
                 group.style.display = (visibleItems.length > 0 || filter === "") ? 'block' : 'none';
             });
         }
-        
-        window.switchTab = switchTab;
-        window.changeTheme = changeTheme;
-        // Diğer tüm fonksiyonları bu şekilde window'a atayın
+
+        document.getElementById('tab-btn-home').addEventListener('click', () => {
+            switchTab('home');
+        });
+
