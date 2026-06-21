@@ -330,10 +330,19 @@ function buildSingleDOMList(classCode, files) {
     const listDiv = document.createElement('div');
     listDiv.id = 'list-' + classCode;
     listDiv.className = 'file-list-group theme-card border rounded-2xl p-6 space-y-4 shadow-sm animate-fadeIn';
-    
-    // ... Buradan aşağısı sizin eski buildDOMLists içindeki HTML oluşturma kısmıyla aynı ...
-    // listDiv.innerHTML = ... (yukarıdaki kod yapısını buraya kopyalayabilirsiniz)
-    
+
+        let htmlContent = '<ul class="space-y-2">';
+            files.forEach(file => {
+                htmlContent += `
+                <li class="file-item flex items-center justify-between p-3 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 transition-colors">
+                    <span class="text-sm font-medium theme-text-body">${file.title}</span>
+                    <a href="${file.url}" target="_blank" class="text-blue-600 font-bold text-xs hover:underline">İndir</a>
+                </li>`;
+            });
+            htmlContent += '</ul>';
+            
+            listDiv.innerHTML = htmlContent;
+        
     targetContainer.appendChild(listDiv);
     typesetMath();
 }
