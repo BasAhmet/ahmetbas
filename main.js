@@ -272,7 +272,7 @@
 function loadClassLinks(classCode) {
     const fileName = `${classCode}.txt`;
     
-    fetch(fileName)
+    fetch('class_document/' + fileName)
         .then(response => {
             if (!response.ok) throw new Error('Dosya bulunamadı');
             return response.text();
