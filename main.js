@@ -1,5 +1,5 @@
     <!-- INTERAKTIF JAVASCRIPT KONTROLLERİ -->
-    <script>
+        
         // Sayfa kaydırma kontrolü
         window.onscroll = function() {
             const btn = document.getElementById("scrollToTopBtn");
@@ -9,8 +9,7 @@
                 btn.style.display = "none";
             }
         };
-    </script>
-    <script>
+
         // TEMA YÖNETİMİ
         document.addEventListener("DOMContentLoaded", function() {
             let savedTheme = 'light';
@@ -374,8 +373,7 @@
             
             typesetMath();
         }
-    </script>
-    <script>
+
         function filterFiles() {
             const input = document.getElementById('fileSearch');
             const filter = input.value.toLowerCase();
@@ -397,4 +395,4 @@
                 group.style.display = (visibleItems.length > 0 || filter === "") ? 'block' : 'none';
             });
         }
-    </script>
+
