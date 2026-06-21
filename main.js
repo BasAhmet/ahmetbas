@@ -7,6 +7,10 @@
                 btn.style.display = "none";
             }
         };
+        // main.js dosyasına ekleyin
+        window.loadLinksForClass = function(classCode) {
+            loadClassLinks(classCode);
+        };
 
         // TEMA YÖNETİMİ
         document.addEventListener("DOMContentLoaded", function() {
@@ -17,7 +21,6 @@
                 console.warn('LocalStorage erişimi kısıtlı.');
             }
             changeTheme(savedTheme);
-            loadAndGenerateLinks();
             loadMotivationalQuote();
             loadBulmaca();
         });
