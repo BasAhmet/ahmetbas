@@ -187,37 +187,37 @@
             
             <div class="flex items-center space-x-3">
                 <nav class="flex space-x-1">
-                    <button onclick="switchTab('home')" id="tab-btn-home" class="px-3.5 py-1.5 rounded-xl text-sm font-semibold transition-all theme-text-muted hover:theme-text-title hover:bg-slate-100/50">
+                    <button id="tab-btn-home" class="px-3.5 py-1.5 rounded-xl text-sm font-semibold transition-all theme-text-muted hover:theme-text-title hover:bg-slate-100/50">
                         Ana Sayfa
                     </button>
-                    <button onclick="openSocialModal()" id="tab-btn-social" class="px-3.5 py-1.5 rounded-xl text-sm font-semibold transition-all theme-text-muted hover:theme-text-title hover:bg-slate-100/50">
+                    <button id="tab-btn-social" class="px-3.5 py-1.5 rounded-xl text-sm font-semibold transition-all theme-text-muted hover:theme-text-title hover:bg-slate-100/50">
                         Sosyal Medya
                     </button>
-                    <button onclick="switchTab('materials')" id="tab-btn-materials" class="px-3.5 py-1.5 rounded-xl text-sm font-semibold transition-all theme-text-muted hover:theme-text-title hover:bg-slate-100/50">
+                    <button id="tab-btn-materials" class="px-3.5 py-1.5 rounded-xl text-sm font-semibold transition-all theme-text-muted hover:theme-text-title hover:bg-slate-100/50">
                         Ders Materyalleri
                     </button>
                 </nav>
 
                 <!-- ŞIK RENK MODU SEÇİCİ (DROPDOWN) -->
                 <div class="relative inline-block text-left">
-                    <button onclick="toggleThemeDropdown()" id="theme-menu-btn" class="w-9 h-9 flex items-center justify-center rounded-xl border theme-border theme-card theme-text-muted hover:theme-text-title transition-all" title="Renk Temasını Değiştir">
+                    <button id="theme-menu-btn" class="w-9 h-9 flex items-center justify-center rounded-xl border theme-border theme-card theme-text-muted hover:theme-text-title transition-all" title="Renk Temasını Değiştir">
                         <i class="fas fa-palette text-sm"></i>
                     </button>
                     <!-- Açılır Menü -->
                     <div id="theme-dropdown" class="hidden absolute right-0 mt-2 w-48 rounded-xl shadow-lg theme-card border theme-border z-50 py-1.5 animate-fadeIn">
-                        <button onclick="changeTheme('light')" class="w-full px-4 py-2 text-left text-xs font-bold flex items-center space-x-2.5 hover:bg-slate-100/50">
+                        <button class="w-full px-4 py-2 text-left text-xs font-bold flex items-center space-x-2.5 hover:bg-slate-100/50">
                             <span class="w-3.5 h-3.5 rounded-full bg-blue-500 border border-white shadow-sm"></span>
                             <span>☀️ Klasik Aydınlık</span>
                         </button>
-                        <button onclick="changeTheme('dark')" class="w-full px-4 py-2 text-left text-xs font-bold flex items-center space-x-2.5 hover:bg-slate-100/50">
+                        <button class="w-full px-4 py-2 text-left text-xs font-bold flex items-center space-x-2.5 hover:bg-slate-100/50">
                             <span class="w-3.5 h-3.5 rounded-full bg-indigo-900 border border-white shadow-sm"></span>
                             <span>🌙 Gece Mavisi</span>
                         </button>
-                        <button onclick="changeTheme('emerald')" class="w-full px-4 py-2 text-left text-xs font-bold flex items-center space-x-2.5 hover:bg-slate-100/50">
+                        <button class="w-full px-4 py-2 text-left text-xs font-bold flex items-center space-x-2.5 hover:bg-slate-100/50">
                             <span class="w-3.5 h-3.5 rounded-full bg-emerald-600 border border-white shadow-sm"></span>
                             <span>🌲 Akademi Yeşili</span>
                         </button>
-                        <button onclick="changeTheme('sunset')" class="w-full px-4 py-2 text-left text-xs font-bold flex items-center space-x-2.5 hover:bg-slate-100/50">
+                        <button class="w-full px-4 py-2 text-left text-xs font-bold flex items-center space-x-2.5 hover:bg-slate-100/50">
                             <span class="w-3.5 h-3.5 rounded-full bg-orange-500 border border-white shadow-sm"></span>
                             <span>🍁 Gün Batımı</span>
                         </button>
@@ -228,7 +228,7 @@
     </header>
     
     <!-- Yukarı Çık Butonu -->
-    <button id="scrollToTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+    <button id="scrollToTopBtn" >
         <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -296,7 +296,7 @@
             <!-- Bağlantılar Giriş Kartları -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Eğitim İçerikleri Kartı (Artık İnteraktif Sosyal Medya Seçiciyi Açar) -->
-                <button onclick="openSocialModal()" class="group theme-card border p-5 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-blue-400">
+                <button class="group theme-card border p-5 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-blue-400">
                     <div class="flex items-center justify-between mb-2">
                         <div class="flex gap-0">
                             <div class="text-rose-500 bg-rose-50 w-10 h-10 rounded-l-xl flex items-center justify-center text-lg"><i class="fab fa-instagram"></i></div>
@@ -308,7 +308,7 @@
                     <p class="text-sm theme-text-muted font-medium">Sosyal mecralarda paylaştığım pratik matematik ipuçları, video çözümleri ve ders anlatımları.</p>
                 </button>
 
-                <button onclick="switchTab('materials')" class="group theme-card border p-5 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-blue-400">
+                <button class="group theme-card border p-5 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-blue-400">
                     <div class="flex items-center justify-between mb-2">
                         <div class="text-amber-500 bg-amber-50 w-10 h-10 rounded-xl flex items-center justify-center text-lg"><i class="fas fa-folder-open"></i></div>
                         <span class="text-xs font-bold theme-text-muted group-hover:theme-accent-text transition-colors">Dökümanları Gör <i class="fas fa-arrow-right ml-1"></i></span>
@@ -318,7 +318,7 @@
                 </button>
 
                 <!-- Birebir & Online Ders Kartı (Yeni Detaylı Modalı Açar) -->
-                <button onclick="openOnlineCourseModal()" class="group theme-card border p-5 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-blue-400">
+                <button class="group theme-card border p-5 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-blue-400">
                     <div class="flex items-center justify-between mb-2">
                         <div class="text-emerald-600 bg-emerald-50 w-10 h-10 rounded-xl flex items-center justify-center text-lg"><i class="fas fa-video"></i></div>
                         <span class="text-xs font-bold theme-text-muted group-hover:theme-accent-text transition-colors">Programı İncele <i class="fas fa-arrow-right ml-1"></i></span>
@@ -327,7 +327,7 @@
                     <p class="text-sm theme-text-muted font-medium">LGS, YKS hazırlık veya okul derslerine takviye için kişiye özel online matematik programları.</p>
                 </button>
 
-                <button onclick="openContactModal()" class="group theme-card border p-5 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-blue-400">
+                <button class="group theme-card border p-5 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-blue-400">
                     <div class="flex items-center justify-between mb-2">
                         <div class="theme-accent-text theme-accent-soft w-10 h-10 rounded-xl flex items-center justify-center text-lg"><i class="fas fa-envelope"></i></div>
                         <span class="text-xs font-bold theme-text-muted group-hover:theme-accent-text transition-colors">Mesaj Gönder <i class="fas fa-paper-plane ml-1"></i></span>
@@ -355,7 +355,7 @@
 
             <!-- 3 ANA KATEGORİ BUTONU -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <button onclick="openSubPage('ortaokul')" class="group theme-card border p-6 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-blue-500 flex flex-col justify-between h-40">
+                <button class="group theme-card border p-6 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-blue-500 flex flex-col justify-between h-40">
                     <div class="theme-accent-text theme-accent-soft w-10 h-10 rounded-xl flex items-center justify-center text-lg mb-2"><i class="fas fa-graduation-cap"></i></div>
                     <div>
                         <h3 class="text-lg font-bold theme-text-title group-hover:theme-accent-text transition-colors">Ortaokul</h3>
@@ -363,7 +363,7 @@
                     </div>
                 </button>
 
-                <button onclick="openSubPage('lise')" class="group theme-card border p-6 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-sky-500 flex flex-col justify-between h-40">
+                <button class="group theme-card border p-6 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-sky-500 flex flex-col justify-between h-40">
                     <div class="text-sky-500 bg-sky-50 w-10 h-10 rounded-xl flex items-center justify-center text-lg mb-2"><i class="fas fa-book-open"></i></div>
                     <div>
                         <h3 class="text-lg font-bold theme-text-title group-hover:text-sky-500 transition-colors">Lise</h3>
@@ -371,7 +371,7 @@
                     </div>
                 </button>
 
-                <button onclick="openSubPage('sinavlar')" class="group theme-card border p-6 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-amber-500 flex flex-col justify-between h-40">
+                <button class="group theme-card border p-6 rounded-2xl text-left transition-all shadow-sm hover:shadow-md hover:border-amber-500 flex flex-col justify-between h-40">
                     <div class="text-amber-500 bg-amber-50 w-10 h-10 rounded-xl flex items-center justify-center text-lg mb-2"><i class="fas fa-star"></i></div>
                     <div>
                         <h3 class="text-lg font-bold theme-text-title group-hover:theme-accent-text transition-colors">LGS & YKS Hazırlık</h3>
@@ -387,19 +387,19 @@
                 <h3 class="text-xl font-bold theme-accent-text"><i class="fas fa-chevron-right mr-2"></i>Ortaokul Sınıfları</h3>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                    <button onclick="showFiles('class5')" class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-blue-500 transition-all group">
+                    <button class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-blue-500 transition-all group">
                         <div class="w-12 h-12 bg-slate-500/5 group-hover:theme-accent-soft group-hover:theme-accent-text rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold theme-text-title transition-colors">5</div>
                         <h4 class="font-bold theme-text-body text-sm">5. Sınıf Matematik</h4>
                     </button>
-                    <button onclick="showFiles('class6')" class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-blue-500 transition-all group">
+                    <button class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-blue-500 transition-all group">
                         <div class="w-12 h-12 bg-slate-500/5 group-hover:theme-accent-soft group-hover:theme-accent-text rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold theme-text-title transition-colors">6</div>
                         <h4 class="font-bold theme-text-body text-sm">6. Sınıf Matematik</h4>
                     </button>
-                    <button onclick="showFiles('class7')" class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-blue-500 transition-all group">
+                    <button class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-blue-500 transition-all group">
                         <div class="w-12 h-12 bg-slate-500/5 group-hover:theme-accent-soft group-hover:theme-accent-text rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold theme-text-title transition-colors">7</div>
                         <h4 class="font-bold theme-text-body text-sm">7. Sınıf Matematik</h4>
                     </button>
-                    <button onclick="showFiles('class8')" class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-blue-600 transition-all group relative overflow-hidden">
+                    <button class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-blue-600 transition-all group relative overflow-hidden">
                         <div class="absolute inset-x-0 bottom-0 h-1 theme-btn-accent"></div>
                         <div class="w-12 h-12 theme-accent-soft theme-accent-text rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold transition-colors">8</div>
                         <h4 class="font-bold theme-text-title text-sm">8. Sınıf (LGS)</h4>
@@ -417,19 +417,19 @@
                 <h3 class="text-xl font-bold text-sky-500"><i class="fas fa-chevron-right mr-2"></i>Lise Sınıfları</h3>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                    <button onclick="showFiles('class9')" class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-sky-500 transition-all group">
+                    <button class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-sky-500 transition-all group">
                         <div class="w-12 h-12 bg-slate-500/5 group-hover:bg-sky-50 group-hover:text-sky-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold theme-text-title transition-colors">9</div>
                         <h4 class="font-bold theme-text-body text-sm">9. Sınıf Matematik</h4>
                     </button>
-                    <button onclick="showFiles('class10')" class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-sky-500 transition-all group">
+                    <button class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-sky-500 transition-all group">
                         <div class="w-12 h-12 bg-slate-500/5 group-hover:bg-sky-50 group-hover:text-sky-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold theme-text-title transition-colors">10</div>
                         <h4 class="font-bold theme-text-body text-sm">10. Sınıf Matematik</h4>
                     </button>
-                    <button onclick="showFiles('class11')" class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-sky-500 transition-all group">
+                    <button class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-sky-500 transition-all group">
                         <div class="w-12 h-12 bg-slate-500/5 group-hover:bg-sky-50 group-hover:text-sky-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold theme-text-title transition-colors">11</div>
                         <h4 class="font-bold theme-text-body text-sm">11. Sınıf Matematik</h4>
                     </button>
-                    <button onclick="showFiles('class12')" class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-sky-500 transition-all group">
+                    <button class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-sky-500 transition-all group">
                         <div class="w-12 h-12 bg-slate-500/5 group-hover:bg-sky-50 group-hover:text-sky-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold theme-text-title transition-colors">12</div>
                         <h4 class="font-bold theme-text-body text-sm">12. Sınıf Matematik</h4>
                     </button>
@@ -446,15 +446,15 @@
                 <h3 class="text-xl font-bold text-amber-600"><i class="fas fa-chevron-right mr-2"></i>LGS & YKS Hazırlık Merkezleri</h3>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <button onclick="showFiles('lgs_prep')" class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-amber-500 transition-all group">
+                    <button class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-amber-500 transition-all group">
                         <div class="w-12 h-12 bg-slate-500/5 group-hover:bg-amber-50 group-hover:text-amber-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold theme-text-title transition-colors"><i class="fas fa-bullseye"></i></div>
                         <h4 class="font-bold theme-text-title text-sm">LGS Matematik</h4>
                     </button>
-                    <button onclick="showFiles('tyt_prep')" class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-amber-500 transition-all group">
+                    <button class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-amber-500 transition-all group">
                         <div class="w-12 h-12 bg-slate-500/5 group-hover:bg-amber-50 group-hover:text-amber-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold theme-text-title transition-colors"><i class="fas fa-layer-group"></i></div>
                         <h4 class="font-bold theme-text-title text-sm">TYT Matematik</h4>
                     </button>
-                    <button onclick="showFiles('ayt_prep')" class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-amber-500 transition-all group">
+                    <button class="theme-card border p-5 rounded-2xl text-center shadow-sm hover:border-amber-500 transition-all group">
                         <div class="w-12 h-12 bg-slate-500/5 group-hover:bg-amber-50 group-hover:text-amber-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-extrabold theme-text-title transition-colors"><i class="fas fa-infinity"></i></div>
                         <h4 class="font-bold theme-text-title text-sm">AYT Matematik</h4>
                     </button>
@@ -473,7 +473,7 @@
     <div id="online-course-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
         <div class="theme-card border theme-border rounded-3xl max-w-lg w-full p-6 shadow-2xl relative animate-fadeIn max-h-[90vh] overflow-y-auto">
             <!-- Kapatma Butonu -->
-            <button onclick="closeOnlineCourseModal()" class="absolute top-4 right-4 text-slate-400 hover:text-red-500 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-500/10">
+            <button class="absolute top-4 right-4 text-slate-400 hover:text-red-500 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-500/10">
                 <i class="fas fa-times text-lg"></i>
             </button>
 
@@ -531,7 +531,7 @@
                 </div>
 
                 <!-- Ön Başvuru Butonu -->
-                <button onclick="triggerApplicationFromModal()" class="w-full theme-btn-accent font-bold py-3 rounded-2xl text-xs shadow-md flex items-center justify-center space-x-2">
+                <button class="w-full theme-btn-accent font-bold py-3 rounded-2xl text-xs shadow-md flex items-center justify-center space-x-2">
                     <i class="fas fa-file-signature"></i>
                     <span>Hemen Ön Başvuru Yap</span>
                 </button>
@@ -545,7 +545,7 @@
     <div id="social-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
         <div class="theme-card border theme-border rounded-3xl max-w-md w-full p-6 shadow-2xl relative animate-fadeIn">
             <!-- Kapatma Butonu -->
-            <button onclick="closeSocialModal()" class="absolute top-4 right-4 text-slate-400 hover:text-red-500 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-500/10">
+            <button class="absolute top-4 right-4 text-slate-400 hover:text-red-500 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-500/10">
                 <i class="fas fa-times text-lg"></i>
             </button>
 
@@ -593,7 +593,7 @@
     <div id="contact-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
         <div class="theme-card border theme-border rounded-3xl max-w-md w-full p-6 shadow-2xl relative animate-fadeIn">
             <!-- Kapatma Butonu -->
-            <button onclick="closeContactModal()" class="absolute top-4 right-4 text-slate-400 hover:text-red-500 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-500/10">
+            <button class="absolute top-4 right-4 text-slate-400 hover:text-red-500 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-500/10">
                 <i class="fas fa-times text-lg"></i>
             </button>
 
@@ -649,7 +649,7 @@
                     </a>
                     
                     <!-- E-POSTA KOPYALAYICI -->
-                    <button onclick="copyMailToClipboard(this)" class="flex items-center justify-center space-x-1.5 p-3 bg-slate-500/5 hover:bg-slate-500/10 border theme-border theme-text-title rounded-2xl transition-all shadow-sm font-bold text-xs">
+                    <button class="flex items-center justify-center space-x-1.5 p-3 bg-slate-500/5 hover:bg-slate-500/10 border theme-border theme-text-title rounded-2xl transition-all shadow-sm font-bold text-xs">
                         <i class="far fa-copy text-sm"></i>
                         <span>E-Postayı Kopyala</span>
                     </button>
@@ -662,8 +662,8 @@
     <footer class="w-full text-center py-6 border-t theme-border theme-card text-xs theme-text-muted font-medium tracking-wide">
         &copy; 2026 Ahmet Baş. Matematik ile Kalın.
     </footer>
-
-    <!-- INTERAKTIF JAVASCRIPT KONTROLLERİ -->
+    
+    <!-- İNTERAKTİF JAVASCRİPT KODLARINI ÇAĞIRIR -->
     <script type="module" src="main.js"></script>
 
 </body>
