@@ -308,19 +308,20 @@ function loadClassLinks(classCode) {
 
 // Tek bir sınıfı render eden düzeltilmiş fonksiyon
 function buildSingleDOMList(classCode, files) {
-    const classInfo = {
-        'class5': { name: '5. Sınıf', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
-        'class6': { name: '6. Sınıf', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
-        'class7': { name: '7. Sınıf', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
-        'class8': { name: '8. Sınıf (LGS)', target: 'harici-ortaokul-listesi', icon: 'fa-star text-amber-500' },
-        'class9': { name: '9. Sınıf', target: 'harici-lise-listesi', icon: 'fa-folder-open' },
-        'class10': { name: '10. Sınıf', target: 'harici-lise-listesi', icon: 'fa-folder-open' },
-        'class11': { name: '11. Sınıf', target: 'harici-lise-listesi', icon: 'fa-folder-open' },
-        'class12': { name: '12. Sınıf', target: 'harici-lise-listesi', icon: 'fa-folder-open' },
-        'lgs_prep': { name: 'LGS Matematik Hazırlık', target: 'harici-sinav-listesi', icon: 'fa-bullseye' },
-        'tyt_prep': { name: 'TYT Matematik Hazırlık', target: 'harici-sinav-listesi', icon: 'fa-layer-group' },
-        'ayt_prep': { name: 'AYT Matematik Hazırlık', target: 'harici-sinav-listesi', icon: 'fa-infinity' }
-    };
+
+        const classInfo = {
+            'class05': { name: '5. Sınıf', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
+            'class06': { name: '6. Sınıf', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
+            'class07': { name: '7. Sınıf', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
+            'class08': { name: '8. Sınıf', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
+            'class09': { name: '9. Sınıf', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
+            'class10': { name: '10. Sınıf', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
+            'class11': { name: '11. Sınıf', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
+            'class12': { name: '12. Sınıf', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
+            'lgs': { name: 'LGS Sınıfı', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
+            'tyt': { name: 'TYT Sınıfı', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
+            'ayt': { name: 'AYT Sınıfı', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
+        };
 
     const item = classInfo[classCode];
     if (!item) return; // Hatalı classCode gelirse durdur
