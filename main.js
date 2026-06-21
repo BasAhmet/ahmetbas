@@ -1,5 +1,3 @@
-    <!-- INTERAKTIF JAVASCRIPT KONTROLLERİ -->
-        
         // Sayfa kaydırma kontrolü
         window.onscroll = function() {
             const btn = document.getElementById("scrollToTopBtn");
@@ -399,4 +397,19 @@
         document.getElementById('tab-btn-home').addEventListener('click', () => {
             switchTab('home');
         });
+        // main.js dosyasının en altına ekleyin:
+        window.switchTab = switchTab;
+        window.openSocialModal = openSocialModal;
+        window.openOnlineCourseModal = openOnlineCourseModal;
+        window.openContactModal = openContactModal;
+        window.closeContactModal = closeContactModal;
+        window.closeSocialModal = closeSocialModal;
+        window.closeOnlineCourseModal = closeOnlineCourseModal;
+        window.triggerApplicationFromModal = triggerApplicationFromModal;
+        window.copyMailToClipboard = copyMailToClipboard;
+        window.toggleThemeDropdown = toggleThemeDropdown;
+        window.changeTheme = changeTheme;
+        window.openSubPage = openSubPage;
+        window.showFiles = showFiles;
+        window.filterFiles = filterFiles;
 
