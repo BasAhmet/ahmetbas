@@ -392,4 +392,3 @@ function buildSingleDOMList(classCode, files) {
 
         window.loadClassLinks = loadClassLinks; 
         window.loadLinksForClass = loadClassLinks; // HTML'deki ismiyle eşleşmesi için
-
