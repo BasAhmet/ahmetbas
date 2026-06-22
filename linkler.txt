@@ -22,6 +22,7 @@ lgs_prep | 2022 LGS Matematik Soruları ve Cevap Anahtarı | https://drive.googl
 lgs_prep | 2021 LGS Matematik Soruları ve Cevap Anahtarı | https://drive.google.com/file/d/1usfA-geEZnSFXLY4050kbwiIZ_yjhr6E/view?usp=drive_link | 1,8 MB
 lgs_prep | 2020 LGS Matematik Soruları ve Cevap Anahtarı | https://drive.google.com/file/d/1SNqQ9aNdGerxcRDycwKb1n2glNXrovnF/view?usp=drive_link | 3,6 MB
 
+tyt_prep | 2025 TYT Matematik Soruları ve Cevap Anahtarı | https://drive.google.com/file/d/1940l3XGJ_tiCED1Jo-cz_GDfJtsZ6wLx/view?usp=drive_link | 1,4 MB
 tyt_prep | 2025 TYT Matematik Soruları ve Cevap Anahtarı | https://drive.google.com/file/d/1eERHaTrXzHsgTGrn02GftW6eCo3KHpAg/view?usp=drive_link | 1,6 MB
 tyt_prep | 2024 TYT Matematik Soruları ve Cevap Anahtarı | https://drive.google.com/file/d/10bNaOWch-SW7PWMkXC2P1vaAewy-X7Lk/view?usp=drive_link | 1,3 MB
 tyt_prep | 2023 TYT Matematik Soruları ve Cevap Anahtarı | https://drive.google.com/file/d/12hvLLF-dRYYjv2kNIe-eDnU9R6NEAMpi/view?usp=drive_link | 1,1 MB
@@ -29,6 +30,7 @@ tyt_prep | 2022 TYT Matematik Soruları ve Cevap Anahtarı | https://drive.googl
 tyt_prep | 2021 TYT Matematik Soruları ve Cevap Anahtarı | https://drive.google.com/file/d/18P0-Xed4C6VbfVe4StjKfVzLPIyhy3v8/view?usp=drive_link | 1,5 MB
 tyt_prep | 2020 TYT Matematik Soruları ve Cevap Anahtarı | https://drive.google.com/file/d/1A1XR-kURTvCx189oVxjxViAkVEJhlW4Y/view?usp=drive_link | 908 KB
 
+ayt_prep | 2025 AYT Matematik Soruları ve Cevap Anahtarı | https://drive.google.com/file/d/174c0tJfNkyzhmDVNEykZA-TRxFIiaz8b/view?usp=drive_link | 1,3 MB
 ayt_prep | 2025 AYT Matematik Soruları ve Cevap Anahtarı | https://drive.google.com/file/d/1Kv8sVrahRyKnVK3YOlPpRqH38G0xqH-B/view?usp=drive_link | 805 KB
 ayt_prep | 2024 AYT Matematik Soruları ve Cevap Anahtarı | https://drive.google.com/file/d/1tYF-u8YQfjIO53OYsJXpzYO0yMpmNrdG/view?usp=drive_link | 884 KB
 ayt_prep | 2023 AYT Matematik Soruları ve Cevap Anahtarı | https://drive.google.com/file/d/1hzrvNkYzzEJ3_ds9mSS_72cjoZKeAwMY/view?usp=drive_link | 1,0 MB
