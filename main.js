@@ -172,152 +172,141 @@
         }
 
         // MOTİVASYON SÖZÜ MOTORU
-        function loadMotivationalQuote() {
-            fetch('motivasyon.txt')
-                .then(response => {
-                    if (!response.ok) throw new Error('Yüklenemedi');
-                    return response.text();
-                })
-                .then(text => {
-                    if (isHTML(text)) throw new Error('Geçersiz TXT formatı.');
-                    const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0 && !l.startsWith('#'));
-                    if (lines.length > 0) {
-                        const randomLine = lines[Math.floor(Math.random() * lines.length)];
-                        document.getElementById('motivational-quote').innerText = `"${randomLine}"`;
-                    } else {
-                        throw new Error('Dosya boş.');
-                    }
-                })
-                .catch(err => {
-                    const fallbackQuotes = [
-                        "Bugün çözemediğin soru yarınki başarın olacak.",
-                        "Hatalar, matematiğin en güzel öğrenme yoludur.",
-                        "Bugünkü azmin, yarınki netlerini belirler!",
-                        "Matematikle aranı iyi tut, o seni yarı yolda bırakmaz."
-                    ];
-                    const randomQuote = fallbackQuotes[Math.floor(Math.random() * fallbackQuotes.length)];
-                    document.getElementById('motivational-quote').innerText = `"${randomQuote}"`;
-                });
+async function loadMotivationalQuote() {
+    // Sizin verdiğiniz motivasyon sözleri CSV linki
+    const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSCRYFI5C-6AxkSHMmh3BdfAJg3dVxwXt3nJ0hgzgwxuJWrlcS-J6rYKvfMNrfb7PuzqGV7aHcAYBp-/pub?gid=1922758547&single=true&output=csv';
+
+    try {
+        const response = await fetch(csvUrl);
+        if (!response.ok) throw new Error('Yüklenemedi');
+        
+        const text = await response.text();
+        const lines = text.split('\n');
+        
+        // CSV'deki verileri bir diziye alıyoruz (1. satır başlık olduğu için i=1'den başlıyoruz)
+        const quotes = [];
+        for (let i = 1; i < lines.length; i++) {
+            const quote = lines[i].trim();
+            if (quote) quotes.push(quote);
         }
+
+        if (quotes.length > 0) {
+	    let randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+	    randomQuote = randomQuote.replace(/^"|"$/g, '');
+            document.getElementById('motivational-quote').innerText = `"${randomQuote}"`;
+        } else {
+            throw new Error('Dosya boş.');
+        }
+    } catch (err) {
+        console.warn("Motivasyon sözü çekilemedi, yedek sözler kullanılıyor:", err);
+        // Hata durumunda yedek sözler
+        const fallbackQuotes = [
+            "Bugün çözemediğin soru yarınki başarın olacak.",
+            "Hatalar, matematiğin en güzel öğrenme yoludur."
+        ];
+        const randomQuote = fallbackQuotes[Math.floor(Math.random() * fallbackQuotes.length)];
+        document.getElementById('motivational-quote').innerText = `"${randomQuote}"`;
+    }
+}
 
         // AKILLI EN GÜNCEL BULMACA SEÇİCİ MOTOR
-        function loadBulmaca() {
-            fetch('bulmaca.txt')
-                .then(response => {
-                    if (!response.ok) throw new Error('Yüklenemedi');
-                    return response.text();
-                })
-                .then(text => {
-                    if (isHTML(text)) throw new Error('Geçersiz TXT formatı.');
-                    
-                    const lines = text.split('\n');
-                    const questions = [];
-                    let currentQuestion = null;
-                    let currentIpucu = null;
+async function loadBulmaca() {
+    // 1. ADIM: Linkin sonunu &output=csv yerine &output=tsv yapın
+    const tsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSCRYFI5C-6AxkSHMmh3BdfAJg3dVxwXt3nJ0hgzgwxuJWrlcS-J6rYKvfMNrfb7PuzqGV7aHcAYBp-/pub?gid=298081800&single=true&output=tsv';
 
-                    lines.forEach(line => {
-                        const trimmed = line.trim();
-                        if (!trimmed || trimmed.startsWith('#')) return;
+    try {
+        const response = await fetch(tsvUrl);
+        if (!response.ok) throw new Error('Yüklenemedi');
+        
+        const text = await response.text();
+        const lines = text.split('\n');
+        const questions = [];
 
-                        if (trimmed.startsWith('SORU |')) {
-                            // Eğer yeni bir soru satırı geldiyse ve önceki soru yarım kaldıysa kaydet
-                            if (currentQuestion) {
-                                questions.push({ soru: currentQuestion, ipucu: currentIpucu });
-                            }
-                            currentQuestion = trimmed.replace('SORU |', '').trim();
-                            currentIpucu = null;
-                        } else if (trimmed.startsWith('IPUCU |')) {
-                            currentIpucu = trimmed.replace('IPUCU |', '').trim();
-                        }
-                    });
+        for (let i = 1; i < lines.length; i++) {
+            const line = lines[i].trim();
+            if (!line) continue;
 
-                    // En son taranan soruyu da listeye ekle
-                    if (currentQuestion) {
-                        questions.push({ soru: currentQuestion, ipucu: currentIpucu });
-                    }
-
-                    if (questions.length > 0) {
-                    // HER ZAMAN EN SONDAKİ (EN GÜNCEL) SORUYU SEÇER
-                    const latest = questions[questions.length - 1];
-                    document.getElementById('bulmaca-soru').innerHTML = latest.soru;
-                
-                    // YENİ İPUCU MANTIĞI
-                        const ipucuEl = document.getElementById('bulmaca-ipucu');
-                    // flex-col (dikey dizilim) ve items-end (içeriği sağa yasla) kullanıyoruz
-                    // !text-right ve !important kullanarak tüm hizalama kurallarını eziyoruz
-                    const whatsappMetni = `<p style="font-style: italic; text-align: right; max-width: 900px;"> Cevaplarınızı WhatsApp üzerinden bekliyorum.</p>`;
-                    
-                    if (latest.ipucu) {
-                        ipucuEl.innerHTML = latest.ipucu + "<br>" + whatsappMetni;
-                    } else {
-                        ipucuEl.innerHTML = "Bu hafta için bir ipucu eklenmemiş. Kendine güveniyorsan çözmeye başla!<br>" + whatsappMetni;
-                    }
-            } 
-                    typesetMath();
-                })
-                .catch(err => {
-                    console.warn('Bulmaca dosyası okunamadı, gömülü soru yükleniyor:', err.message);
-                    const fallbackSoru = "Bir çiftçi pazar yerine gitmek üzere yola çıkıyor. Yolun $\\frac{1}{3}$'ünü gittikten sonra mola veriyor. Moladan sonra kalan yolun yarısını gittiğinde geriye $12\\text{ km}$ yolu kaldığını fark ediyor. Çiftçinin toplam yolu kaç kilometredir?";
-                    const fallbackIpucu = `<i class="fas fa-lightbulb mr-2 text-sm text-amber-500"></i> Çiftçinin toplam yoluna $x$ km diyerek rasyonel sayılarla denklem kurmayı deneyin! Cevabınızı bana WhatsApp üzerinden ulaştırabilirsiniz.`;
-                    
-                    document.getElementById('bulmaca-soru').innerHTML = fallbackSoru;
-                    document.getElementById('bulmaca-ipucu').innerHTML = fallbackIpucu;
-                    
-                    typesetMath();
+            // 2. ADIM: BURAYI DEĞİŞTİRDİK
+            // Virgül (,) yerine \t (tab) kullandık. Bu sayede soru içindeki virgüller karışmaz.
+            const [soru, ipucu] = line.split('\t'); 
+            
+            if (soru) {
+                questions.push({ 
+                    soru: soru.trim(), 
+                    ipucu: ipucu ? ipucu.trim() : null 
                 });
+            }
         }
+
+        if (questions.length > 0) {
+            const latest = questions[questions.length - 1];
+            document.getElementById('bulmaca-soru').innerHTML = latest.soru;
+
+            const ipucuEl = document.getElementById('bulmaca-ipucu');
+            const whatsappMetni = `<p style="font-style: italic; text-align: right; max-width: 900px;"> Cevaplarınızı WhatsApp üzerinden bekliyorum.</p>`;
+            
+            ipucuEl.innerHTML = (latest.ipucu && latest.ipucu !== "null") ? latest.ipucu + "<br>" + whatsappMetni : "Bu hafta için bir ipucu eklenmemiş.<br>" + whatsappMetni;
+        }
+        
+        if (typeof typesetMath === 'function') typesetMath();
+
+    } catch (err) {
+        console.error('Hata:', err);
+    }
+}
 
         // DÖKÜMAN LİNKLERİ MOTORU
-        function loadAndGenerateLinks() {
-            fetch('linkler.txt')
-                .then(response => {
-                    if (!response.ok) throw new Error('Yüklenemedi');
-                    return response.text();
-                })
-                .then(text => {
-                    if (isHTML(text)) throw new Error('Geçersiz TXT formatı.');
-                    const lines = text.split('\n');
-                    const collections = {};
+        async function loadAndGenerateLinks() {
+    const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSCRYFI5C-6AxkSHMmh3BdfAJg3dVxwXt3nJ0hgzgwxuJWrlcS-J6rYKvfMNrfb7PuzqGV7aHcAYBp-/pub?gid=0&single=true&output=csv';
 
-                    lines.forEach(line => {
-                        if (!line.trim() || line.startsWith('#')) return;
-                        const parts = line.split('|').map(p => p.trim());
-                        if (parts.length >= 3) {
-                            const [targetClass, title, url, size] = parts;
-                            const fileSize = size || 'Belirtilmedi';
+    try {
+        const response = await fetch(csvUrl);
+        if (!response.ok) throw new Error('Veri yüklenemedi');
+        
+        const text = await response.text();
+        const lines = text.split('\n'); // Satırlara ayır
+        const collections = {};
 
-                            if (!collections[targetClass]) {
-                                collections[targetClass] = [];
-                            }
-                            collections[targetClass].push({ title, url, fileSize });
-                        }
-                    });
+        // 1. satır başlık olduğu için i=1'den başlıyoruz
+        for (let i = 1; i < lines.length; i++) {
+            const line = lines[i].trim();
+            if (!line) continue;
 
-                    buildDOMLists(collections);
-                })
-                .catch(err => {
-                    const fallbackData = {
-                        'class8': [
-                            { title: '2026 LGS Matematik Soruları ve Çözümleri', url: 'https://drive.google.com/file/d/17SrsxuWtvDVo_6AyL6BOdgQVEn6Io0Gw/view?usp=sharing', fileSize: '2.1 MB' }
-                        ]
-                    };
-                    buildDOMLists(fallbackData);
+            // CSV olduğu için virgülle parçalıyoruz
+            const [targetClass, title, url, size] = line.split(',');
+
+            if (targetClass && title && url) {
+                if (!collections[targetClass]) {
+                    collections[targetClass] = [];
+                }
+                collections[targetClass].push({ 
+                    title: title.trim(), 
+                    url: url.trim(), 
+                    fileSize: size ? size.trim() : 'Belirtilmedi' 
                 });
+            }
         }
+
+        buildDOMLists(collections);
+    } catch (err) {
+        console.error("API'den veri alınamadı:", err);
+        // İsterseniz buraya yedek verilerinizi ekleyebilirsiniz
+    }
+}
 
         function buildDOMLists(collections) {
             const classCodes = [
-                { code: 'class5', name: '5. Sınıf', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
-                { code: 'class6', name: '6. Sınıf', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
-                { code: 'class7', name: '7. Sınıf', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
-                { code: 'class8', name: '8. Sınıf (LGS)', target: 'harici-ortaokul-listesi', icon: 'fa-star text-amber-500 animate-pulse' },
-                { code: 'class9', name: '9. Sınıf', target: 'harici-lise-listesi', icon: 'fa-folder-open' },
-                { code: 'class10', name: '10. Sınıf', target: 'harici-lise-listesi', icon: 'fa-folder-open' },
-                { code: 'class11', name: '11. Sınıf', target: 'harici-lise-listesi', icon: 'fa-folder-open' },
-                { code: 'class12', name: '12. Sınıf', target: 'harici-lise-listesi', icon: 'fa-folder-open' },
-                { code: 'lgs_prep', name: 'LGS Matematik Hazırlık', target: 'harici-sinav-listesi', icon: 'fa-bullseye' },
-                { code: 'tyt_prep', name: 'TYT Matematik Hazırlık', target: 'harici-sinav-listesi', icon: 'fa-layer-group' },
-                { code: 'ayt_prep', name: 'AYT Matematik Hazırlık', target: 'harici-sinav-listesi', icon: 'fa-infinity' }
+                { code: '5', name: '5. Sınıf', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
+                { code: '6', name: '6. Sınıf', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
+                { code: '7', name: '7. Sınıf', target: 'harici-ortaokul-listesi', icon: 'fa-folder-open' },
+                { code: '8', name: '8. Sınıf (LGS)', target: 'harici-ortaokul-listesi', icon: 'fa-star text-amber-500 animate-pulse' },
+                { code: '9', name: '9. Sınıf', target: 'harici-lise-listesi', icon: 'fa-folder-open' },
+                { code: '10', name: '10. Sınıf', target: 'harici-lise-listesi', icon: 'fa-folder-open' },
+                { code: '11', name: '11. Sınıf', target: 'harici-lise-listesi', icon: 'fa-folder-open' },
+                { code: '12', name: '12. Sınıf', target: 'harici-lise-listesi', icon: 'fa-folder-open' },
+                { code: 'lgs', name: 'LGS Matematik Hazırlık', target: 'harici-sinav-listesi', icon: 'fa-bullseye' },
+                { code: 'tyt', name: 'TYT Matematik Hazırlık', target: 'harici-sinav-listesi', icon: 'fa-layer-group' },
+                { code: 'ayt', name: 'AYT Matematik Hazırlık', target: 'harici-sinav-listesi', icon: 'fa-infinity' }
             ];
 
             classCodes.forEach(item => {
