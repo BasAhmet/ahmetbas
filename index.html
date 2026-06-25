@@ -672,10 +672,28 @@
     <!-- trlink kodları dış bağlantı reklamları -->
 <script type="text/javascript">
   var link_api_token = 'de3a75a93f4486f087f015a8cee8a98f04815618';
-  // Aşağıdaki satır, içinde 'drive.google' geçen tüm butonları zorla kısaltır:
-  var link_domains = ['drive.google.com', 'drive.google']; 
+  var link_exclude_domains = ['instagram.com', 'youtube.com', 'wa.me', 'ahmetbas.vercel.app'];
+
+  // Sitede sonradan oluşan (Google Sheets'ten gelen) linkleri yakalayan fonksiyon
+  function dinamikLinkleriKisalt() {
+    const tumLinkler = document.querySelectorAll('a');
+    tumLinkler.forEach(link => {
+      const href = link.href;
+      // Eğer link içinde drive geçiyorsa ve zaten kısaltılmamışsa
+      if (href.includes('drive.google') && !href.includes('aylink.co')) {
+        link.href = `https://aylink.co{link_api_token}&url=${encodeURIComponent(href)}`;
+      }
+    });
+  }
+
+  // Sayfadaki değişiklikleri sürekli izleyen gözlemci (Sheets verisi yüklenince tetiklenir)
+  const gozlemci = new MutationObserver(() => {
+    dinamikLinkleriKisalt();
+  });
+
+  // Sayfa gövdesini izlemeye alıyoruz
+  gozlemci.observe(document.body, { childList: true, subtree: true });
 </script>
-<script src='//aylink.co/full-api.js'></script>
 
     
 </body>
