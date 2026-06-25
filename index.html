@@ -670,11 +670,13 @@
     <script type="module" src="main.js"></script>
 
     <!-- trlink kodları dış bağlantı reklamları -->
-    <script type="text/javascript">
-var link_api_token = 'de3a75a93f4486f087f015a8cee8a98f04815618';
-var link_exclude_domains = ['bunukisaltma.com', 'bunudakisaltma.com'];
+<script type="text/javascript">
+  var link_api_token = 'de3a75a93f4486f087f015a8cee8a98f04815618';
+  // Aşağıdaki satır, içinde 'drive.google' geçen tüm butonları zorla kısaltır:
+  var link_domains = ['drive.google.com', 'drive.google']; 
 </script>
 <script src='//aylink.co/full-api.js'></script>
+
     
 </body>
 </html>
