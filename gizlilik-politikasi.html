@@ -178,27 +178,17 @@
 
                 <!-- ŞIK RENK MODU SEÇİCİ (DROPDOWN) -->
                 <div class="relative inline-block text-left">
-                    <button onclick="toggleThemeDropdown()" id="theme-menu-btn" class="w-9 h-9 flex items-center justify-center rounded-xl border theme-border theme-card theme-text-muted hover:theme-text-title transition-all" title="Renk Temasını Değiştir">
+                    <!-- Menü Butonu (onclick silindi) -->
+                    <button id="theme-menu-btn" class="w-9 h-9 ...">
                         <i class="fas fa-palette text-sm"></i>
                     </button>
-                    <!-- Açılır Menü -->
-                    <div id="theme-dropdown" class="hidden absolute right-0 mt-2 w-48 rounded-xl shadow-lg theme-card border theme-border z-50 py-1.5 animate-fadeIn">
-                        <button onclick="changeTheme('light')" class="w-full px-4 py-2 text-left text-xs font-bold flex items-center space-x-2.5 hover:bg-slate-100/50">
-                            <span class="w-3.5 h-3.5 rounded-full bg-blue-500 border border-white shadow-sm"></span>
-                            <span>☀️ Klasik Aydınlık</span>
-                        </button>
-                        <button onclick="changeTheme('dark')" class="w-full px-4 py-2 text-left text-xs font-bold flex items-center space-x-2.5 hover:bg-slate-100/50">
-                            <span class="w-3.5 h-3.5 rounded-full bg-indigo-900 border border-white shadow-sm"></span>
-                            <span>🌙 Gece Mavisi</span>
-                        </button>
-                        <button onclick="changeTheme('emerald')" class="w-full px-4 py-2 text-left text-xs font-bold flex items-center space-x-2.5 hover:bg-slate-100/50">
-                            <span class="w-3.5 h-3.5 rounded-full bg-emerald-600 border border-white shadow-sm"></span>
-                            <span>🌲 Akademi Yeşili</span>
-                        </button>
-                        <button onclick="changeTheme('sunset')" class="w-full px-4 py-2 text-left text-xs font-bold flex items-center space-x-2.5 hover:bg-slate-100/50">
-                            <span class="w-3.5 h-3.5 rounded-full bg-orange-500 border border-white shadow-sm"></span>
-                            <span>🍁 Gün Batımı</span>
-                        </button>
+                    
+                    <!-- Açılır Menü Butonları (onclick silindi, data-theme eklendi) -->
+                    <div id="theme-dropdown" class="hidden ...">
+                        <button data-theme="light" class="w-full ...">☀️ Klasik Aydınlık</button>
+                        <button data-theme="dark" class="w-full ...">🌙 Gece Mavisi</button>
+                        <button data-theme="emerald" class="w-full ...">🌲 Akademi Yeşili</button>
+                        <button data-theme="sunset" class="w-full ...">🍁 Gün Batımı</button>
                     </div>
                 </div>
             </div>
