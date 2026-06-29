@@ -170,12 +170,11 @@
             
             <div class="flex items-center space-x-3">
                     <nav class="flex space-x-1">
-                        <!-- Buton yerine 'a' etiketi kullandık ve href ekledik -->
-                        <a href="index.html" id="tab-btn-home" class="px-3.5 py-1.5 rounded-xl text-sm font-semibold transition-all theme-text-muted hover:theme-text-title hover:bg-slate-100/50 inline-block text-center">
+                        <!-- id="go-home-link" ekledik -->
+                        <a href="index.html" id="go-home-link" class="px-3.5 py-1.5 rounded-xl text-sm font-semibold transition-all theme-text-muted hover:theme-text-title hover:bg-slate-100/50 inline-block text-center">
                             Ana Sayfa
                         </a>
                     </nav>
-
 
                 <!-- ŞIK RENK MODU SEÇİCİ (DROPDOWN) -->
                 <div class="relative inline-block text-left">
@@ -309,6 +308,31 @@
         });
     });
 </script>
+<!-- Gizlilik Sayfasına Özel Çıkış Yüklenme Ekranı (İlk başta gizlidir: hidden) -->
+<div id="exit-loader" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/90 backdrop-blur-sm transition-opacity duration-300">
+    <div class="flex flex-col items-center space-y-4">
+        <div class="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+        <p class="text-white text-sm font-medium tracking-wide animate-pulse">Ana Sayfaya Geçiliyor...</p>
+    </div>
+</div>
+
+<script>
+document.getElementById('go-home-link').addEventListener('click', function(e) {
+    // 1. Tarayıcının sayfayı anında değiştirmesini durdur
+    e.preventDefault(); 
+    
+    // 2. Gizli olan yükleniyor ekranını görünür yap
+    const loader = document.getElementById('exit-loader');
+    loader.classList.remove('hidden');
+    
+    // 3. 400 milisaniye (salise) beklet, o sırada arka plan kararır ve animasyon döner
+    setTimeout(() => {
+        // 4. Süre bitince ana sayfaya pürüzsüzce geçiş yap
+        window.location.href = "index.html";
+    }, 400); 
+});
+</script>
+
 <!-- Çerez Onay Banner Bitişi -->
 
     
