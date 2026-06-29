@@ -1,4 +1,256 @@
-Gizlilik Politikası
+<!DOCTYPE html>
+<html lang="tr">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Etiketleri -->
+    <title>Ahmet Baş | Matematik Öğretmeni | LGS & TYT Hazırlık</title>
+    <link rel="icon" href="/favicon.png" sizes="any" />
+    <meta name="description" content="Ahmet Baş ile LGS ve TYT matematik hazırlığı. Ücretsiz çalışma kağıtları, yeni nesil soru bankaları ve matematik ders materyalleri ile başarınızı artırın.">
+    <meta name="keywords" content="matematik öğretmeni, LGS matematik, TYT matematik, matematik soru bankası, Ahmet Baş, özel ders, matematik çalışma kağıtları">
+    <meta name="author" content="Ahmet Baş">
+
+    <!-- Sosyal Medya Önizleme (Open Graph) -->
+    <meta property="og:title" content="Ahmet Baş | Matematik Öğretmeni">
+    <meta property="og:description" content="LGS ve TYT matematik hazırlığında ücretsiz materyaller ve pratik çözümler için sitemi ziyaret edin.">
+    <meta property="og:type" content="website">
+    
+    <!-- Tailwind CSS ve FontAwesome İkonları -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-87MVS0ZGXZ');
+</script>
+    <!-- Google adsens -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1818576194203212"
+     crossorigin="anonymous"></script>
+    
+    <!-- LATEX / MATHJAX MATEMATİKSEL BİÇİMLENDİRME ENTEGRASYONU -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        window.mathJaxReady = true;
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* Yukarı Çık Oku Stili */
+        #scrollToTopBtn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: none;
+            background-color: #2563eb;
+            color: white;
+            padding: 1rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 50;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        #scrollToTopBtn:hover { transform: scale(1.1); background-color: #1d4ed8; }
+    </style>
+    
+    <!-- ÇOKLU TEMA RENK DEĞİŞKENLERİ -->
+    <style>
+        /* 1. KLASİK AYDINLIK TEMASI */
+        body[data-theme="light"] {
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --text-title: #0f172a;
+            --text-body: #334155;
+            --text-muted: #64748b;
+            --border-ui: #e2e8f0;
+            --accent-soft: #eff6ff;
+            --accent-color: #2563eb;
+            --accent-border: #bfdbfe;
+            --btn-accent: #2563eb;
+            --btn-accent-hover: #1d4ed8;
+            --btn-accent-text: #ffffff;
+            --header-bg: rgba(255, 255, 255, 0.85);
+        }
+
+        /* 2. GECE MAVİSİ TEMASI (DARK MODE) */
+        body[data-theme="dark"] {
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --text-title: #f8fafc;
+            --text-body: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border-ui: #334155;
+            --accent-soft: #1e1b4b;
+            --accent-color: #818cf8;
+            --accent-border: #312e81;
+            --btn-accent: #6366f1;
+            --btn-accent-hover: #4f46e5;
+            --btn-accent-text: #ffffff;
+            --header-bg: rgba(30, 41, 59, 0.85);
+        }
+
+        /* 3. AKADEMİ YEŞİLİ TEMASI */
+        body[data-theme="emerald"] {
+            --bg-body: #f4fbf7;
+            --bg-card: #ffffff;
+            --text-title: #064e3b;
+            --text-body: #0f766e;
+            --text-muted: #115e59;
+            --border-ui: #ccfbf1;
+            --accent-soft: #f0fdf4;
+            --accent-color: #059669;
+            --accent-border: #a7f3d0;
+            --btn-accent: #059669;
+            --btn-accent-hover: #047857;
+            --btn-accent-text: #ffffff;
+            --header-bg: rgba(255, 255, 255, 0.85);
+        }
+
+        /* 4. SICAK GÜN BATIMI TEMASI */
+        body[data-theme="sunset"] {
+            --bg-body: #fffbeb;
+            --bg-card: #ffffff;
+            --text-title: #7c2d12;
+            --text-body: #9a3412;
+            --text-muted: #b45309;
+            --border-ui: #ffedd5;
+            --accent-soft: #fff7ed;
+            --accent-color: #ea580c;
+            --accent-border: #fed7aa;
+            --btn-accent: #ea580c;
+            --btn-accent-hover: #ca8a04;
+            --btn-accent-text: #ffffff;
+            --header-bg: rgba(255, 255, 255, 0.85);
+        }
+
+        /* TEMA ÖZEL SINIFLARI (TAILWIND İLE BÜTÜNLEŞİK) */
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-body);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .theme-header {
+            background-color: var(--header-bg);
+            border-color: var(--border-ui);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .theme-card {
+            background-color: var(--bg-card);
+            border-color: var(--border-ui);
+            color: var(--text-body);
+            transition: all 0.3s ease;
+        }
+        .theme-text-title { color: var(--text-title); transition: color 0.3s ease; }
+        .theme-text-body { color: var(--text-body); transition: color 0.3s ease; }
+        .theme-text-muted { color: var(--text-muted); transition: color 0.3s ease; }
+        .theme-border { border-color: var(--border-ui); transition: border-color 0.3s ease; }
+        .theme-accent-soft { background-color: var(--accent-soft); transition: background-color 0.3s ease; }
+        .theme-accent-text { color: var(--accent-color); transition: color 0.3s ease; }
+        .theme-btn-accent {
+            background-color: var(--btn-accent);
+            color: var(--btn-accent-text);
+            transition: all 0.3s ease;
+        }
+        .theme-btn-accent:hover {
+            background-color: var(--btn-accent-hover);
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .sub-content { display: none; }
+        .sub-content.active { display: block; }
+    </style>
+</head>
+<body data-theme="light" class="min-h-screen flex flex-col justify-between antialiased selection:bg-blue-500 selection:text-white">
+
+    <!-- ÜST MENÜ (NAVİGASYON) -->
+    <header class="border-b theme-header backdrop-blur sticky top-0 z-50 shadow-sm">
+        <div class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="font-bold text-lg tracking-tight flex items-center space-x-2 theme-text-title">
+                <span class="theme-accent-text"><i class="fas fa-calculator text-xl"></i></span>
+                <span>Ahmet Baş</span>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <nav class="flex space-x-1">
+                    <button onclick="switchTab('home')" id="tab-btn-home" class="px-3.5 py-1.5 rounded-xl text-sm font-semibold transition-all theme-text-muted hover:theme-text-title hover:bg-slate-100/50">
+                        Ana Sayfa
+                    </button>
+                    <button onclick="openSocialModal()" id="tab-btn-social" class="px-3.5 py-1.5 rounded-xl text-sm font-semibold transition-all theme-text-muted hover:theme-text-title hover:bg-slate-100/50">
+                        Sosyal Medya
+                    </button>
+                    <button onclick="switchTab('materials')" id="tab-btn-materials" class="px-3.5 py-1.5 rounded-xl text-sm font-semibold transition-all theme-text-muted hover:theme-text-title hover:bg-slate-100/50">
+                        Ders Materyalleri
+                    </button>
+                </nav>
+
+                <!-- ŞIK RENK MODU SEÇİCİ (DROPDOWN) -->
+                <div class="relative inline-block text-left">
+                    <button onclick="toggleThemeDropdown()" id="theme-menu-btn" class="w-9 h-9 flex items-center justify-center rounded-xl border theme-border theme-card theme-text-muted hover:theme-text-title transition-all" title="Renk Temasını Değiştir">
+                        <i class="fas fa-palette text-sm"></i>
+                    </button>
+                    <!-- Açılır Menü -->
+                    <div id="theme-dropdown" class="hidden absolute right-0 mt-2 w-48 rounded-xl shadow-lg theme-card border theme-border z-50 py-1.5 animate-fadeIn">
+                        <button onclick="changeTheme('light')" class="w-full px-4 py-2 text-left text-xs font-bold flex items-center space-x-2.5 hover:bg-slate-100/50">
+                            <span class="w-3.5 h-3.5 rounded-full bg-blue-500 border border-white shadow-sm"></span>
+                            <span>☀️ Klasik Aydınlık</span>
+                        </button>
+                        <button onclick="changeTheme('dark')" class="w-full px-4 py-2 text-left text-xs font-bold flex items-center space-x-2.5 hover:bg-slate-100/50">
+                            <span class="w-3.5 h-3.5 rounded-full bg-indigo-900 border border-white shadow-sm"></span>
+                            <span>🌙 Gece Mavisi</span>
+                        </button>
+                        <button onclick="changeTheme('emerald')" class="w-full px-4 py-2 text-left text-xs font-bold flex items-center space-x-2.5 hover:bg-slate-100/50">
+                            <span class="w-3.5 h-3.5 rounded-full bg-emerald-600 border border-white shadow-sm"></span>
+                            <span>🌲 Akademi Yeşili</span>
+                        </button>
+                        <button onclick="changeTheme('sunset')" class="w-full px-4 py-2 text-left text-xs font-bold flex items-center space-x-2.5 hover:bg-slate-100/50">
+                            <span class="w-3.5 h-3.5 rounded-full bg-orange-500 border border-white shadow-sm"></span>
+                            <span>🍁 Gün Batımı</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Yukarı Çık Butonu -->
+    <button id="scrollToTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- ANA İÇERİK ALANI -->
+    <main class="max-w-4xl mx-auto px-6 py-12 flex-grow w-full">
+        
+        <!-- 1. SEKME: ANA SAYFA -->
+        <div id="tab-home" class="tab-content active space-y-12 animate-fadeIn">
+            
+            <!-- Profil Üst Alanı -->
+            <div class="text-center">
+                <h1 class="text-4xl font-extrabold tracking-tight theme-text-title mb-1">Ahmet Baş</h1>
+                <h2 class="text-xl font-bold math-gradient mb-2">Matematik Öğretmeni & Eğitim İçeriği Üreticisi</h2>
+                
+                <!-- GÜNÜN MOTİVASYON SÖZÜ ALANI -->
+                <div class="max-w-md mx-auto py-1 px-4 mb-4">
+                    <p id="motivational-quote" class="text-xs italic font-semibold theme-text-muted transition-all duration-500 leading-relaxed">
+                      Gizlilik Politikası
 Son güncelleme: 29 Haziran 2026
 [ahmetbas.vercel.app] olarak, ziyaretçilerimizin gizliliğine ve kişisel verilerinin korunmasına büyük önem veriyoruz.
 Bu Gizlilik Politikası, web sitemizi ziyaret ettiğinizde hangi bilgilerin toplandığını, bu bilgilerin nasıl kullanıldığını ve güvenliğinin nasıl sağlandığını açıklamaktadır.
@@ -16,3 +268,53 @@ Kullanıcılar, Google Reklam ve İçerik Ağı Gizlilik Politikası sayfasını
 Toplanan verilerin güvenliğini sağlamak için gerekli teknik ve idari tedbirler alınmaktadır. Bilgileriniz yasal zorunluluklar haricinde, rızanız olmadan kesinlikle üçüncü şahıslarla paylaşılmaz veya satılmaz.
 5. İletişim
 Bu gizlilik politikası ile ilgili her türlü soru, görüş ve önerileriniz için ahba8184@gmail.com üzerinden bizimle iletişime geçebilirsiniz.
+                    </p>
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+    <!-- FOOTER -->
+    <footer class="w-full text-center py-6 border-t theme-border theme-card text-xs theme-text-muted font-medium tracking-wide">
+    <p>© 2026 Ahmet Baş. Matematik ile Kalın.</p>
+        <br>
+        <a href="gizlilik-politikasi.html">Gizlilik Politikası</a>
+    </footer>
+
+    <!-- INTERAKTIF JAVASCRIPT KONTROLLERİ -->
+    <!-- İNTERAKTİF JAVASCRİPT KODLARINI ÇAĞIRIR -->
+    
+    <script type="module" src="main.js"></script>
+
+    <!-- Çerez Onay Banner Başlangıcı -->
+<div id="cookie-banner" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; max-width: 450px; background: #1e293b; color: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); z-index: 9999; font-family: sans-serif; font-size: 14px; line-height: 1.5;">
+    <p style="margin: 0 0 15px 0;">
+        Sitemizde kullanıcı deneyimini geliştirmek, analitik ölçümler yapmak ve Google AdSense reklamları sunmak amacıyla çerezler kullanılmaktadır. Detaylı bilgi için <a href="gizlilik-politikasi.html" style="color: #38bdf8; text-decoration: underline;">Gizlilik Politikamızı</a> inceleyebilirsiniz.
+    </p>
+    <div style="display: flex; gap: 10px; justify-content: flex-end;">
+        <button id="accept-cookies" style="background: #38bdf8; color: #1e293b; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: background 0.2s;">Kabul Et</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Kullanıcı daha önce kabul etmiş mi kontrol et
+        if (!localStorage.getItem("cookiesAccepted")) {
+            document.getElementById("cookie-banner").style.display = "block";
+        }
+
+        // Butona tıklandığında banner'ı gizle ve seçimi kaydet
+        document.getElementById("accept-cookies").addEventListener("click", function () {
+            localStorage.setItem("cookiesAccepted", "true");
+            document.getElementById("cookie-banner").style.display = "none";
+        });
+    });
+</script>
+<!-- Çerez Onay Banner Bitişi -->
+
+    
+</body>
+</html>
