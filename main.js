@@ -9,39 +9,80 @@
         };
 
         // TEMA YÖNETİMİ
-        document.addEventListener("DOMContentLoaded", function() {
-            let savedTheme = 'light';
-            try {
-                savedTheme = localStorage.getItem('site-theme') || 'light';
-            } catch (e) {
-                console.warn('LocalStorage erişimi kısıtlı.');
-            }
-            changeTheme(savedTheme);
-            loadAndGenerateLinks();
-            loadMotivationalQuote();
-            loadBulmaca();
+document.addEventListener('DOMContentLoaded', () => {
+    const menuBtn = document.getElementById('theme-menu-btn');
+    const dropdown = document.getElementById('theme-dropdown');
+    const themeButtons = document.querySelectorAll('[data-theme]');
+
+    // Menüyü aç / kapat
+    menuBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Tıklamanın window'a yayılmasını engelle
+        dropdown.classList.toggle('hidden');
+    });
+
+    // Tema değiştirme işlevi
+    function changeTheme(themeName) {
+        document.body.className = '';
+        document.body.classList.add('theme-' + themeName);
+        dropdown.classList.add('hidden');
+        localStorage.setItem('selected-theme', themeName);
+    }
+
+    // Seçenek butonlarına tıklama olayını bağla
+    themeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const selectedTheme = button.getAttribute('data-theme');
+            changeTheme(selectedTheme);
         });
+    });
 
-        function toggleThemeDropdown() {
-            const dropdown = document.getElementById('theme-dropdown');
-            dropdown.classList.toggle('hidden');
+    // Boşluğa tıklayınca menüyü kapat
+    window.addEventListener('click', (e) => {
+        if (!menuBtn.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.classList.add('hidden');
         }
+    });
 
-        function changeTheme(themeName) {
-            document.body.setAttribute('data-theme', themeName);
-            try {
-                localStorage.setItem('site-theme', themeName);
-            } catch (e) {}
-            document.getElementById('theme-dropdown').classList.add('hidden');
-        }
+    // Kayıtlı temayı yükle
+    const savedTheme = localStorage.getItem('selected-theme');
+    if (savedTheme) {
+        changeTheme(savedTheme);
+    }
+});
 
-        window.addEventListener('click', function(e) {
-            const btn = document.getElementById('theme-menu-btn');
-            const dropdown = document.getElementById('theme-dropdown');
-            if (btn && !btn.contains(e.target) && dropdown && !dropdown.contains(e.target)) {
-                dropdown.classList.add('hidden');
-            }
-        });
+        //document.addEventListener("DOMContentLoaded", function() {
+        //    let savedTheme = 'light';
+        //    try {
+        //        savedTheme = localStorage.getItem('site-theme') || 'light';
+        //    } catch (e) {
+        //        console.warn('LocalStorage erişimi kısıtlı.');
+        //    }
+        //    changeTheme(savedTheme);
+        //    loadAndGenerateLinks();
+        //    loadMotivationalQuote();
+        //    loadBulmaca();
+        //});
+
+        //function toggleThemeDropdown() {
+        //   const dropdown = document.getElementById('theme-dropdown');
+        //    dropdown.classList.toggle('hidden');
+        //}
+
+        //function changeTheme(themeName) {
+        //    document.body.setAttribute('data-theme', themeName);
+        //    try {
+        //        localStorage.setItem('site-theme', themeName);
+        //    } catch (e) {}
+        //    document.getElementById('theme-dropdown').classList.add('hidden');
+        //}
+
+        //window.addEventListener('click', function(e) {
+        //    const btn = document.getElementById('theme-menu-btn');
+        //    const dropdown = document.getElementById('theme-dropdown');
+        //    if (btn && !btn.contains(e.target) && dropdown && !dropdown.contains(e.target)) {
+        //        dropdown.classList.add('hidden');
+        //    }
+        //});
 
         // MODAL KONTROLLERİ
         function openContactModal() {
