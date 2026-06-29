@@ -1,163 +1,6 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <title>Matematik Kültürü | Ahmet Baş</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
+   <!--  <script src="https://cdn.tailwindcss.com"></script> -->
 
-    <div class="max-w-6xl mx-auto px-4 py-12">
-        <h1 class="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-2">🧠 Matematik Kültürü Atlası</h1>
-        <p class="text-slate-600 dark:text-slate-400 mb-8">Formüllerin ötesine geçin, matematiğin hikayelerini keşfedin.</p>
-
-        <div id="yazi-listesi" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <p class="text-slate-500 dark:text-slate-400 col-span-full">Yazılar yükleniyor...</p>
-        </div>
-    </div>
-
-    <div id="cultureModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-xl">
-            <div class="p-6 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center sticky top-0 bg-white dark:bg-slate-800">
-                <h4 id="modalTitle" class="text-2xl font-bold text-slate-800 dark:text-slate-100"></h4>
-                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                </button>
-            </div>
-            <div id="modalContent" class="p-6 text-slate-600 dark:text-slate-300 space-y-4 leading-relaxed"></div>
-        </div>
-    </div>
-
-<script>
-    // Sizin Google Sheets Web Yayın Linkinizden üretilen API adresi
-    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR_zG8vD8tSXZydndgEq4rHHDqaHGoVMv4guOL8jeQ1MsL35VqWNwofTxXV_65W55XxgfWYO2ENq_j8/pub?gid=0&single=true&output=csv';
-
-    let tumYazilar = [];
-
-    // CSV formatındaki veriyi düzgün bir listeye çeviren yardımcı fonksiyon
-    function csvToArray(text) {
-        let p = '', r = [];
-        let q = false;
-        let row = [''];
-        for (let i = 0; i < text.length; i++) {
-            let c = text[i];
-            if (c === '"') { q = !q; continue; }
-            if (c === ',' && !q) { row.push(''); continue; }
-            if ((c === '\r' || c === '\n') && !q) {
-                if (c === '\n') {
-                    r.push(row);
-                    row = [''];
-                }
-                continue;
-            }
-            row[row.length - 1] += c;
-        }
-        if (row.length > 1 || row[0] !== '') r.push(row);
-        return r;
-    }
-
-    // Google Sheets'ten verileri anlık çeken fonksiyon
-    async function yazilariGetir() {
-        try {
-            const response = await fetch(SHEET_URL);
-            const text = await response.text();
-            
-            // Satırları ayır (İlk satır başlıklar olduğu için i=1'den başlıyoruz)
-            const rows = csvToArray(text);
-            
-            tumYazilar = [];
-            for (let i = 1; i < rows.length; i++) {
-                const row = rows[i];
-                if (row.length >= 4 && row[1]) { // Başlık boş değilse ekle
-                    tumYazilar.push({
-                        id: row[0] || i,
-                        baslik: row[1],
-                        ozet: row[2] || "Detaylar için tıklayın.",
-                        icerik: row[3],
-                        okumaSuresi: row[4] || "2",
-                        tarih: row[5] || ""
-                    });
-                }
-            }
-
-            kartlariEkranaBas(tumYazilar);
-        } catch (error) {
-            console.error("Veri çekilirken hata oluştu:", error);
-            document.getElementById('yazi-listesi').innerHTML = '<p class="text-red-500 col-span-full text-center">Yazılar şu anda yüklenemedi. Lütfen internet bağlantınızı veya tablo izinlerini kontrol edin.</p>';
-        }
-    }
-
-    // Kartları Tailwind CSS ile ekrana basan fonksiyon
-    function kartlariEkranaBas(yazilar) {
-        const listeAlani = document.getElementById('yazi-listesi');
-        listeAlani.innerHTML = ''; // "Yükleniyor" yazısını temizle
-
-        if(yazilar.length === 0) {
-            listeAlani.innerHTML = '<p class="text-slate-500 col-span-full text-center">Henüz eklenmiş bir yazı bulunamadı.</p>';
-            return;
-        }
-
-        yazilar.forEach((yazi, index) => {
-            listeAlani.innerHTML += `
-                <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col justify-between hover:shadow-md transition duration-200">
-                    <div>
-                        <div class="flex justify-between items-center mb-3">
-                            <span class="text-xs font-semibold text-amber-600 bg-amber-50 dark:bg-amber-900/20 dark:text-amber-400 px-2.5 py-1 rounded-full">${yazi.okumaSuresi} dk okuma</span>
-                            <span class="text-xs text-slate-400 dark:text-slate-500">${yazi.tarih}</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100 mb-2 leading-tight">${yazi.baslik}</h3>
-                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-4 line-clamp-3">${yazi.ozet}</p>
-                    </div>
-                    <button onclick="openModal(${index})" class="w-full py-2.5 px-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 font-medium rounded-xl transition text-sm">
-                        Yazıyı Oku
-                    </button>
-                </div>
-            `;
-        });
-    }
-
-    // Açılır Pencereyi (Modal) Yöneten Fonksiyonlar
-    function openModal(index) {
-        const yazi = tumYazilar[index];
-        document.getElementById('modalTitle').innerText = yazi.baslik;
-        
-        // İçerik kısmında satır satır <p> etiketleri oluşturarak metni düzenli gösterir
-        const duzgunIcerik = yazi.icerik.split('\n').map(paragraf => {
-            if(paragraf.trim() !== "") {
-                return `<p class="mb-4">${paragraf.trim()}</p>`;
-            }
-            return '';
-        }).join('');
-
-        document.getElementById('modalContent').innerHTML = duzgunIcerik;
-        document.getElementById('cultureModal').classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-        document.getElementById('cultureModal').classList.add('hidden');
-        document.body.style.overflow = '';
-    }
-
-    // Modal dışına tıklayınca kapatma
-    window.onclick = function(event) {
-        const modal = document.getElementById('cultureModal');
-        if (event.target == modal) {
-            closeModal();
-        }
-    }
-
-    // Sayfa yüklendiğinde çalıştır
-    yazilariGetir();
-</script>
-</body>
-</html>
-
-
-
-
-
-
+    
 <!DOCTYPE html>
 <html lang="tr">
 <head> 
@@ -165,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- SEO Meta Etiketleri -->
-    <title>Ahmet Baş | Matematik Öğretmeni | LGS & TYT Hazırlık</title>
+    <title>Matematik Kültürü | Ahmet Baş</title>
     <link rel="icon" href="/favicon.png" sizes="any" />
     <meta name="description" content="Ahmet Baş ile LGS ve TYT matematik hazırlığı. Ücretsiz çalışma kağıtları, yeni nesil soru bankaları ve matematik ders materyalleri ile başarınızı artırın.">
     <meta name="keywords" content="matematik öğretmeni, LGS matematik, TYT matematik, matematik soru bankası, Ahmet Baş, özel ders, matematik çalışma kağıtları">
@@ -427,38 +270,153 @@
                 </div>
             </div>
 
-            <!-- İnteraktif Bölüm: Haftanın Sorusu -->
-            <div class="theme-card border rounded-2xl p-6 shadow-sm relative overflow-hidden transition-all hover:shadow-md">
-    <div class="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-blue-500 to-indigo-500"></div>
-    
-    <div class="flex items-center space-x-3 mb-4">
-        <span class="flex h-3 w-3 relative">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
-        </span>
-        <h3 class="text-lg font-bold theme-text-title tracking-tight">🧠 Haftanın Matematik Bulmacası</h3>
-    </div>
-    
-    <p id="bulmaca-soru" class="theme-text-body text-sm leading-relaxed font-medium bg-slate-500/5 p-5 rounded-xl border theme-border mb-4">
-        Yükleniyor...
-    </p>
-    
-<div id="bulmaca-ipucu-container" class="flex items-start space-x-3 p-4 bg-amber-500/5 border border-amber-500/20 rounded-xl w-full">
-    <div class="text-amber-500 mt-0.5 flex-shrink-0">
-        <i class="fas fa-lightbulb text-lg"></i>
-    </div>
-    <div id="bulmaca-ipucu" class="text-xs theme-text-muted font-medium leading-relaxed w-full text-left">
-        <div></div>
-        <div class="italic mt-1 opacity-70">Cevaplarınızı WhatsApp üzerinden bekliyorum.</div>
-    </div>
-</div>
+            <!-- ----------------- -->
+            <!-- MATEMATİK KÜLTÜRÜ -->
+            <!-- ----------------- -->
+            
+<div class="max-w-6xl mx-auto px-4 py-12">
+        <h1 class="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-2">🧠 Matematik Kültürü Atlası</h1>
+        <p class="text-slate-600 dark:text-slate-400 mb-8">Formüllerin ötesine geçin, matematiğin hikayelerini keşfedin.</p>
 
+        <div id="yazi-listesi" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <p class="text-slate-500 dark:text-slate-400 col-span-full">Yazılar yükleniyor...</p>
+        </div>
+    </div>
 
-</div>
+    <div id="cultureModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-xl">
+            <div class="p-6 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center sticky top-0 bg-white dark:bg-slate-800">
+                <h4 id="modalTitle" class="text-2xl font-bold text-slate-800 dark:text-slate-100"></h4>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+            <div id="modalContent" class="p-6 text-slate-600 dark:text-slate-300 space-y-4 leading-relaxed"></div>
+        </div>
+    </div>
 
-            <!-- BOSLUK -->
-            <!-- BOSLUK -->
-            <!-- BOSLUK -->
+<script>
+    // Sizin Google Sheets Web Yayın Linkinizden üretilen API adresi
+    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR_zG8vD8tSXZydndgEq4rHHDqaHGoVMv4guOL8jeQ1MsL35VqWNwofTxXV_65W55XxgfWYO2ENq_j8/pub?gid=0&single=true&output=csv';
+
+    let tumYazilar = [];
+
+    // CSV formatındaki veriyi düzgün bir listeye çeviren yardımcı fonksiyon
+    function csvToArray(text) {
+        let p = '', r = [];
+        let q = false;
+        let row = [''];
+        for (let i = 0; i < text.length; i++) {
+            let c = text[i];
+            if (c === '"') { q = !q; continue; }
+            if (c === ',' && !q) { row.push(''); continue; }
+            if ((c === '\r' || c === '\n') && !q) {
+                if (c === '\n') {
+                    r.push(row);
+                    row = [''];
+                }
+                continue;
+            }
+            row[row.length - 1] += c;
+        }
+        if (row.length > 1 || row[0] !== '') r.push(row);
+        return r;
+    }
+
+    // Google Sheets'ten verileri anlık çeken fonksiyon
+    async function yazilariGetir() {
+        try {
+            const response = await fetch(SHEET_URL);
+            const text = await response.text();
+            
+            // Satırları ayır (İlk satır başlıklar olduğu için i=1'den başlıyoruz)
+            const rows = csvToArray(text);
+            
+            tumYazilar = [];
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+                if (row.length >= 4 && row[1]) { // Başlık boş değilse ekle
+                    tumYazilar.push({
+                        id: row[0] || i,
+                        baslik: row[1],
+                        ozet: row[2] || "Detaylar için tıklayın.",
+                        icerik: row[3],
+                        okumaSuresi: row[4] || "2",
+                        tarih: row[5] || ""
+                    });
+                }
+            }
+
+            kartlariEkranaBas(tumYazilar);
+        } catch (error) {
+            console.error("Veri çekilirken hata oluştu:", error);
+            document.getElementById('yazi-listesi').innerHTML = '<p class="text-red-500 col-span-full text-center">Yazılar şu anda yüklenemedi. Lütfen internet bağlantınızı veya tablo izinlerini kontrol edin.</p>';
+        }
+    }
+
+    // Kartları Tailwind CSS ile ekrana basan fonksiyon
+    function kartlariEkranaBas(yazilar) {
+        const listeAlani = document.getElementById('yazi-listesi');
+        listeAlani.innerHTML = ''; // "Yükleniyor" yazısını temizle
+
+        if(yazilar.length === 0) {
+            listeAlani.innerHTML = '<p class="text-slate-500 col-span-full text-center">Henüz eklenmiş bir yazı bulunamadı.</p>';
+            return;
+        }
+
+        yazilar.forEach((yazi, index) => {
+            listeAlani.innerHTML += `
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col justify-between hover:shadow-md transition duration-200">
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs font-semibold text-amber-600 bg-amber-50 dark:bg-amber-900/20 dark:text-amber-400 px-2.5 py-1 rounded-full">${yazi.okumaSuresi} dk okuma</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">${yazi.tarih}</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100 mb-2 leading-tight">${yazi.baslik}</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-4 line-clamp-3">${yazi.ozet}</p>
+                    </div>
+                    <button onclick="openModal(${index})" class="w-full py-2.5 px-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 font-medium rounded-xl transition text-sm">
+                        Yazıyı Oku
+                    </button>
+                </div>
+            `;
+        });
+    }
+
+    // Açılır Pencereyi (Modal) Yöneten Fonksiyonlar
+    function openModal(index) {
+        const yazi = tumYazilar[index];
+        document.getElementById('modalTitle').innerText = yazi.baslik;
+        
+        // İçerik kısmında satır satır <p> etiketleri oluşturarak metni düzenli gösterir
+        const duzgunIcerik = yazi.icerik.split('\n').map(paragraf => {
+            if(paragraf.trim() !== "") {
+                return `<p class="mb-4">${paragraf.trim()}</p>`;
+            }
+            return '';
+        }).join('');
+
+        document.getElementById('modalContent').innerHTML = duzgunIcerik;
+        document.getElementById('cultureModal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        document.getElementById('cultureModal').classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+
+    // Modal dışına tıklayınca kapatma
+    window.onclick = function(event) {
+        const modal = document.getElementById('cultureModal');
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+
+    // Sayfa yüklendiğinde çalıştır
+    yazilariGetir();
+</script>
 
     <!-- FOOTER -->
     <footer class="w-full text-center py-6 border-t theme-border theme-card text-xs theme-text-muted font-medium tracking-wide">
