@@ -94,6 +94,16 @@
         <div id="printAreaKarneler" class="hidden"></div>
     </div>
 
+    <script src="api.js"></script>
+
+<script>
+    // Örnek: Kaydet butonuna tıklandığında çalışan kısım
+    document.getElementById("btnSaveToDB").addEventListener("click", () => {
+        // 'reportData' burada sizin optik sonuçlarınızın bulunduğu değişken
+        saveActiveExamToDB(reportData); 
+    });
+</script>
+
     <script>
         let reportData = [];
         let currentExamTitle = "";
