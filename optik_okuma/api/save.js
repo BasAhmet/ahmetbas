@@ -45,3 +45,26 @@ export default async function handler(req, res) {
         return res.status(500).json({ error: error.message });
     }
 }
+// api.js
+async function saveActiveExamToDB(reportData) {
+    const webAppUrl = "https://script.google.com/macros/s/AKfycbzq_AUX-Ep0NM10bP-Yol83ODOWVehBqsXLW5BxnqjG8QJQn5h81CbzAPx0J9s85V68zA/exec";
+    
+    const btn = document.getElementById("btnSaveToDB");
+    if (btn) btn.innerText = "⏳ Gönderiliyor...";
+    
+    try {
+        const response = await fetch(webAppUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ students: reportData })
+        });
+        
+        alert("✅ Başarılı! Veriler Google Sheets'e kaydedildi.");
+    } catch (error) {
+        console.error("Kayıt hatası:", error);
+        alert("❌ Bir hata oluştu, lütfen tekrar deneyin.");
+    } finally {
+        if (btn) btn.innerText = "💾 Google Sheets'e Kaydet";
+    }
+}
