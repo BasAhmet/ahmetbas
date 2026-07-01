@@ -691,32 +691,40 @@
     
     <script type="module" src="main.js"></script>
 
-    <!-- Çerez Onay Banner Başlangıcı -->
+<!-- Gelişmiş Çerez Onay Banner Başlangıcı -->
 <div id="cookie-banner" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; max-width: 450px; background: #1e293b; color: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); z-index: 9999; font-family: sans-serif; font-size: 14px; line-height: 1.5;">
     <p style="margin: 0 0 15px 0;">
         Sitemizde kullanıcı deneyimini geliştirmek, analitik ölçümler yapmak ve Google AdSense reklamları sunmak amacıyla çerezler kullanılmaktadır. Detaylı bilgi için <a href="gizlilik-politikasi.html" style="color: #38bdf8; text-decoration: underline;">Gizlilik Politikamızı</a> inceleyebilirsiniz.
     </p>
     <div style="display: flex; gap: 10px; justify-content: flex-end;">
+        <button id="reject-cookies" style="background: transparent; color: #94a3b8; border: 1px solid #475569; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: all 0.2s;">Reddet</button>
         <button id="accept-cookies" style="background: #38bdf8; color: #1e293b; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: background 0.2s;">Kabul Et</button>
     </div>
 </div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Kullanıcı daha önce kabul etmiş mi kontrol et
-        if (!localStorage.getItem("cookiesAccepted")) {
+        // Kullanıcı daha önce bir seçim yapmış mı kontrol et
+        if (!localStorage.getItem("cookieChoice")) {
             document.getElementById("cookie-banner").style.display = "block";
         }
 
-        // Butona tıklandığında banner'ı gizle ve seçimi kaydet
+        // Kabul Et butonuna tıklandığında
         document.getElementById("accept-cookies").addEventListener("click", function () {
-            localStorage.setItem("cookiesAccepted", "true");
+            localStorage.setItem("cookieChoice", "accepted");
             document.getElementById("cookie-banner").style.display = "none";
+            // Burada isterseniz reklam ve analiz kodlarını çalıştırabilirsiniz
+        });
+
+        // Reddet butonuna tıklandığında
+        document.getElementById("reject-cookies").addEventListener("click", function () {
+            localStorage.setItem("cookieChoice", "rejected");
+            document.getElementById("cookie-banner").style.display = "none";
+            // Kullanıcı reddettiği için bar kapanır ve bir daha rahatsız edilmez
         });
     });
 </script>
-<!-- Çerez Onay Banner Bitişi -->
-
+<!-- Gelişmiş Çerez Onay Banner Bitişi -->
     
 </body>
 </html>
