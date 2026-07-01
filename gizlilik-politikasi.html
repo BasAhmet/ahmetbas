@@ -287,30 +287,40 @@
     });
 </script>
 <!-- Gizlilik Sayfasına Özel Çıkış Yüklenme Ekranı (İlk başta gizlidir: hidden) -->
-<div id="exit-loader" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/90 backdrop-blur-sm transition-opacity duration-300">
-    <div class="flex flex-col items-center space-y-4">
-        <div class="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
-        <p class="text-white text-sm font-medium tracking-wide animate-pulse">Ana Sayfaya Geçiliyor...</p>
+<!-- Gelişmiş Çerez Onay Banner Başlangıcı -->
+<div id="cookie-banner" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; max-width: 450px; background: #1e293b; color: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); z-index: 9999; font-family: sans-serif; font-size: 14px; line-height: 1.5;">
+    <p style="margin: 0 0 15px 0;">
+        Sitemizde kullanıcı deneyimini geliştirmek, analitik ölçümler yapmak ve Google AdSense reklamları sunmak amacıyla çerezler kullanılmaktadır. Detaylı bilgi için <a href="gizlilik-politikasi.html" style="color: #38bdf8; text-decoration: underline;">Gizlilik Politikamızı</a> inceleyebilirsiniz.
+    </p>
+    <div style="display: flex; gap: 10px; justify-content: flex-end;">
+        <button id="reject-cookies" style="background: transparent; color: #94a3b8; border: 1px solid #475569; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: all 0.2s;">Reddet</button>
+        <button id="accept-cookies" style="background: #38bdf8; color: #1e293b; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: background 0.2s;">Kabul Et</button>
     </div>
 </div>
 
 <script>
-document.getElementById('go-home-link').addEventListener('click', function(e) {
-    // 1. Tarayıcının sayfayı anında değiştirmesini durdur
-    e.preventDefault(); 
-    
-    // 2. Gizli olan yükleniyor ekranını görünür yap
-    const loader = document.getElementById('exit-loader');
-    loader.classList.remove('hidden');
-    
-    // 3. 400 milisaniye (salise) beklet, o sırada arka plan kararır ve animasyon döner
-    setTimeout(() => {
-        // 4. Süre bitince ana sayfaya pürüzsüzce geçiş yap
-        window.location.href = "index.html";
-    }, 400); 
-});
-</script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Kullanıcı daha önce bir seçim yapmış mı kontrol et
+        if (!localStorage.getItem("cookieChoice")) {
+            document.getElementById("cookie-banner").style.display = "block";
+        }
 
+        // Kabul Et butonuna tıklandığında
+        document.getElementById("accept-cookies").addEventListener("click", function () {
+            localStorage.setItem("cookieChoice", "accepted");
+            document.getElementById("cookie-banner").style.display = "none";
+            // Burada isterseniz reklam ve analiz kodlarını çalıştırabilirsiniz
+        });
+
+        // Reddet butonuna tıklandığında
+        document.getElementById("reject-cookies").addEventListener("click", function () {
+            localStorage.setItem("cookieChoice", "rejected");
+            document.getElementById("cookie-banner").style.display = "none";
+            // Kullanıcı reddettiği için bar kapanır ve bir daha rahatsız edilmez
+        });
+    });
+</script>
+<!-- Gelişmiş Çerez Onay Banner Bitişi -->
 <!-- Çerez Onay Banner Bitişi -->
 
     
