@@ -283,7 +283,21 @@
             <p class="text-slate-500 dark:text-slate-400 col-span-full">Yazılar yükleniyor...</p>
         </div>
     </div>
-
+<!------------------------------->
+    <div id="cultureModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="theme-card rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-xl">
+            <div class="p-6 border-b theme-border flex justify-between items-center sticky top-0 theme-card z-10">
+                <h4 id="modalTitle" class="text-2xl font-bold theme-text-title"></h4>
+                <button onclick="closeModal()" class="theme-text-muted hover:theme-text-title transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+            <div id="modalContent" class="p-6 theme-text-body space-y-4 leading-relaxed"></div>
+        </div>
+    </div>
+                
+<!------------------------------->
+     <!--       
     <div id="cultureModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-xl">
             <div class="p-6 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center sticky top-0 bg-white dark:bg-slate-800">
@@ -295,6 +309,7 @@
             <div id="modalContent" class="p-6 text-slate-600 dark:text-slate-300 space-y-4 leading-relaxed"></div>
         </div>
     </div>
+    -->
 
 <script>
     // Sizin Google Sheets Web Yayın Linkinizden üretilen API adresi
@@ -366,21 +381,38 @@
         }
 
         yazilar.forEach((yazi, index) => {
+<!---------------------------------------->
             listeAlani.innerHTML += `
-                <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col justify-between hover:shadow-md transition duration-200">
+                <div class="theme-card p-6 rounded-2xl shadow-sm border theme-border flex flex-col justify-between hover:shadow-md transition duration-200">
                     <div>
                         <div class="flex justify-between items-center mb-3">
-                            <span class="text-xs font-semibold text-amber-600 bg-amber-50 dark:bg-amber-900/20 dark:text-amber-400 px-2.5 py-1 rounded-full">${yazi.okumaSuresi} dk okuma</span>
-                            <span class="text-xs text-slate-400 dark:text-slate-500">${yazi.tarih}</span>
+                            <span class="text-xs font-semibold theme-accent-soft theme-accent-text px-2.5 py-1 rounded-full">${yazi.okumaSuresi} dk okuma</span>
+                            <span class="text-xs theme-text-muted">${yazi.tarih}</span>
                         </div>
-                        <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100 mb-2 leading-tight">${yazi.baslik}</h3>
-                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-4 line-clamp-3">${yazi.ozet}</p>
+                        <h3 class="text-lg font-bold theme-text-title mb-2 leading-tight">${yazi.baslik}</h3>
+                        <p class="theme-text-muted text-sm mb-4 line-clamp-3">${yazi.ozet}</p>
                     </div>
-                    <button onclick="openModal(${index})" class="w-full py-2.5 px-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 font-medium rounded-xl transition text-sm">
+                    <button onclick="openModal(${index})" class="w-full py-2.5 px-4 theme-btn-accent font-bold rounded-xl transition shadow-sm text-sm">
                         Yazıyı Oku
                     </button>
                 </div>
             `;
+<!---------------------------------------->
+            //listeAlani.innerHTML += `
+            //    <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col justify-between hover:shadow-md transition duration-200">
+            //        <div>
+            //            <div class="flex justify-between items-center mb-3">
+            //                <span class="text-xs font-semibold text-amber-600 bg-amber-50 dark:bg-amber-900/20 dark:text-amber-400 px-2.5 py-1 rounded-full">${yazi.okumaSuresi} dk okuma</span>
+            //                <span class="text-xs text-slate-400 dark:text-slate-500">${yazi.tarih}</span>
+            //            </div>
+            //            <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100 mb-2 leading-tight">${yazi.baslik}</h3>
+            //            <p class="text-slate-600 dark:text-slate-400 text-sm mb-4 line-clamp-3">${yazi.ozet}</p>
+            //        </div>
+            //        <button onclick="openModal(${index})" class="w-full py-2.5 px-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 font-medium rounded-xl transition text-sm">
+            //            Yazıyı Oku
+            //        </button>
+            //    </div>
+            //`;
         });
     }
 
