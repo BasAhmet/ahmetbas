@@ -87,10 +87,20 @@
             const contactModal = document.getElementById('contact-modal');
             const socialModal = document.getElementById('social-modal');
             const courseModal = document.getElementById('online-course-modal');
-            if (e.target === contactModal) closeContactModal();
-            if (e.target === socialModal) closeSocialModal();
-            if (e.target === courseModal) closeOnlineCourseModal();
-        });
+            
+//			if (e.target === contactModal) closeContactModal();
+//          if (e.target === socialModal) closeSocialModal();
+//          if (e.target === courseModal) closeOnlineCourseModal();
+		    
+		    // Güvenlik: Eğer bu elementler o sayfada varsa işlem yap!
+		    if (contactModal && e.target === contactModal) closeContactModal();
+		    if (socialModal && e.target === socialModal) closeSocialModal();
+		    if (courseModal && e.target === courseModal) closeOnlineCourseModal();
+		});
+
+
+
+
 
         // E-POSTA KOPYALAYICI FONKSİYON
         function copyMailToClipboard(btnElement) {
@@ -383,9 +393,17 @@ async function loadBulmaca() {
             });
         }
 
-        document.getElementById('tab-btn-home').addEventListener('click', () => {
-            switchTab('home');
-        });
+//        document.getElementById('tab-btn-home').addEventListener('click', () => {
+//            switchTab('home');
+//        });
+
+		const homeBtn = document.getElementById('tab-btn-home');
+		if(homeBtn) {
+		    homeBtn.addEventListener('click', () => {
+		        switchTab('home');
+		    });
+		}
+
         // main.js dosyasının en altına ekleyin:
         window.switchTab = switchTab;
         window.openSocialModal = openSocialModal;
