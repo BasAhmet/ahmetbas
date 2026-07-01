@@ -281,36 +281,31 @@
             }, 300);
         }
 
-        async function saveActiveExamToDB() {
-            const titleInput = document.getElementById("examTitle").value.trim();
-            if (!titleInput || reportData.length === 0) return;
-
-            const btn = document.getElementById("btnSaveToDB");
-            btn.innerText = "⏳ Buluta Yükleniyor...";
-            btn.disabled = true;
-
-            try {
-                const response = await fetch('/api/save', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ examTitle: titleInput, students: reportData })
-                });
-
-                if (response.ok) {
-                    alert(`"${titleInput}" Google Sheets'e başarıyla aktarıldı!`);
-                    btn.innerText = "✅ Başarıyla Kaydedildi";
-                    btn.classList.replace('bg-emerald-500', 'bg-slate-500');
-                } else {
-                    alert("Kaydedilirken bir hata oluştu.");
-                    btn.innerText = "💾 Buluta (Sheets) Kaydet";
-                    btn.disabled = false;
-                }
-            } catch (error) {
-                alert("Bağlantı hatası: " + error.message);
-                btn.innerText = "💾 Buluta (Sheets) Kaydet";
-                btn.disabled = false;
-            }
-        }
+async function saveActiveExamToDB() {
+    // Kopyaladığınız URL'yi buraya ekledik
+    const webAppUrl = "https://script.google.com/macros/s/AKfycbzq_AUX-Ep0NM10bP-Yol83ODOWVehBqsXLW5BxnqjG8QJQn5h81CbzAPx0J9s85V68zA/exec";
+    
+    // Kullanıcıya işlemin başladığını gösteriyoruz
+    const btn = document.getElementById("btnSaveToDB");
+    if (btn) btn.innerText = "⏳ Gönderiliyor...";
+    
+    try {
+        const response = await fetch(webAppUrl, {
+            method: 'POST',
+            mode: 'no-cors', // Google Apps Script bağlantısı için bu satır zorunludur
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ students: reportData }) // 'reportData' sizin analiz verilerinizi tutan değişkendir
+        });
+        
+        alert("Başarılı! Optik verileri Google Sheets'e kaydedildi.");
+    } catch (error) {
+        console.error("Kayıt hatası:", error);
+        alert("Kaydedilirken bir hata oluştu, lütfen konsolu kontrol edin.");
+    } finally {
+        // İşlem bitince butonu eski haline getiriyoruz
+        if (btn) btn.innerText = "💾 Google Sheets'e Kaydet";
+    }
+}
     </script>
 </body>
 </html>
