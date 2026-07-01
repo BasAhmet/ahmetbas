@@ -3,247 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gelişmiş TYT Analiz, Karne & Veri Tabanı Sistemi</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Optik Okuyucu & Karne Sistemi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-
         @media print {
-            body { background: white; color: black; }
+            body * { visibility: hidden; }
+            #printArea, #printArea * { visibility: visible; }
+            #printArea { position: absolute; left: 0; top: 0; width: 100%; }
             .no-print { display: none !important; }
-            .page-break { page-break-after: always; break-after: page; }
-            .print-shadow-none { box-shadow: none !important; border: 1px solid #e2e8f0 !important; }
+            .page-break { page-break-after: always; }
+            .print-shadow-none { box-shadow: none !important; }
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen">
+<body class="bg-slate-100 p-4 md:p-8 font-sans text-slate-800">
 
-    <div class="max-w-7xl mx-auto px-4 py-8 no-print">
-        <header class="mb-8 text-center">
-            <h1 class="text-3xl font-bold text-slate-900 tracking-tight">TYT Analiz Sistemi</h1>
-            <p class="text-slate-500 mt-2">Optik Otomasyonu</p>
-        </header>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div class="lg:col-span-1 space-y-6">
-                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-                    <h2 class="text-md font-semibold mb-3 text-slate-700 flex items-center gap-2">⚙️ Format Ayarları</h2>
-                    <div class="space-y-3 text-xs">
-                        <div class="grid grid-cols-2 gap-2">
-                            <div><label class="text-slate-500 block mb-1">Ad Soyadı Baş.</label><input type="number" id="startName" value="0" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
-                            <div><label class="text-slate-500 block mb-1">Ad Soyadı Bit.</label><input type="number" id="endName" value="20" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
-                        </div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <div><label class="text-slate-500 block mb-1">Sınıf Baş.</label><input type="number" id="startClass" value="20" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
-                            <div><label class="text-slate-500 block mb-1">Sınıf Bit.</label><input type="number" id="endClass" value="25" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
-                        </div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <div><label class="text-slate-500 block mb-1">Telefon Baş.</label><input type="number" id="startPhone" value="25" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
-                            <div><label class="text-slate-500 block mb-1">Telefon Bit.</label><input type="number" id="endPhone" value="36" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
-                        </div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <div><label class="text-slate-500 block mb-1">Kitapçık Baş.</label><input type="number" id="startType" value="36" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
-                            <div><label class="text-slate-500 block mb-1">Kitapçık Bit.</label><input type="number" id="endType" value="37" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
-                        </div>
-                        <div><label class="text-slate-500 block mb-1">Cevaplar Başlangıç Karakteri</label><input type="number" id="startAnswers" value="37" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
-                    </div>
-                </div>
-
-                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-                    <h2 class="text-md font-semibold mb-3 text-slate-700 flex items-center gap-2">📁 Yeni Sınav Yükle</h2>
-                    <div class="mb-3">
-                        <label class="text-xs font-medium text-slate-500 block mb-1">Sınav Adı / Başlığı</label>
-                        <input type="text" id="examTitle" placeholder="Örn: TYT Deneme-1" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-indigo-600 font-medium"/>
-                    </div>
-                    <input type="file" id="fileInput" accept=".txt" class="block w-full text-xs text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 border border-slate-200 rounded-xl p-1 bg-slate-50 mb-3"/>
-                    <button onclick="processFile()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs py-2.5 rounded-xl transition cursor-pointer">
-                        Analiz Et ve Geçici Hafızaya Al
-                    </button>
-                </div>
-
-                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-                    <h2 class="text-md font-semibold mb-2 text-slate-700 flex items-center gap-2">🗄️ Veri Tabanı Arşivi</h2>
-                    <div id="dbExamList" class="space-y-2 max-h-48 overflow-y-auto pr-1 text-xs">
-                        <p class="text-slate-400 italic text-center py-2">Kayıtlı sınav bulunamadı.</p>
-                    </div>
-                </div>
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 no-print">
+        
+        <div class="md:col-span-1 space-y-4">
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                <h2 class="text-lg font-bold text-slate-800 mb-4">📂 Dosya Yükle</h2>
+                <input type="text" id="examTitle" placeholder="Örn: TYT Deneme 1" class="w-full px-3 py-2 border border-slate-200 rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <input type="file" id="fileInput" accept=".txt" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer mb-4"/>
+                <button onclick="processFile()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-xl transition-colors">📊 Sonuçları Analiz Et</button>
             </div>
 
-            <div class="lg:col-span-2 space-y-6">
-                <div id="noDataPlaceholder" class="bg-white p-12 rounded-2xl border border-slate-200 shadow-xs text-center text-slate-400">
-                    <span class="text-4xl block mb-2">📊</span>
-                    <p class="text-sm font-medium">Lütfen yeni bir sınav yükleyin veya arşivden eski bir sınav seçin.</p>
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 text-xs">
+                <h3 class="font-bold text-slate-700 mb-3 text-sm">⚙️ Format Ayarları (Sütunlar)</h3>
+                
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                    <div><label class="text-slate-500 block mb-1">Ad Baş.</label><input type="number" id="startName" value="0" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
+                    <div><label class="text-slate-500 block mb-1">Ad Bit.</label><input type="number" id="endName" value="20" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
                 </div>
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                    <div><label class="text-slate-500 block mb-1">Öğr. No Baş.</label><input type="number" id="startNum" value="20" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
+                    <div><label class="text-slate-500 block mb-1">Öğr. No Bit.</label><input type="number" id="endNum" value="25" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                    <div><label class="text-slate-500 block mb-1">Sınıf Baş.</label><input type="number" id="startClass" value="25" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
+                    <div><label class="text-slate-500 block mb-1">Sınıf Bit.</label><input type="number" id="endClass" value="30" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 mb-2 hidden">
+                    <div><label class="text-slate-500 block mb-1">Tel Baş.</label><input type="number" id="startPhone" value="30" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
+                    <div><label class="text-slate-500 block mb-1">Tel Bit.</label><input type="number" id="endPhone" value="41" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                    <div><label class="text-slate-500 block mb-1">Kitapçık Baş.</label><input type="number" id="startType" value="30" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
+                    <div><label class="text-slate-500 block mb-1">Kitapçık Bit.</label><input type="number" id="endType" value="31" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
+                </div>
+                <div class="mt-2">
+                    <label class="text-slate-500 block mb-1">Cevaplar Başlangıç</label>
+                    <input type="number" id="startAnswers" value="31" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/>
+                </div>
+            </div>
+        </div>
 
-                <div id="resultsDashboard" class="hidden space-y-6">
-                    <div class="grid grid-cols-1 sm:grid-cols-5 gap-4">
-                        <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
-                            <span class="text-[10px] font-semibold text-slate-400 uppercase block">Aktif Sınav</span>
-                            <span id="activeExamLabel" class="text-sm font-bold text-slate-700 block truncate mt-1">-</span>
-                        </div>
-                        <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
-                            <span class="text-[10px] font-semibold text-slate-400 uppercase block">Sınıf Net Ort.</span>
-                            <span id="statToplamNet" class="text-lg font-bold text-indigo-600 block mt-1">0.00</span>
-                        </div>
-                        <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
-                            <span class="text-[10px] font-semibold text-slate-400 uppercase block">Puan Ort.</span>
-                            <span id="statPuanOrt" class="text-lg font-bold text-emerald-600 block mt-1">0.00</span>
-                        </div>
-                        
-                        <div class="sm:col-span-2 grid grid-cols-2 gap-2">
-                            <button id="btnSaveToDB" onclick="saveActiveExamToDB()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold rounded-xl transition cursor-pointer py-2">
-                                💾 Veri Tabanına Kaydet
-                            </button>
-                            <div class="flex flex-col gap-1">
-                                <button onclick="printReport('toplu')" class="bg-slate-800 hover:bg-slate-900 text-white text-[10px] font-semibold rounded-lg transition cursor-pointer py-1 text-center">🖨️ Toplu List (D-Y-N)</button>
-                                <button onclick="printReport('karne')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-semibold rounded-lg transition cursor-pointer py-1 text-center">🪪 Karneler</button>
-                            </div>
-                        </div>
-                    </div>
+        <div class="md:col-span-3 space-y-4">
+            
+            <div id="actionButtons" class="hidden flex gap-3">
+                <button onclick="printReport('liste')" class="flex-1 bg-white border-2 border-slate-200 hover:border-slate-300 text-slate-700 font-bold py-2 rounded-xl transition-all">📋 Listeyi Yazdır</button>
+                <button onclick="printReport('karne')" class="flex-1 bg-indigo-50 border-2 border-indigo-100 hover:border-indigo-200 text-indigo-700 font-bold py-2 rounded-xl transition-all">🖨️ Karneleri Yazdır</button>
+                <button id="btnSaveToDB" onclick="saveActiveExamToDB()" class="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 rounded-xl transition-all shadow-sm shadow-emerald-200">💾 Buluta (Sheets) Kaydet</button>
+            </div>
 
-                    <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
-                        <div class="border-b border-slate-100 bg-slate-50/70 p-4">
-                            <div class="text-xs font-bold text-indigo-600 uppercase tracking-wider mb-2">Genel Başarı Sıralaması <span class="text-[10px] text-slate-400 font-normal lowercase">(Hücreler: Doğru - Yanlış = Net)</span></div>
-                            <div class="overflow-x-auto max-h-[550px]">
-                                <table class="w-full text-left border-collapse text-xs">
-                                    <thead>
-                                        <tr class="bg-slate-100 text-slate-600 font-bold border-b border-slate-200 whitespace-nowrap">
-                                            <th class="py-2.5 px-3 text-center">Sıra</th>
-                                            <th class="py-2.5 px-3">Adı Soyadı</th>
-                                            <th class="py-2.5 px-2 text-center">Sınıf</th>
-                                            <th class="py-2.5 px-2 text-center bg-slate-50">Türkçe</th>
-                                            <th class="py-2.5 px-2 text-center bg-slate-50">Sosyal</th>
-                                            <th class="py-2.5 px-2 text-center bg-slate-50">Matematik</th>
-                                            <th class="py-2.5 px-2 text-center bg-slate-50">Fen</th>
-                                            <th class="py-2.5 px-3 text-center text-indigo-700 bg-indigo-50/50">Top. Net</th>
-                                            <th class="py-2.5 px-3 text-center text-emerald-700 bg-emerald-50/50">TYT Puan</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="mainTableBody" class="divide-y divide-slate-100 font-medium"></tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left">
+                        <thead class="text-xs text-slate-500 bg-slate-50 border-b border-slate-200 uppercase">
+                            <tr>
+                                <th class="py-3 px-4">Sıra</th>
+                                <th class="py-3 px-4">Öğr. No</th>
+                                <th class="py-3 px-4">Adı Soyadı</th>
+                                <th class="py-3 px-4 text-center">Sınıf</th>
+                                <th class="py-3 px-4 text-center">Tür</th>
+                                <th class="py-3 px-4 text-center text-indigo-600">Top. Net</th>
+                                <th class="py-3 px-4 text-center text-emerald-600">TYT Puanı</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultTableBody" class="divide-y divide-slate-100">
+                            <tr><td colspan="7" class="py-8 text-center text-slate-400">Sonuçları görmek için bir dosya yükleyin.</td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="printAreaToplu" class="hidden max-w-5xl mx-auto p-6 bg-white">
-        <h1 id="printTopluHeader" class="text-lg font-bold uppercase tracking-wide text-center mb-4 border-b pb-2"></h1>
-        <table class="w-full text-[10px] text-left border-collapse border border-slate-300">
-            <thead>
-                <tr class="bg-slate-100 font-bold border-b border-slate-300">
-                    <th class="p-1 border text-center">Sıra</th>
-                    <th class="p-1 border">Adı Soyadı</th>
-                    <th class="p-1 border text-center">Sınıf</th>
-                    <th class="p-1 border text-center">Kit.</th>
-                    <th class="p-1 border text-center">Türkçe (D-Y-N)</th>
-                    <th class="p-1 border text-center">Sosyal (D-Y-N)</th>
-                    <th class="p-1 border text-center">Mat (D-Y-N)</th>
-                    <th class="p-1 border text-center">Fen (D-Y-N)</th>
-                    <th class="p-1 border text-center bg-slate-200">Top. Net</th>
-                    <th class="p-1 border text-center bg-slate-200">TYT Puan</th>
-                </tr>
-            </thead>
-            <tbody id="printTbodyToplu"></tbody>
-        </table>
+    <div id="printArea" class="hidden absolute top-0 left-0 w-full bg-white z-50">
+        <div id="printAreaListe" class="hidden p-8"></div>
+        <div id="printAreaKarneler" class="hidden"></div>
     </div>
-    <div id="printAreaKarneler" class="hidden"></div>
 
     <script>
-        let db;
-        let currentExamTitle = "";
         let reportData = [];
-        let keyA = "", keyB = "";
+        let currentExamTitle = "";
 
-        // DATABASE BAĞLANTISI (IndexedDB)
-        const dbRequest = window.indexedDB.open("TYTOptikDB", 1);
-        dbRequest.onsuccess = (e) => { db = e.target.result; loadExamListFromDB(); };
-        dbRequest.onupgradeneeded = (e) => {
-            let database = e.target.result;
-            if (!database.objectStoreNames.contains("exams")) { database.createObjectStore("exams", { keyPath: "title" }); }
-        };
-
-        function loadExamListFromDB() {
-            const listContainer = document.getElementById("dbExamList");
-            listContainer.innerHTML = "";
-            const transaction = db.transaction(["exams"], "readonly");
-            const store = transaction.objectStore("exams");
-            const request = store.getAll();
-
-            request.onsuccess = () => {
-                const exams = request.result;
-                if(exams.length === 0) {
-                    listContainer.innerHTML = `<p class="text-slate-400 italic text-center py-2">Kayıtlı sınav bulunamadı.</p>`;
-                    return;
-                }
-                exams.forEach(exam => {
-                    listContainer.innerHTML += `
-                        <div class="flex items-center justify-between p-2 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 transition mb-1">
-                            <span onclick="loadExam('${exam.title}')" class="font-semibold text-slate-700 cursor-pointer truncate flex-1 pr-2">📝 ${exam.title}</span>
-                            <button onclick="deleteExamFromDB('${exam.title}')" class="text-rose-600 hover:text-rose-800 font-bold px-1.5 py-0.5 cursor-pointer text-[10px]">Sil</button>
-                        </div>`;
-                });
-            };
+        function turkceKarakterOnar(text) {
+            const map = { 'Ý': 'İ', 'Þ': 'Ş', 'Ð': 'Ğ', 'ý': 'ı', 'þ': 'ş', 'ð': 'ğ', 'Ä±': 'ı', 'Ä°': 'İ', 'ÄŸ': 'ğ', 'Äž': 'Ğ', 'ÅŸ': 'ş', 'Åž': 'Ş', 'Ã¶': 'ö', 'Ã–': 'Ö', 'Ã§': 'ç', 'Ã‡': 'Ç', 'Ã¼': 'ü', 'Ãœ': 'Ü' };
+            return text.replace(/[ÝÞÐýþðÄ°ÄŸÄžÅŸÅžÃ¶Ã–Ã§Ã‡Ã¼Ãœ]|Ä±/g, match => map[match] || match);
         }
 
-        function loadExam(title) {
-            const transaction = db.transaction(["exams"], "readonly");
-            const store = transaction.objectStore("exams");
-            const request = store.get(title);
-            request.onsuccess = () => {
-                const exam = request.result;
-                currentExamTitle = exam.title;
-                reportData = exam.data;
-                document.getElementById("examTitle").value = exam.title;
-                document.getElementById("btnSaveToDB").innerText = "🔄 Değişiklikleri Güncelle";
-                renderUI();
-            };
-        }
-
-        function saveActiveExamToDB() {
-            if(reportData.length === 0) return;
-            const titleInput = document.getElementById("examTitle").value.trim();
-            if(!titleInput) { alert("Lütfen sınava bir ad verin!"); return; }
-
-            const transaction = db.transaction(["exams"], "readwrite");
-            const store = transaction.objectStore("exams");
-            const examRecord = { title: titleInput, data: reportData, date: new Date().toLocaleDateString() };
-            
-            store.put(examRecord).onsuccess = () => {
-                currentExamTitle = titleInput;
-                document.getElementById("activeExamLabel").innerText = currentExamTitle;
-                document.getElementById("btnSaveToDB").innerText = "🔄 Değişiklikleri Güncelle";
-                alert(`"${titleInput}" başarıyla kaydedildi!`);
-                loadExamListFromDB();
-            };
-        }
-
-        function deleteExamFromDB(title) {
-            if(!confirm(`"${title}" sınavını silmek istediğinize emin misiniz?`)) return;
-            const transaction = db.transaction(["exams"], "readwrite");
-            store = transaction.objectStore("exams").delete(title);
-            transaction.oncomplete = () => {
-                if(currentExamTitle === title) {
-                    document.getElementById("resultsDashboard").classList.add("hidden");
-                    document.getElementById("noDataPlaceholder").classList.remove("hidden");
-                }
-                loadExamListFromDB();
-            };
-        }
-
-        // TÜRKÇE KARAKTER ONARIM FİLTRESİ
-        function turkceKarakterOnar(metin) {
-            if (!metin) return "";
-            const harfHaritasi = {
-                'Ý': 'İ', 'ý': 'i', 'Þ': 'Ş', 'þ': 'ş', 'Ð': 'Ğ', 'ð': 'ğ'
-            };
-            return metin.split('').map(char => harfHaritasi[char] || char).join('');
-        }
-
-        // OPTİK DEĞERLENDİRME MOTORU
         function processFile() {
             const fileInput = document.getElementById('fileInput');
             const titleInput = document.getElementById('examTitle').value.trim();
@@ -254,19 +113,19 @@
 
             const sName = parseInt(document.getElementById('startName').value) || 0;
             const eName = parseInt(document.getElementById('endName').value) || 20;
-            const sClass = parseInt(document.getElementById('startClass').value) || 20;
-            const eClass = parseInt(document.getElementById('endClass').value) || 25;
-            const sPhone = parseInt(document.getElementById('startPhone').value) || 25;
-            const ePhone = parseInt(document.getElementById('endPhone').value) || 36;
-            const sType = parseInt(document.getElementById('startType').value) || 36;
-            const eType = parseInt(document.getElementById('endType').value) || 37;
-            const sAnswers = parseInt(document.getElementById('startAnswers').value) || 37;
+            const sNum = parseInt(document.getElementById('startNum').value) || 20;
+            const eNum = parseInt(document.getElementById('endNum').value) || 25;
+            const sClass = parseInt(document.getElementById('startClass').value) || 25;
+            const eClass = parseInt(document.getElementById('endClass').value) || 30;
+            const sType = parseInt(document.getElementById('startType').value) || 30;
+            const eType = parseInt(document.getElementById('endType').value) || 31;
+            const sAnswers = parseInt(document.getElementById('startAnswers').value) || 31;
 
             const reader = new FileReader();
             reader.onload = function(e) {
                 const lines = e.target.result.split('\n').map(l => l.replace(/\r$/, '')).filter(l => l.trim().length > 0);
                 let studentsLines = [];
-                keyA = ""; keyB = "";
+                let keyA = "", keyB = "";
 
                 lines.forEach(line => {
                     const namePart = line.substring(sName, eName).trim();
@@ -274,16 +133,14 @@
                     else if (namePart.startsWith('CEVAP_ANAHTARI_B')) { keyB = line.substring(sAnswers).toUpperCase(); } 
                     else {
                         studentsLines.push({
+                            numara: line.substring(sNum, eNum).trim(),
                             name: turkceKarakterOnar(namePart), 
                             sınıf: turkceKarakterOnar(line.substring(sClass, eClass).trim()),
-                            telefon: line.substring(sPhone, ePhone).trim(),
                             kitapcik: line.substring(sType, eType).trim().toUpperCase(),
                             answers: line.substring(sAnswers).toUpperCase()
                         });
                     }
                 });
-
-                if (!keyA || !keyB) { alert('Hata: Çift cevap anahtarı bulunamadı!'); return; }
 
                 const lessons = [
                     { id: 'turkce', name: 'Türkçe', max: 40 },
@@ -294,23 +151,35 @@
 
                 reportData = studentsLines.map(student => {
                     let activeKey = (student.kitapcik === 'B') ? keyB : keyA;
-                    let r = { name: student.name, sınıf: student.sınıf, telefon: student.telefon, kitapcik: student.kitapcik, totalNet: 0, details: {} };
+                    let r = { numara: student.numara, name: student.name, sınıf: student.sınıf, kitapcik: student.kitapcik, totalNet: 0, details: {} };
                     let currentIdx = 0;
                     
                     lessons.forEach(l => {
                         let correct = 0, wrong = 0, empty = 0;
                         const subKey = activeKey.substring(currentIdx, currentIdx + l.max);
                         const subAns = student.answers.substring(currentIdx, currentIdx + l.max);
+                        let formattedStudentAns = ""; 
 
                         for(let i=0; i < l.max; i++) {
-                            const k = subKey[i] || ' '; const s = subAns[i] || ' ';
-                            if (s === 'X' || s === ' ' || s === '') empty++;
-                            else if (s === k) correct++;
-                            else wrong++;
+                            const k = subKey[i] || ' '; 
+                            const s = subAns[i] || ' ';
+                            
+                            if (s === 'X' || s === ' ' || s === '') {
+                                empty++;
+                                formattedStudentAns += '-'; 
+                            } else if (s === k) {
+                                correct++;
+                                formattedStudentAns += s.toUpperCase(); 
+                            } else {
+                                wrong++;
+                                formattedStudentAns += s.toLowerCase(); 
+                            }
                         }
                         let net = correct - (wrong / 4); if (net < 0) net = 0;
-                        r.details[l.id] = { label: l.name, correct, wrong, empty, net, max: l.max };
-                        r.totalNet += net; currentIdx += l.max;
+                        
+                        r.details[l.id] = { label: l.name, correct, wrong, empty, net, max: l.max, subKey, formattedStudentAns };
+                        r.totalNet += net; 
+                        currentIdx += l.max;
                     });
                     r.tytPuan = 100 + (r.totalNet * 3.333); if (r.tytPuan > 500) r.tytPuan = 500;
                     return r;
@@ -319,112 +188,128 @@
                 reportData.sort((a, b) => b.totalNet - a.totalNet);
                 renderUI();
             };
-            // OKUMA DİL KODLAMASINI TÜRKÇE YAPALIM (Karakter bozulmasını engeller)
             reader.readAsText(fileInput.files[0], 'Windows-1254');
         }
 
-        // EKRAN ARAYÜZÜNÜ ÇİZME
         function renderUI() {
-            if (reportData.length === 0) return;
-            document.getElementById('activeExamLabel').innerText = currentExamTitle;
-            
-            const total = reportData.length;
-            const sumNet = reportData.reduce((acc, curr) => acc + curr.totalNet, 0);
-            const sumPuan = reportData.reduce((acc, curr) => acc + curr.tytPuan, 0);
-
-            document.getElementById('statToplamNet').innerText = (sumNet / total).toFixed(2);
-            document.getElementById('statPuanOrt').innerText = (sumPuan / total).toFixed(2);
-
-            const tbody = document.getElementById('mainTableBody');
+            const tbody = document.getElementById('resultTableBody');
             tbody.innerHTML = '';
             
-            reportData.forEach((s, i) => {
-                // Her ders için şık D-Y ve Net dökümü hücresi oluşturuyoruz
-                const formatCell = (d) => `<div class="text-center"><span class="text-emerald-600 font-bold">${d.correct}</span><span class="text-slate-300 mx-0.5">/</span><span class="text-rose-500 font-bold">${d.wrong}</span><div class="text-[11px] text-slate-500 font-extrabold mt-0.5">${d.net.toFixed(2)} N</div></div>`;
-
+            reportData.forEach((s, idx) => {
                 tbody.innerHTML += `
-                    <tr class="hover:bg-slate-50 transition border-b border-slate-100 whitespace-nowrap">
-                        <td class="py-2 px-3 text-center font-bold text-slate-400">${i + 1}</td>
-                        <td class="py-2 px-3 font-semibold text-slate-900">${s.name}</td>
-                        <td class="py-2 px-2 text-center text-slate-500">${s.sınıf || '-'}</td>
-                        <td class="py-2 px-2 bg-slate-50/50">${formatCell(s.details.turkce)}</td>
-                        <td class="py-2 px-2 bg-slate-50/50">${formatCell(s.details.sosyal)}</td>
-                        <td class="py-2 px-2 bg-slate-50/50">${formatCell(s.details.matematik)}</td>
-                        <td class="py-2 px-2 bg-slate-50/50">${formatCell(s.details.fen)}</td>
-                        <td class="py-2 px-2 text-center font-black text-indigo-700 bg-indigo-50/30 text-xs sm:text-sm">${s.totalNet.toFixed(2)}</td>
-                        <td class="py-2 px-3 text-center font-black text-emerald-700 bg-emerald-50/30 text-xs sm:text-sm">${s.tytPuan.toFixed(1)}</td>
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="py-2.5 px-4 font-semibold text-slate-600">${idx + 1}</td>
+                        <td class="py-2.5 px-4 font-mono text-slate-500">${s.numara || '-'}</td>
+                        <td class="py-2.5 px-4 font-medium text-slate-800">${s.name}</td>
+                        <td class="py-2.5 px-4 text-center text-slate-600">${s.sınıf || '-'}</td>
+                        <td class="py-2.5 px-4 text-center font-bold text-slate-600">${s.kitapcik}</td>
+                        <td class="py-2.5 px-4 text-center font-bold text-indigo-600 bg-indigo-50/30">${s.totalNet.toFixed(2)}</td>
+                        <td class="py-2.5 px-4 text-center font-black text-emerald-600">${s.tytPuan.toFixed(1)}</td>
                     </tr>`;
             });
-
-            document.getElementById('noDataPlaceholder').classList.add('hidden');
-            document.getElementById('resultsDashboard').classList.remove('hidden');
+            document.getElementById('actionButtons').classList.remove('hidden');
         }
 
-        // PDF YAZDIRMA FONKSİYONU
         function printReport(type) {
-            const printAreaToplu = document.getElementById('printAreaToplu');
+            const printArea = document.getElementById('printArea');
+            const printAreaListe = document.getElementById('printAreaListe');
             const printAreaKarneler = document.getElementById('printAreaKarneler');
-            printAreaToplu.classList.add('hidden'); printAreaKarneler.classList.add('hidden'); printAreaKarneler.innerHTML = '';
+            
+            printAreaListe.classList.add('hidden');
+            printAreaKarneler.classList.add('hidden');
+            printArea.classList.remove('hidden');
 
-            if (type === 'toplu') {
-                document.getElementById("printTopluHeader").innerText = currentExamTitle + " SINAV SONUÇ LİSTESİ";
-                const printTbody = document.getElementById('printTbodyToplu');
-                printTbody.innerHTML = '';
-                
-                reportData.forEach((s, i) => {
-                    const fPrint = (d) => `${d.correct}D ${d.wrong}Y (${d.net.toFixed(2)})`;
-                    printTbody.innerHTML += `
-                        <tr class="border-b border-slate-300 text-[10px]">
-                            <td class="p-1 border text-center font-bold">${i+1}</td>
-                            <td class="p-1 border font-medium">${s.name}</td>
-                            <td class="p-1 border text-center">${s.sınıf}</td>
-                            <td class="p-1 border text-center font-bold">${s.kitapcik}</td>
-                            <td class="p-1 border text-center">${fPrint(s.details.turkce)}</td>
-                            <td class="p-1 border text-center">${fPrint(s.details.sosyal)}</td>
-                            <td class="p-1 border text-center">${fPrint(s.details.matematik)}</td>
-                            <td class="p-1 border text-center">${fPrint(s.details.fen)}</td>
-                            <td class="p-1 border text-center font-bold bg-slate-50 text-indigo-700">${s.totalNet.toFixed(2)}</td>
-                            <td class="p-1 border text-center font-bold bg-slate-50 text-emerald-700">${s.tytPuan.toFixed(1)}</td>
-                        </tr>`;
-                });
-                printAreaToplu.classList.remove('hidden');
-            } else if (type === 'karne') {
+            if (type === 'liste') {
+                printAreaListe.innerHTML = `
+                    <h2 class="text-2xl font-black mb-4 text-center">${currentExamTitle} - TOPLU SONUÇ LİSTESİ</h2>
+                    <table class="w-full text-sm text-left border-collapse border border-slate-300">
+                        <thead><tr class="bg-slate-100"><th class="border p-2">Sıra</th><th class="border p-2">Öğr. No</th><th class="border p-2">Ad Soyad</th><th class="border p-2">Sınıf</th><th class="border p-2">Net</th><th class="border p-2">Puan</th></tr></thead>
+                        <tbody>
+                            ${reportData.map((s, i) => `<tr><td class="border p-2">${i+1}</td><td class="border p-2 font-mono">${s.numara||'-'}</td><td class="border p-2">${s.name}</td><td class="border p-2">${s.sınıf||'-'}</td><td class="border p-2 font-bold">${s.totalNet.toFixed(2)}</td><td class="border p-2 font-bold">${s.tytPuan.toFixed(1)}</td></tr>`).join('')}
+                        </tbody>
+                    </table>`;
+                printAreaListe.classList.remove('hidden');
+            } 
+            else if (type === 'karne') {
+                printAreaKarneler.innerHTML = '';
                 reportData.forEach((s, i) => {
                     let lessonRowsHtml = '';
                     Object.keys(s.details).forEach(key => {
                         const d = s.details[key];
+                        const basariYuzdesi = Math.max(0, (d.net / d.max) * 100);
                         lessonRowsHtml += `
-                            <div class="border border-slate-200 rounded-xl p-2 bg-slate-50/50 text-xs">
-                                <div class="flex justify-between font-semibold text-slate-700 mb-0.5"><span>${d.label}</span><span class="text-indigo-600 font-bold">Net: ${d.net.toFixed(2)}</span></div>
-                                <div class="grid grid-cols-3 text-[10px] text-slate-500">
-                                    <span>Doğru: <b class="text-emerald-600">${d.correct}</b></span>
-                                    <span>Yanlış: <b class="text-rose-600">${d.wrong}</b></span>
-                                    <span>Boş: <b>${d.empty}</b></span>
+                            <div class="border border-slate-300 rounded-xl p-3 mb-3 bg-white text-xs print-shadow-none">
+                                <div class="flex justify-between font-bold text-slate-800 mb-1">
+                                    <span class="text-sm">${d.label}</span>
+                                    <span>${d.correct}D ${d.wrong}Y | Net: <span class="text-indigo-600">${d.net.toFixed(2)}</span></span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-2.5 mb-2 border border-slate-200">
+                                    <div class="bg-indigo-500 h-2.5 rounded-full" style="width: ${basariYuzdesi}%"></div>
+                                </div>
+                                <div class="bg-slate-50 border border-slate-200 p-2 rounded text-[10px] font-mono tracking-widest overflow-x-auto whitespace-nowrap">
+                                    <div class="flex"><span class="w-16 font-semibold text-slate-500">ANAHTAR:</span> <span class="text-slate-800">${d.subKey}</span></div>
+                                    <div class="flex mt-1"><span class="w-16 font-semibold text-slate-500">ÖĞRENCİ:</span> <span class="text-slate-800 font-bold">${d.formattedStudentAns}</span></div>
                                 </div>
                             </div>`;
                     });
 
                     printAreaKarneler.innerHTML += `
-                        <div class="page-break max-w-xl mx-auto p-6 my-2 bg-white border border-slate-300 rounded-2xl print-shadow-none">
-                            <div class="flex justify-between items-center border-b pb-2 mb-4">
-                                <div><h2 class="text-md font-bold text-slate-900">${currentExamTitle} KARNESİ</h2></div>
-                                <div><span class="text-xs font-bold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded">Sıra: ${i+1}/${reportData.length}</span></div>
+                        <div class="page-break max-w-2xl mx-auto p-8 my-4 bg-white border-2 border-slate-800 rounded-2xl print-shadow-none">
+                            <div class="text-center border-b-2 border-slate-800 pb-4 mb-6">
+                                <h2 class="text-2xl font-black text-slate-900 tracking-tight">${currentExamTitle} SONUÇ BELGESİ</h2>
                             </div>
-                            <div class="grid grid-cols-2 gap-2 text-[11px] mb-4 p-2 bg-slate-50 rounded-xl print-shadow-none">
-                                <div><span class="text-slate-400">Öğrenci:</span> <span class="font-bold">${s.name}</span></div>
-                                <div><span class="text-slate-400">Sınıf:</span> <span class="font-bold">${s.sınıf || '-'}</span></div>
-                                <div><span class="text-slate-400">Kitapçık:</span> <span class="font-bold">${s.kitapcik}</span></div>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-6 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                                <div><span class="text-slate-500 block text-[10px] uppercase font-bold">Öğr. No / Adı</span> <span class="font-bold text-base block truncate">${s.numara || '-'} - ${s.name}</span></div>
+                                <div><span class="text-slate-500 block text-[10px] uppercase font-bold">Sınıf / Kitapçık</span> <span class="font-bold text-base">${s.sınıf || '-'} / ${s.kitapcik}</span></div>
+                                <div><span class="text-slate-500 block text-[10px] uppercase font-bold">Genel Sıralama</span> <span class="font-black text-indigo-700 text-base">${i + 1} / ${reportData.length}</span></div>
+                                <div><span class="text-slate-500 block text-[10px] uppercase font-bold">TYT Puanı</span> <span class="font-black text-emerald-600 text-base">${s.tytPuan.toFixed(1)}</span></div>
                             </div>
-                            <div class="grid grid-cols-2 gap-2 text-center mb-4 text-xs">
-                                <div class="p-2 border border-slate-200 rounded-xl bg-indigo-50/30 print-shadow-none">Net: <b class="text-indigo-700 text-sm">${s.totalNet.toFixed(2)}</b></div>
-                                <div class="p-2 border border-slate-200 rounded-xl bg-emerald-50/30 print-shadow-none">Puan: <b class="text-emerald-700 text-sm">${s.tytPuan.toFixed(1)}</b></div>
+                            <div class="space-y-2">
+                                ${lessonRowsHtml}
                             </div>
-                            <div class="space-y-1.5">${lessonRowsHtml}</div>
+                            <div class="text-center mt-4 text-[10px] text-slate-400 font-medium">
+                                * Doğru şıklar BÜYÜK, yanlış şıklar küçük harfle gösterilmiştir. Boşlar tire (-) işaretidir.
+                            </div>
                         </div>`;
                 });
                 printAreaKarneler.classList.remove('hidden');
             }
-            window.print();
+            
+            setTimeout(() => {
+                window.print();
+                printArea.classList.add('hidden');
+            }, 300);
+        }
+
+        async function saveActiveExamToDB() {
+            const titleInput = document.getElementById("examTitle").value.trim();
+            if (!titleInput || reportData.length === 0) return;
+
+            const btn = document.getElementById("btnSaveToDB");
+            btn.innerText = "⏳ Buluta Yükleniyor...";
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('/api/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ examTitle: titleInput, students: reportData })
+                });
+
+                if (response.ok) {
+                    alert(`"${titleInput}" Google Sheets'e başarıyla aktarıldı!`);
+                    btn.innerText = "✅ Başarıyla Kaydedildi";
+                    btn.classList.replace('bg-emerald-500', 'bg-slate-500');
+                } else {
+                    alert("Kaydedilirken bir hata oluştu.");
+                    btn.innerText = "💾 Buluta (Sheets) Kaydet";
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                alert("Bağlantı hatası: " + error.message);
+                btn.innerText = "💾 Buluta (Sheets) Kaydet";
+                btn.disabled = false;
+            }
         }
     </script>
 </body>
