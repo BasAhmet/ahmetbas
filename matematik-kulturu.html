@@ -53,6 +53,16 @@
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- SAYFA AÇILIRKEN HIZLI TEMA KONTROLÜ -->
+    <script>
+        (function() {
+            try {
+                let savedTheme = localStorage.getItem('site-theme') || 'light';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                document.body.setAttribute('data-theme', savedTheme);
+            } catch (e) {}
+        })();
+    </script>
     <style>
         /* Yukarı Çık Oku Stili */
         #scrollToTopBtn {
