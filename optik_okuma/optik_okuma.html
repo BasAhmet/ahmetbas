@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Optik Okuyucu & Karne Sistemi</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         @media print {
             body * { visibility: hidden; }
@@ -13,12 +14,14 @@
             .no-print { display: none !important; }
             .page-break { page-break-after: always; }
             .print-shadow-none { box-shadow: none !important; }
+            /* Çıktıda grafik renklerinin solmaması için Tailwind'i zorluyoruz */
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
         }
     </style>
 </head>
 <body class="bg-slate-100 p-4 md:p-8 font-sans text-slate-800">
 
-    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 no-print">
+    <div class="max-w-[95rem] mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 no-print">
         
         <div class="md:col-span-1 space-y-4">
             <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
@@ -30,7 +33,6 @@
 
             <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 text-xs">
                 <h3 class="font-bold text-slate-700 mb-3 text-sm">⚙️ Format Ayarları (Sütunlar)</h3>
-                
                 <div class="grid grid-cols-2 gap-2 mb-2">
                     <div><label class="text-slate-500 block mb-1">Ad Baş.</label><input type="number" id="startName" value="0" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
                     <div><label class="text-slate-500 block mb-1">Ad Bit.</label><input type="number" id="endName" value="20" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
@@ -42,10 +44,6 @@
                 <div class="grid grid-cols-2 gap-2 mb-2">
                     <div><label class="text-slate-500 block mb-1">Sınıf Baş.</label><input type="number" id="startClass" value="25" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
                     <div><label class="text-slate-500 block mb-1">Sınıf Bit.</label><input type="number" id="endClass" value="30" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
-                </div>
-                <div class="grid grid-cols-2 gap-2 mb-2 hidden">
-                    <div><label class="text-slate-500 block mb-1">Tel Baş.</label><input type="number" id="startPhone" value="30" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
-                    <div><label class="text-slate-500 block mb-1">Tel Bit.</label><input type="number" id="endPhone" value="41" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
                 </div>
                 <div class="grid grid-cols-2 gap-2 mb-2">
                     <div><label class="text-slate-500 block mb-1">Kitapçık Baş.</label><input type="number" id="startType" value="30" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
@@ -60,7 +58,7 @@
 
         <div class="md:col-span-3 space-y-4">
             
-            <div id="actionButtons" class="hidden flex gap-3">
+            <div id="actionButtons" class="hidden flex flex-wrap gap-3">
                 <button onclick="printReport('liste')" class="flex-1 bg-white border-2 border-slate-200 hover:border-slate-300 text-slate-700 font-bold py-2 rounded-xl transition-all">📋 Listeyi Yazdır</button>
                 <button onclick="printReport('karne')" class="flex-1 bg-indigo-50 border-2 border-indigo-100 hover:border-indigo-200 text-indigo-700 font-bold py-2 rounded-xl transition-all">🖨️ Karneleri Yazdır</button>
                 <button id="btnSaveToDB" onclick="saveActiveExamToDB()" class="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 rounded-xl transition-all shadow-sm shadow-emerald-200">💾 Buluta (Sheets) Kaydet</button>
@@ -68,20 +66,26 @@
 
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                 <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left">
+                    <table class="w-full text-sm text-left whitespace-nowrap">
                         <thead class="text-xs text-slate-500 bg-slate-50 border-b border-slate-200 uppercase">
                             <tr>
-                                <th class="py-3 px-4">Sıra</th>
-                                <th class="py-3 px-4">Öğr. No</th>
-                                <th class="py-3 px-4">Adı Soyadı</th>
-                                <th class="py-3 px-4 text-center">Sınıf</th>
-                                <th class="py-3 px-4 text-center">Tür</th>
-                                <th class="py-3 px-4 text-center text-indigo-600">Top. Net</th>
-                                <th class="py-3 px-4 text-center text-emerald-600">TYT Puanı</th>
+                                <th class="py-3 px-3">Sıra</th>
+                                <th class="py-3 px-3">Öğr. No</th>
+                                <th class="py-3 px-3">Adı Soyadı</th>
+                                <th class="py-3 px-2 text-center">Sınıf</th>
+                                <th class="py-3 px-2 text-center">Deneme Adı</th>
+                                <th class="py-3 px-2 text-center">Tür</th>
+                                <th class="py-3 px-2 text-center">Türkçe (D/Y)</th>
+                                <th class="py-3 px-2 text-center">Sosyal (D/Y)</th>
+                                <th class="py-3 px-2 text-center">Mat (D/Y)</th>
+                                <th class="py-3 px-2 text-center">Fen (D/Y)</th>
+                                <th class="py-3 px-3 text-center text-indigo-600">Top. Net</th>
+                                <th class="py-3 px-3 text-center text-emerald-600">Puan</th>
+                                <th class="py-3 px-3 text-center">İşlem</th>
                             </tr>
                         </thead>
                         <tbody id="resultTableBody" class="divide-y divide-slate-100">
-                            <tr><td colspan="7" class="py-8 text-center text-slate-400">Sonuçları görmek için bir dosya yükleyin.</td></tr>
+                            <tr><td colspan="13" class="py-8 text-center text-slate-400">Sonuçları görmek için bir dosya yükleyin.</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -94,19 +98,33 @@
         <div id="printAreaKarneler" class="hidden"></div>
     </div>
 
-    <script src="api.js"></script>
+    <div id="karneModal" class="hidden fixed inset-0 bg-slate-900/60 z-[100] flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl p-6">
+            <div class="flex justify-between items-start border-b border-slate-100 pb-4 mb-4">
+                <div>
+                    <h2 id="karneOgrenciAdi" class="text-2xl font-black text-slate-800">Öğrenci Adı</h2>
+                    <h3 id="karneSiralama" class="text-sm font-semibold text-slate-500 mt-1">Sınıf: - | Genel Sıralama: -</h3>
+                </div>
+                <button onclick="document.getElementById('karneModal').classList.add('hidden')" class="text-slate-400 hover:text-red-500 transition-colors">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <div class="mb-6">
+                <canvas id="karneGrafik" height="100"></canvas>
+            </div>
 
-<script>
-    // Örnek: Kaydet butonuna tıklandığında çalışan kısım
-    document.getElementById("btnSaveToDB").addEventListener("click", () => {
-        // 'reportData' burada sizin optik sonuçlarınızın bulunduğu değişken
-        saveActiveExamToDB(reportData); 
-    });
-</script>
+            <div class="flex justify-end gap-3 border-t border-slate-100 pt-4">
+                <button onclick="document.getElementById('karneModal').classList.add('hidden')" class="px-5 py-2 rounded-xl bg-slate-100 text-slate-700 font-bold hover:bg-slate-200">Kapat</button>
+                <button onclick="printReport('karne')" class="px-5 py-2 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700">Tüm Karneleri Yazdır</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         let reportData = [];
         let currentExamTitle = "";
+        let currentChart = null; 
 
         function turkceKarakterOnar(text) {
             const map = { 'Ý': 'İ', 'Þ': 'Ş', 'Ð': 'Ğ', 'ý': 'ı', 'þ': 'ş', 'ð': 'ğ', 'Ä±': 'ı', 'Ä°': 'İ', 'ÄŸ': 'ğ', 'Äž': 'Ğ', 'ÅŸ': 'ş', 'Åž': 'Ş', 'Ã¶': 'ö', 'Ã–': 'Ö', 'Ã§': 'ç', 'Ã‡': 'Ç', 'Ã¼': 'ü', 'Ãœ': 'Ü' };
@@ -165,7 +183,7 @@
                     let currentIdx = 0;
                     
                     lessons.forEach(l => {
-                        let correct = 0, wrong = 0, empty = 0;
+                        let dogru = 0, yanlis = 0, bos = 0; 
                         const subKey = activeKey.substring(currentIdx, currentIdx + l.max);
                         const subAns = student.answers.substring(currentIdx, currentIdx + l.max);
                         let formattedStudentAns = ""; 
@@ -175,49 +193,103 @@
                             const s = subAns[i] || ' ';
                             
                             if (s === 'X' || s === ' ' || s === '') {
-                                empty++;
+                                bos++;
                                 formattedStudentAns += '-'; 
                             } else if (s === k) {
-                                correct++;
+                                dogru++;
                                 formattedStudentAns += s.toUpperCase(); 
                             } else {
-                                wrong++;
+                                yanlis++;
                                 formattedStudentAns += s.toLowerCase(); 
                             }
                         }
-                        let net = correct - (wrong / 4); if (net < 0) net = 0;
                         
-                        r.details[l.id] = { label: l.name, correct, wrong, empty, net, max: l.max, subKey, formattedStudentAns };
+                        // Eksi nete düşmeye izin verildi. if (net < 0) net = 0 kaldırıldı.
+                        let net = dogru - (yanlis / 4); 
+                        
+                        r.details[l.id] = { label: l.name, dogru, yanlis, bos, net, max: l.max, subKey, formattedStudentAns };
                         r.totalNet += net; 
                         currentIdx += l.max;
                     });
-                    r.tytPuan = 100 + (r.totalNet * 3.333); if (r.tytPuan > 500) r.tytPuan = 500;
+                    
+                    r.tytPuan = 100 + (r.totalNet * 3.333); 
+                    if (r.tytPuan > 500) r.tytPuan = 500;
+                    
                     return r;
                 });
 
-                reportData.sort((a, b) => b.totalNet - a.totalNet);
                 renderUI();
             };
             reader.readAsText(fileInput.files[0], 'Windows-1254');
         }
 
         function renderUI() {
+            // Ekrana basmadan önce puanlara göre büyükten küçüğe sıralıyoruz
+            reportData.sort((a, b) => b.tytPuan - a.tytPuan);
+            
             const tbody = document.getElementById('resultTableBody');
             tbody.innerHTML = '';
             
             reportData.forEach((s, idx) => {
+                s.sira = idx + 1; // Sıralamayı öğrenci objesine kaydettik
+
+                // Ders detaylarını hazırlıyoruz
+                const trk = `<span class="text-emerald-600">${s.details.turkce.dogru}</span>/<span class="text-red-500">${s.details.turkce.yanlis}</span>`;
+                const sos = `<span class="text-emerald-600">${s.details.sosyal.dogru}</span>/<span class="text-red-500">${s.details.sosyal.yanlis}</span>`;
+                const mat = `<span class="text-emerald-600">${s.details.matematik.dogru}</span>/<span class="text-red-500">${s.details.matematik.yanlis}</span>`;
+                const fen = `<span class="text-emerald-600">${s.details.fen.dogru}</span>/<span class="text-red-500">${s.details.fen.yanlis}</span>`;
+
                 tbody.innerHTML += `
-                    <tr class="hover:bg-slate-50 transition-colors">
-                        <td class="py-2.5 px-4 font-semibold text-slate-600">${idx + 1}</td>
-                        <td class="py-2.5 px-4 font-mono text-slate-500">${s.numara || '-'}</td>
-                        <td class="py-2.5 px-4 font-medium text-slate-800">${s.name}</td>
-                        <td class="py-2.5 px-4 text-center text-slate-600">${s.sınıf || '-'}</td>
-                        <td class="py-2.5 px-4 text-center font-bold text-slate-600">${s.kitapcik}</td>
-                        <td class="py-2.5 px-4 text-center font-bold text-indigo-600 bg-indigo-50/30">${s.totalNet.toFixed(2)}</td>
-                        <td class="py-2.5 px-4 text-center font-black text-emerald-600">${s.tytPuan.toFixed(1)}</td>
+                    <tr class="hover:bg-indigo-50 transition-colors">
+                        <td class="py-2.5 px-3 font-semibold text-slate-600">${s.sira}</td>
+                        <td class="py-2.5 px-3 font-mono text-slate-500">${s.numara || '-'}</td>
+                        <td class="py-2.5 px-3 font-medium text-slate-800">${s.name}</td>
+                        <td class="py-2.5 px-2 text-center text-slate-600">${s.sınıf || '-'}</td>
+                        <td class="py-2.5 px-2 text-center font-bold text-slate-700 text-xs">${currentExamTitle}</td>
+                        <td class="py-2.5 px-2 text-center font-bold text-slate-600">${s.kitapcik}</td>
+                        <td class="py-2.5 px-2 text-center font-mono text-xs">${trk}</td>
+                        <td class="py-2.5 px-2 text-center font-mono text-xs">${sos}</td>
+                        <td class="py-2.5 px-2 text-center font-mono text-xs">${mat}</td>
+                        <td class="py-2.5 px-2 text-center font-mono text-xs">${fen}</td>
+                        <td class="py-2.5 px-3 text-center font-bold text-indigo-600 bg-indigo-50/50">${s.totalNet.toFixed(2)}</td>
+                        <td class="py-2.5 px-3 text-center font-black text-emerald-600 bg-emerald-50/50">${s.tytPuan.toFixed(1)}</td>
+                        <td class="py-2.5 px-3 text-center">
+                            <button onclick="showKarne('${s.numara}')" class="bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm transition-colors">📊 Karne</button>
+                        </td>
                     </tr>`;
             });
             document.getElementById('actionButtons').classList.remove('hidden');
+        }
+
+        function showKarne(ogrenciNo) {
+            const student = reportData.find(s => String(s.numara) === String(ogrenciNo));
+            if (!student) return;
+
+            document.getElementById("karneOgrenciAdi").innerText = `${student.name} (${student.numara})`;
+            document.getElementById("karneSiralama").innerText = `Sınıf: ${student.sınıf} | Genel Sıralama: ${student.sira} | TYT Puanı: ${student.tytPuan.toFixed(1)}`;
+            
+            const ctx = document.getElementById('karneGrafik').getContext('2d');
+            
+            if (currentChart) currentChart.destroy(); 
+
+            currentChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Türkçe', 'Sosyal Bilimleri', 'Matematik', 'Fen Bilimleri'],
+                    datasets: [
+                        { label: 'Doğru', data: [student.details.turkce.dogru, student.details.sosyal.dogru, student.details.matematik.dogru, student.details.fen.dogru], backgroundColor: '#10b981', borderRadius: 4 },
+                        { label: 'Yanlış', data: [student.details.turkce.yanlis, student.details.sosyal.yanlis, student.details.matematik.yanlis, student.details.fen.yanlis], backgroundColor: '#ef4444', borderRadius: 4 },
+                        { label: 'Net', data: [student.details.turkce.net, student.details.sosyal.net, student.details.matematik.net, student.details.fen.net], backgroundColor: '#6366f1', borderRadius: 4 }
+                    ]
+                },
+                options: { 
+                    responsive: true, 
+                    scales: { y: { beginAtZero: true, max: 40 } },
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+            
+            document.getElementById("karneModal").classList.remove('hidden');
         }
 
         function printReport(type) {
@@ -235,7 +307,7 @@
                     <table class="w-full text-sm text-left border-collapse border border-slate-300">
                         <thead><tr class="bg-slate-100"><th class="border p-2">Sıra</th><th class="border p-2">Öğr. No</th><th class="border p-2">Ad Soyad</th><th class="border p-2">Sınıf</th><th class="border p-2">Net</th><th class="border p-2">Puan</th></tr></thead>
                         <tbody>
-                            ${reportData.map((s, i) => `<tr><td class="border p-2">${i+1}</td><td class="border p-2 font-mono">${s.numara||'-'}</td><td class="border p-2">${s.name}</td><td class="border p-2">${s.sınıf||'-'}</td><td class="border p-2 font-bold">${s.totalNet.toFixed(2)}</td><td class="border p-2 font-bold">${s.tytPuan.toFixed(1)}</td></tr>`).join('')}
+                            ${reportData.map((s, i) => `<tr><td class="border p-2">${s.sira}</td><td class="border p-2 font-mono">${s.numara||'-'}</td><td class="border p-2">${s.name}</td><td class="border p-2">${s.sınıf||'-'}</td><td class="border p-2 font-bold">${s.totalNet.toFixed(2)}</td><td class="border p-2 font-bold">${s.tytPuan.toFixed(1)}</td></tr>`).join('')}
                         </tbody>
                     </table>`;
                 printAreaListe.classList.remove('hidden');
@@ -243,41 +315,77 @@
             else if (type === 'karne') {
                 printAreaKarneler.innerHTML = '';
                 reportData.forEach((s, i) => {
+                    
+                    // --- Çıktı Ekranı İçin Özel CSS Grafik ---
+                    let chartHtml = `
+                    <div class="flex flex-col mb-6 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-bold text-slate-700">Net ve Başarı Analizi</span>
+                            <div class="flex gap-3 text-[10px] font-bold uppercase">
+                                <span class="flex items-center gap-1"><span class="w-3 h-3 bg-emerald-500 rounded-sm"></span> Doğru</span>
+                                <span class="flex items-center gap-1"><span class="w-3 h-3 bg-red-500 rounded-sm"></span> Yanlış</span>
+                                <span class="flex items-center gap-1"><span class="w-3 h-3 bg-indigo-500 rounded-sm"></span> Net</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-around items-end h-32 border-b-2 border-l-2 border-slate-300 pb-2 pl-2 relative pt-4">
+                    `;
+
+                    Object.keys(s.details).forEach(key => {
+                        const d = s.details[key];
+                        const maxH = d.max;
+                        
+                        // Görselleştirme için barların yüksekliği. (Net eksi olsa bile boyu 0'da kalır, ancak yazısı eksi görünür)
+                        const dogruH = Math.max(0, (d.dogru / maxH) * 100);
+                        const yanlisH = Math.max(0, (d.yanlis / maxH) * 100);
+                        const netH = Math.max(0, (d.net / maxH) * 100);
+
+                        chartHtml += `
+                            <div class="flex flex-col items-center gap-1 w-1/4 h-full justify-end">
+                                <div class="flex items-end gap-1 w-full h-full justify-center">
+                                    <div class="w-6 bg-emerald-500 rounded-t relative print-shadow-none" style="height: ${dogruH}%; -webkit-print-color-adjust: exact;"><span class="absolute -top-4 left-1/2 -translate-x-1/2 text-[11px] font-bold text-slate-700">${d.dogru}</span></div>
+                                    <div class="w-6 bg-red-500 rounded-t relative print-shadow-none" style="height: ${yanlisH}%; -webkit-print-color-adjust: exact;"><span class="absolute -top-4 left-1/2 -translate-x-1/2 text-[11px] font-bold text-slate-700">${d.yanlis}</span></div>
+                                    <div class="w-6 bg-indigo-500 rounded-t relative print-shadow-none" style="height: ${netH}%; -webkit-print-color-adjust: exact;"><span class="absolute -top-4 left-1/2 -translate-x-1/2 text-[11px] font-bold text-slate-700">${d.net % 1 === 0 ? d.net : d.net.toFixed(2)}</span></div>
+                                </div>
+                                <span class="text-[11px] font-bold text-slate-600 mt-2">${d.label}</span>
+                            </div>
+                        `;
+                    });
+                    chartHtml += `</div></div>`;
+                    // --- CSS Grafik Bitişi ---
+
                     let lessonRowsHtml = '';
                     Object.keys(s.details).forEach(key => {
                         const d = s.details[key];
-                        const basariYuzdesi = Math.max(0, (d.net / d.max) * 100);
                         lessonRowsHtml += `
-                            <div class="border border-slate-300 rounded-xl p-3 mb-3 bg-white text-xs print-shadow-none">
-                                <div class="flex justify-between font-bold text-slate-800 mb-1">
-                                    <span class="text-sm">${d.label}</span>
-                                    <span>${d.correct}D ${d.wrong}Y | Net: <span class="text-indigo-600">${d.net.toFixed(2)}</span></span>
-                                </div>
-                                <div class="w-full bg-slate-100 rounded-full h-2.5 mb-2 border border-slate-200">
-                                    <div class="bg-indigo-500 h-2.5 rounded-full" style="width: ${basariYuzdesi}%"></div>
-                                </div>
-                                <div class="bg-slate-50 border border-slate-200 p-2 rounded text-[10px] font-mono tracking-widest overflow-x-auto whitespace-nowrap">
-                                    <div class="flex"><span class="w-16 font-semibold text-slate-500">ANAHTAR:</span> <span class="text-slate-800">${d.subKey}</span></div>
-                                    <div class="flex mt-1"><span class="w-16 font-semibold text-slate-500">ÖĞRENCİ:</span> <span class="text-slate-800 font-bold">${d.formattedStudentAns}</span></div>
+                            <div class="border border-slate-300 rounded-xl p-3 mb-2 bg-white text-xs print-shadow-none">
+                                <div class="bg-slate-50 border border-slate-200 p-2 rounded text-[11px] font-mono tracking-widest overflow-x-auto whitespace-nowrap">
+                                    <div class="flex"><span class="w-20 font-semibold text-slate-500">${d.label.substring(0,3).toUpperCase()} ANAHTAR:</span> <span class="text-slate-800">${d.subKey}</span></div>
+                                    <div class="flex mt-1"><span class="w-20 font-semibold text-slate-500">ÖĞRENCİ:</span> <span class="text-slate-800 font-bold">${d.formattedStudentAns}</span></div>
                                 </div>
                             </div>`;
                     });
 
                     printAreaKarneler.innerHTML += `
-                        <div class="page-break max-w-2xl mx-auto p-8 my-4 bg-white border-2 border-slate-800 rounded-2xl print-shadow-none">
+                        <div class="page-break max-w-3xl mx-auto p-8 my-4 bg-white border-2 border-slate-800 rounded-2xl print-shadow-none">
                             <div class="text-center border-b-2 border-slate-800 pb-4 mb-6">
                                 <h2 class="text-2xl font-black text-slate-900 tracking-tight">${currentExamTitle} SONUÇ BELGESİ</h2>
                             </div>
+                            
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-6 bg-slate-50 p-4 rounded-xl border border-slate-200">
-                                <div><span class="text-slate-500 block text-[10px] uppercase font-bold">Öğr. No / Adı</span> <span class="font-bold text-base block truncate">${s.numara || '-'} - ${s.name}</span></div>
+                                <div><span class="text-slate-500 block text-[10px] uppercase font-bold">Öğr. No / Adı</span> <span class="font-bold text-base block whitespace-normal break-words leading-tight">${s.numara || '-'} - ${s.name}</span></div>
                                 <div><span class="text-slate-500 block text-[10px] uppercase font-bold">Sınıf / Kitapçık</span> <span class="font-bold text-base">${s.sınıf || '-'} / ${s.kitapcik}</span></div>
-                                <div><span class="text-slate-500 block text-[10px] uppercase font-bold">Genel Sıralama</span> <span class="font-black text-indigo-700 text-base">${i + 1} / ${reportData.length}</span></div>
+                                <div><span class="text-slate-500 block text-[10px] uppercase font-bold">Genel Sıralama</span> <span class="font-black text-indigo-700 text-base">${s.sira} / ${reportData.length}</span></div>
                                 <div><span class="text-slate-500 block text-[10px] uppercase font-bold">TYT Puanı</span> <span class="font-black text-emerald-600 text-base">${s.tytPuan.toFixed(1)}</span></div>
                             </div>
-                            <div class="space-y-2">
+
+                            ${chartHtml}
+
+                            <div class="space-y-1 mt-2">
+                                <h3 class="text-sm font-bold text-slate-700 mb-2">Cevap Anahtarı Analizi</h3>
                                 ${lessonRowsHtml}
                             </div>
-                            <div class="text-center mt-4 text-[10px] text-slate-400 font-medium">
+                            
+                            <div class="text-center mt-6 text-[10px] text-slate-400 font-medium">
                                 * Doğru şıklar BÜYÜK, yanlış şıklar küçük harfle gösterilmiştir. Boşlar tire (-) işaretidir.
                             </div>
                         </div>`;
@@ -291,31 +399,28 @@
             }, 300);
         }
 
-async function saveActiveExamToDB() {
-    // Kopyaladığınız URL'yi buraya ekledik
-    const webAppUrl = "https://script.google.com/macros/s/AKfycbzq_AUX-Ep0NM10bP-Yol83ODOWVehBqsXLW5BxnqjG8QJQn5h81CbzAPx0J9s85V68zA/exec";
-    
-    // Kullanıcıya işlemin başladığını gösteriyoruz
-    const btn = document.getElementById("btnSaveToDB");
-    if (btn) btn.innerText = "⏳ Gönderiliyor...";
-    
-    try {
-        const response = await fetch(webAppUrl, {
-            method: 'POST',
-            mode: 'no-cors', // Google Apps Script bağlantısı için bu satır zorunludur
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ students: reportData }) // 'reportData' sizin analiz verilerinizi tutan değişkendir
-        });
-        
-        alert("Başarılı! Optik verileri Google Sheets'e kaydedildi.");
-    } catch (error) {
-        console.error("Kayıt hatası:", error);
-        alert("Kaydedilirken bir hata oluştu, lütfen konsolu kontrol edin.");
-    } finally {
-        // İşlem bitince butonu eski haline getiriyoruz
-        if (btn) btn.innerText = "💾 Google Sheets'e Kaydet";
-    }
-}
+        async function saveActiveExamToDB() {
+            const webAppUrl = "https://script.google.com/macros/s/AKfycbzq_AUX-Ep0NM10bP-Yol83ODOWVehBqsXLW5BxnqjG8QJQn5h81CbzAPx0J9s85V68zA/exec";
+            
+            const btn = document.getElementById("btnSaveToDB");
+            if (btn) btn.innerText = "⏳ Gönderiliyor...";
+            
+            try {
+                const response = await fetch(webAppUrl, {
+                    method: 'POST',
+                    mode: 'no-cors', 
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ students: reportData })
+                });
+                
+                alert("✅ Başarılı! Optik verileri Google Sheets'e güncellendi.");
+            } catch (error) {
+                console.error("Kayıt hatası:", error);
+                alert("❌ Kaydedilirken bir hata oluştu, lütfen internet bağlantınızı kontrol edin.");
+            } finally {
+                if (btn) btn.innerText = "💾 Buluta (Sheets) Kaydet";
+            }
+        }
     </script>
 </body>
 </html>
