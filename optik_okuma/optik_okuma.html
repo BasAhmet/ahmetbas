@@ -6,10 +6,11 @@
     <title>Optik Okuyucu & Karne Sistemi</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Yazdırma Yönünü Ayarlayan Dinamik Stil -->
     <style id="printPageStyle"></style>
     <style>
         @media print {
+            @page { size: auto; margin: 8mm; }
+            body { margin: 0px; }
             body * { visibility: hidden; }
             #printArea, #printArea * { visibility: visible; }
             #printArea { position: absolute; left: 0; top: 0; width: 100%; }
@@ -22,12 +23,30 @@
 </head>
 <body class="bg-slate-100 p-4 md:p-8 font-sans text-slate-800">
 
+    <div id="loginOverlay" class="fixed inset-0 bg-slate-950 flex items-center justify-center z-[9999]">
+        <div class="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full border border-slate-200 text-center mx-4">
+            <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+                ∑
+            </div>
+            <h2 class="text-xl font-black text-slate-800 mb-2">Ahmet Baş Math - Sınav Yönetimi</h2>
+            <p class="text-sm text-slate-500 mb-6">Sisteme erişmek için bilgilerinizi giriniz.</p>
+            
+            <input type="text" id="sysUsername" placeholder="Kullanıcı Adı" class="w-full px-4 py-3 border border-slate-200 rounded-xl mb-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-center text-base font-medium">
+            <input type="password" id="sysPassword" placeholder="Şifre" class="w-full px-4 py-3 border border-slate-200 rounded-xl mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-center text-lg tracking-widest" onkeydown="if(event.key === 'Enter') checkLogin()">
+            
+            <button id="btnLogin" onclick="checkLogin()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl transition-colors">Sisteme Giriş Yap</button>
+            <p id="loginError" class="text-red-500 text-xs font-semibold mt-3 hidden">⚠️ Kullanıcı adı veya şifre hatalı!</p>
+        </div>
+    </div>
+
     <div class="max-w-[95rem] mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 no-print">
         
-        <!-- SOL PANEL: YÜKLEME VE AYARLAR -->
         <div class="md:col-span-1 space-y-4">
             <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
-                <h2 class="text-lg font-bold text-slate-800 mb-4">📂 Dosya Yükle</h2>
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-bold text-slate-800">📂 Dosya Yükle</h2>
+                    <span id="userBadge" class="text-xs bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-full font-bold">Hoca</span>
+                </div>
                 <input type="text" id="examTitle" placeholder="Örn: TYT Deneme 1" class="w-full px-3 py-2 border border-slate-200 rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                 <input type="file" id="fileInput" accept=".txt" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer mb-4"/>
                 
@@ -47,10 +66,9 @@
             </div>
         </div>
 
-        <!-- SAĞ PANEL: TABLO -->
         <div class="md:col-span-3 space-y-4">
             <div id="actionButtons" class="hidden flex flex-wrap gap-3">
-                <button onclick="printReport('liste')" class="flex-1 bg-white border-2 border-slate-200 hover:border-slate-300 text-slate-700 font-bold py-2 rounded-xl transition-all">📋 Listeyi Yazdır (Yatay)</button>
+                <button onclick="printReport('liste')" class="flex-1 bg-white border-2 border-slate-200 hover:border-slate-300 text-slate-700 font-bold py-2 rounded-xl transition-all">📋 Listeyi Yazdır (Yatay Analiz)</button>
                 <button onclick="printReport('karne')" class="flex-1 bg-indigo-50 border-2 border-indigo-100 hover:border-indigo-200 text-indigo-700 font-bold py-2 rounded-xl transition-all">🖨️ Karneleri Yazdır</button>
                 <button id="btnSaveToDB" onclick="saveActiveExamToDB()" class="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 rounded-xl transition-all shadow-sm shadow-emerald-200">💾 Buluta (Sheets) Kaydet</button>
             </div>
@@ -64,7 +82,6 @@
                                 <th class="py-3 px-3">Öğr. No</th>
                                 <th class="py-3 px-3">Adı Soyadı</th>
                                 <th class="py-3 px-2 text-center">Sınıf</th>
-                                <!-- TC VE OPTİK SÜTUNLARI EKRANDAN GİZLENDİ -->
                                 <th class="py-3 px-3 text-center text-indigo-600">Top. Net</th>
                                 <th class="py-3 px-3 text-center text-emerald-600">Puan</th>
                                 <th class="py-3 px-3 text-center">İşlem</th>
@@ -79,15 +96,13 @@
         </div>
     </div>
 
-    <!-- YAZDIRMA ALANI -->
     <div id="printArea" class="hidden absolute top-0 left-0 w-full bg-white z-50">
         <div id="printAreaListe" class="hidden p-4"></div>
         <div id="printAreaKarneler" class="hidden"></div>
     </div>
 
-    <!-- KARNE MODAL -->
     <div id="karneModal" class="hidden fixed inset-0 bg-slate-900/60 z-[100] flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl p-6">
+        <div class="bg-white rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl p-6">
             <div class="flex justify-between items-start border-b border-slate-100 pb-4 mb-4">
                 <div>
                     <h2 id="karneOgrenciAdi" class="text-2xl font-black text-slate-800">Öğrenci Adı</h2>
@@ -97,7 +112,7 @@
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
-            <div class="mb-6"><canvas id="karneGrafik" height="100"></canvas></div>
+            <div class="mb-6"><canvas id="karneGrafik" height="120"></canvas></div>
             <div class="flex justify-end gap-3 border-t border-slate-100 pt-4">
                 <button onclick="document.getElementById('karneModal').classList.add('hidden')" class="px-5 py-2 rounded-xl bg-slate-100 text-slate-700 font-bold hover:bg-slate-200">Kapat</button>
             </div>
@@ -112,7 +127,61 @@
         let globalSettings = []; 
         let currentChart = null; 
 
-        window.onload = async () => {
+        // 🛡️ BULUT TABANLI GÜVENLİK DOĞRULAMASI
+        async function checkLogin() {
+            const user = document.getElementById('sysUsername').value.trim();
+            const pass = document.getElementById('sysPassword').value;
+            const btn = document.getElementById('btnLogin');
+            const err = document.getElementById('loginError');
+
+            if(!user || !pass) { alert("Lütfen kullanıcı adı ve şifre giriniz."); return; }
+
+            btn.innerText = "⏳ Kontrol Ediliyor...";
+            btn.disabled = true;
+
+            try {
+                // Şifre kontrolü için Apps Script'e doğrudan güvenli POST isteği atıyoruz
+                const response = await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'login', username: user, password: pass })
+                });
+                
+                // No-cors modunda değilsek yanıtı çözebiliriz. Eğer Apps Script'iniz no-cors dönüyorsa 
+                // alternatif olarak doGet üzerinden de kontrol mekanizması kurabiliriz. Ancak en temizi normal POST yanıtıdır.
+                const result = await response.json();
+                
+                if (result.success) {
+                    document.getElementById('loginOverlay').classList.add('hidden');
+                    sessionStorage.setItem('isLoggedIn', 'true');
+                    sessionStorage.setItem('activeUser', result.name);
+                    document.getElementById('userBadge').innerText = result.name;
+                    loadSettings(); // Başarılı girişte ayarları yükle
+                } else {
+                    err.innerText = "⚠️ " + (result.message || "Hatalı giriş!");
+                    err.classList.remove('hidden');
+                    setTimeout(() => err.classList.add('hidden'), 3000);
+                }
+            } catch (e) {
+                // Eğer CORS/Erişim kısıtlaması yaşanırsa korumayı yerel yedek moda geçiriyoruz (Geliştirme kolaylığı için)
+                console.error("Bulut doğrulaması hatası:", e);
+                // Canlı dağıtımda hata alırsanız burayı tamamen kapatabilirsiniz, şu an test için esneklik sağlar:
+                if(user === "ahmet" && pass === "ahmet15") {
+                    document.getElementById('loginOverlay').classList.add('hidden');
+                    sessionStorage.setItem('isLoggedIn', 'true');
+                    sessionStorage.setItem('activeUser', "Ahmet Hoca (Yedek Mod)");
+                    document.getElementById('userBadge').innerText = "Ahmet Hoca";
+                    loadSettings();
+                } else {
+                    err.innerText = "⚠️ Sunucu bağlantı hatası veya geçersiz bilgi!";
+                    err.classList.remove('hidden');
+                }
+            } finally {
+                btn.innerText = "Sisteme Giriş Yap";
+                btn.disabled = false;
+            }
+        }
+
+        async function loadSettings() {
             try {
                 const response = await fetch(WEB_APP_URL);
                 globalSettings = await response.json();
@@ -124,10 +193,50 @@
                 examTypes.forEach(type => {
                     typeSelect.innerHTML += `<option value="${type}">${type}</option>`;
                 });
-                
             } catch (error) {
                 document.getElementById('examType').innerHTML = '<option value="">❌ Ayarlar Çekilemedi!</option>';
-                console.error("Hata:", error);
+            }
+        }
+
+        window.onload = () => {
+            if (sessionStorage.getItem('isLoggedIn') === 'true') {
+                document.getElementById('loginOverlay').classList.add('hidden');
+                document.getElementById('userBadge').innerText = sessionStorage.getItem('activeUser') || "Hoca";
+                loadSettings();
+            }
+        };
+
+        const subLessonsConfig = {
+            'TYT': {
+                'sosyal': [
+                    { id: 'tarih', name: 'Tarih', count: 5 },
+                    { id: 'cografya', name: 'Coğrafya', count: 5 },
+                    { id: 'felsefe', name: 'Felsefe', count: 5 },
+                    { id: 'din', name: 'Din Kül.', count: 5 }
+                ],
+                'fen': [
+                    { id: 'fizik', name: 'Fizik', count: 7 },
+                    { id: 'kimya', name: 'Kimya', count: 7 },
+                    { id: 'biyoloji', name: 'Biyoloji', count: 6 }
+                ]
+            },
+            'AYT': {
+                'turkce': [
+                    { id: 'edebiyat', name: 'Edebiyat', count: 24 },
+                    { id: 'tarih1', name: 'Tarih-1', count: 10 },
+                    { id: 'cografya1', name: 'Coğrafya-1', count: 6 }
+                ],
+                'sosyal': [
+                    { id: 'tarih2', name: 'Tarih-2', count: 11 },
+                    { id: 'cografya2', name: 'Coğrafya-2', count: 11 },
+                    { id: 'felsefe_gr', name: 'Felsefe Gr.', count: 12 },
+                    { id: 'din2', name: 'Din Kül.-2', count: 6 }
+                ],
+                'fen': [
+                    { id: 'fizik2', name: 'Fizik', count: 14 },
+                    { id: 'kimya2', name: 'Kimya', count: 13 },
+                    { id: 'biyoloji2', name: 'Biyoloji', count: 13 }
+                ]
             }
         };
 
@@ -137,12 +246,7 @@
             const analyzeBtn = document.getElementById('btnAnalyze');
             
             opticSelect.innerHTML = '<option value="">Optik Form Seçin</option>';
-            
-            if (!selectedType) {
-                opticSelect.disabled = true;
-                analyzeBtn.disabled = true;
-                return;
-            }
+            if (!selectedType) { opticSelect.disabled = true; analyzeBtn.disabled = true; return; }
 
             const filteredOptics = globalSettings.filter(s => s['Sınav Türü'] === selectedType);
             filteredOptics.forEach(opt => {
@@ -168,7 +272,6 @@
             if (!selectedExamType || !selectedOptic) { alert('Lütfen Sınav Türü ve Optik Form seçin.'); return; }
             
             const ayar = globalSettings.find(s => s['Sınav Türü'] === selectedExamType && s['Optik Adı'] === selectedOptic);
-            
             currentExamTitle = titleInput || fileInput.files[0].name.replace(".txt", "");
             document.getElementById('examTitle').value = currentExamTitle;
 
@@ -194,7 +297,7 @@
                     }
                 });
 
-                const lessonsConfig = [
+                const baseLessonsConfig = [
                     { id: 'turkce', name: 'Türkçe', start: ayar['Türkçe Başlangıç'], end: ayar['Türkçe Bitiş'] },
                     { id: 'sosyal', name: 'Sosyal', start: ayar['Sosyal Başlangıç'], end: ayar['Sosyal Bitiş'] },
                     { id: 'matematik', name: 'Matematik', start: ayar['Matematik Başlangıç'], end: ayar['Matematik Bitiş'] },
@@ -206,34 +309,66 @@
                     let activeKey = (student.kitapcik === 'B') ? keyB : keyA;
                     let r = { numara: student.numara, name: student.name, sınıf: student.sınıf, telefon: student.telefon, kitapcik: student.kitapcik, denemeAdi: currentExamTitle, optikAdi: selectedOptic, totalNet: 0, details: {} };
                     
-                    lessonsConfig.forEach(l => {
-                        let dogru = 0, yanlis = 0, bos = 0;
+                    baseLessonsConfig.forEach(l => {
                         const sStart = parseInt(l.start);
                         const sEnd = parseInt(l.end);
                         const maxSoru = sEnd - sStart;
 
                         const subKey = activeKey.substring(sStart, sEnd) || "".padEnd(maxSoru, " ");
                         const subAns = student.fullLine.substring(sStart, sEnd) || "".padEnd(maxSoru, " ");
-                        let formattedStudentAns = ""; 
+                        const subs = (subLessonsConfig[selectedExamType] && subLessonsConfig[selectedExamType][l.id]);
 
-                        for(let i=0; i < maxSoru; i++) {
-                            const k = subKey[i] || ' '; 
-                            const s = subAns[i] || ' ';
-                            
-                            if (s === 'X' || s === ' ' || s === '') {
-                                bos++; formattedStudentAns += '-'; 
-                            } else if (s === k) {
-                                dogru++; formattedStudentAns += s.toUpperCase(); 
-                            } else {
-                                yanlis++; formattedStudentAns += s.toLowerCase(); 
+                        if (subs) {
+                            let currentOffset = 0;
+                            subs.forEach(sub => {
+                                let dogru = 0, yanlis = 0, bos = 0;
+                                let formattedStudentAns = "";
+                                const maxSoruSub = sub.count;
+                                
+                                const partKey = subKey.substring(currentOffset, currentOffset + maxSoruSub) || "".padEnd(maxSoruSub, " ");
+                                const partAns = subAns.substring(currentOffset, currentOffset + maxSoruSub) || "".padEnd(maxSoruSub, " ");
+                                
+                                for(let i=0; i < maxSoruSub; i++) {
+                                    const k = partKey[i] || ' ';
+                                    const s = partAns[i] || ' ';
+                                    if (s === 'X' || s === ' ' || s === '') {
+                                        bos++; formattedStudentAns += '-';
+                                    } else if (s === k) {
+                                        dogru++; formattedStudentAns += s.toUpperCase();
+                                    } else {
+                                        yanlis++; formattedStudentAns += s.toLowerCase();
+                                    }
+                                }
+                                let net = dogru - (yanlis / 4);
+                                r.details[sub.id] = { label: sub.name, dogru, yanlis, bos, net, max: maxSoruSub, subKey: partKey, formattedStudentAns };
+                                r.totalNet += net;
+                                currentOffset += maxSoruSub;
+                            });
+                        } else {
+                            let dogru = 0, yanlis = 0, bos = 0;
+                            let formattedStudentAns = ""; 
+
+                            for(let i=0; i < maxSoru; i++) {
+                                const k = subKey[i] || ' '; 
+                                const s = subAns[i] || ' ';
+                                if (s === 'X' || s === ' ' || s === '') {
+                                    bos++; formattedStudentAns += '-'; 
+                                } else if (s === k) {
+                                    dogru++; formattedStudentAns += s.toUpperCase(); 
+                                } else {
+                                    yanlis++; formattedStudentAns += s.toLowerCase(); 
+                                }
                             }
+                            let net = dogru - (yanlis / 4); 
+                            let finalLabel = l.name;
+                            if (selectedExamType === 'AYT' && l.id === 'matematik') finalLabel = 'AYT Mat';
+                            r.details[l.id] = { label: finalLabel, dogru, yanlis, bos, net, max: maxSoru, subKey, formattedStudentAns };
+                            r.totalNet += net; 
                         }
-                        let net = dogru - (yanlis / 4); 
-                        r.details[l.id] = { label: l.name, dogru, yanlis, bos, net, max: maxSoru, subKey, formattedStudentAns };
-                        r.totalNet += net; 
                     });
                     
                     if(selectedExamType === 'TYT') { r.puan = 100 + (r.totalNet * 3.333); } 
+                    else if(selectedExamType === 'AYT') { r.puan = 100 + (r.totalNet * 3.5); }
                     else if (selectedExamType === 'LGS') { r.puan = 200 + (r.totalNet * 3.1); } 
                     else { r.puan = r.totalNet * 3.5; }
                     
@@ -280,7 +415,6 @@
             if (currentChart) currentChart.destroy(); 
 
             const labels = [], dataDogru = [], dataYanlis = [], dataNet = [];
-
             Object.keys(student.details).forEach(key => {
                 const d = student.details[key];
                 labels.push(d.label);
@@ -315,40 +449,35 @@
             printArea.classList.remove('hidden');
 
             if (type === 'liste') {
-                // Listeyi yazdırırken sayfayı YATAY (landscape) yapıyoruz
-                pageStyle.innerHTML = '@media print { @page { size: landscape; margin: 10mm; } }';
-                
+                pageStyle.innerHTML = '@media print { @page { size: landscape; margin: 8mm; } body { margin: 0; } }';
                 let firstStudent = reportData[0];
-                let lessonHeaders = '';
-                let subHeaders = '';
+                let lessonHeaders = ''; let subHeaders = '';
                 
                 if(firstStudent) {
                     Object.keys(firstStudent.details).forEach(key => {
-                        lessonHeaders += `<th class="border border-slate-400 p-1 bg-slate-200" colspan="3">${firstStudent.details[key].label}</th>`;
+                        lessonHeaders += `<th class="border border-slate-400 p-0.5 bg-slate-200" colspan="3">${firstStudent.details[key].label}</th>`;
                         subHeaders += `
-                            <th class="border border-slate-400 p-1 text-emerald-700 bg-emerald-50 text-[9px]">D</th>
-                            <th class="border border-slate-400 p-1 text-red-700 bg-red-50 text-[9px]">Y</th>
-                            <th class="border border-slate-400 p-1 text-indigo-700 bg-indigo-50 text-[9px]">N</th>
+                            <th class="border border-slate-400 p-0.5 text-emerald-700 bg-emerald-50 text-[9px] font-bold">D</th>
+                            <th class="border border-slate-400 p-0.5 text-red-700 bg-red-50 text-[9px] font-bold">Y</th>
+                            <th class="border border-slate-400 p-0.5 text-indigo-700 bg-indigo-50 text-[9px] font-bold">N</th>
                         `;
                     });
                 }
 
                 printAreaListe.innerHTML = `
-                    <h2 class="text-xl font-black mb-4 text-center uppercase">${currentExamTitle} - DETAYLI SONUÇ LİSTESİ</h2>
-                    <table class="w-full text-[10px] text-center border-collapse border border-slate-400">
+                    <h2 class="text-base font-black mb-3 text-center uppercase">${currentExamTitle} - DETAYLI BRANŞ ANALİZ LİSTESİ</h2>
+                    <table class="w-full text-[9px] text-center border-collapse border border-slate-400">
                         <thead>
                             <tr class="bg-slate-100 text-slate-800">
                                 <th class="border border-slate-400 p-1" rowspan="2">Sıra</th>
-                                <th class="border border-slate-400 p-1" rowspan="2">Öğr. No</th>
+                                <th class="border border-slate-400 p-1" rowspan="2">No</th>
                                 <th class="border border-slate-400 p-1 text-left" rowspan="2">Ad Soyad</th>
                                 <th class="border border-slate-400 p-1" rowspan="2">Sınıf</th>
                                 ${lessonHeaders}
-                                <th class="border border-slate-400 p-1 bg-indigo-100" rowspan="2">Top. Net</th>
-                                <th class="border border-slate-400 p-1 bg-emerald-100" rowspan="2">Puan</th>
+                                <th class="border border-slate-400 p-1 bg-indigo-100 font-bold" rowspan="2">T.Net</th>
+                                <th class="border border-slate-400 p-1 bg-emerald-100 font-bold" rowspan="2">Puan</th>
                             </tr>
-                            <tr class="bg-slate-50">
-                                ${subHeaders}
-                            </tr>
+                            <tr class="bg-slate-50">${subHeaders}</tr>
                         </thead>
                         <tbody>
                             ${reportData.map(s => {
@@ -356,20 +485,20 @@
                                 Object.keys(s.details).forEach(key => {
                                     let d = s.details[key];
                                     studentLessonsHtml += `
-                                        <td class="border border-slate-400 p-1 font-bold text-emerald-700">${d.dogru}</td>
-                                        <td class="border border-slate-400 p-1 font-bold text-red-700">${d.yanlis}</td>
-                                        <td class="border border-slate-400 p-1 font-bold text-indigo-700">${d.net % 1 === 0 ? d.net : d.net.toFixed(2)}</td>
+                                        <td class="border border-slate-400 p-0.5 text-emerald-700 font-semibold">${d.dogru}</td>
+                                        <td class="border border-slate-400 p-0.5 text-red-700">${d.yanlis}</td>
+                                        <td class="border border-slate-400 p-0.5 font-bold text-indigo-700">${d.net % 1 === 0 ? d.net : d.net.toFixed(2)}</td>
                                     `;
                                 });
                                 return `
-                                <tr>
-                                    <td class="border border-slate-400 p-1 font-bold">${s.sira}</td>
-                                    <td class="border border-slate-400 p-1 font-mono">${s.numara||'-'}</td>
-                                    <td class="border border-slate-400 p-1 text-left font-medium">${s.name}</td>
-                                    <td class="border border-slate-400 p-1">${s.sınıf||'-'}</td>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="border border-slate-400 p-0.5 font-bold">${s.sira}</td>
+                                    <td class="border border-slate-400 p-0.5 font-mono">${s.numara||'-'}</td>
+                                    <td class="border border-slate-400 p-0.5 text-left font-medium whitespace-nowrap">${s.name}</td>
+                                    <td class="border border-slate-400 p-0.5">${s.sınıf||'-'}</td>
                                     ${studentLessonsHtml}
-                                    <td class="border border-slate-400 p-1 font-black text-indigo-800 bg-indigo-50">${s.totalNet.toFixed(2)}</td>
-                                    <td class="border border-slate-400 p-1 font-black text-emerald-800 bg-emerald-50">${s.puan.toFixed(1)}</td>
+                                    <td class="border border-slate-400 p-0.5 font-black text-indigo-900 bg-indigo-50">${s.totalNet.toFixed(2)}</td>
+                                    <td class="border border-slate-400 p-0.5 font-black text-emerald-900 bg-emerald-50">${s.puan.toFixed(1)}</td>
                                 </tr>`;
                             }).join('')}
                         </tbody>
@@ -377,13 +506,12 @@
                 printAreaListe.classList.remove('hidden');
             } 
             else if (type === 'karne') {
-                // Karneleri yazdırırken sayfayı DİKEY (portrait) yapıyoruz
-                pageStyle.innerHTML = '@media print { @page { size: portrait; margin: 10mm; } }';
-                
+                pageStyle.innerHTML = '@media print { @page { size: portrait; margin: 8mm; } body { margin: 0; } }';
                 printAreaKarneler.innerHTML = '';
+                
                 reportData.forEach(s => {
                     let chartHtml = `<div class="flex flex-col mb-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
-                        <div class="flex justify-around items-end h-32 border-b-2 border-l-2 border-slate-300 pb-2 pl-2 relative pt-4">`;
+                        <div class="flex justify-around items-end h-28 border-b-2 border-l-2 border-slate-300 pb-2 pl-2 relative pt-4">`;
                     
                     Object.keys(s.details).forEach(key => {
                         const d = s.details[key];
@@ -392,12 +520,12 @@
                         const netH = Math.max(0, (d.net / d.max) * 100);
                         chartHtml += `
                             <div class="flex flex-col items-center gap-1 w-1/4 h-full justify-end">
-                                <div class="flex items-end gap-1 w-full h-full justify-center">
-                                    <div class="w-6 bg-emerald-500 rounded-t relative print-shadow-none" style="height: ${dogruH}%;"><span class="absolute -top-4 left-1/2 -translate-x-1/2 text-[10px] font-bold text-slate-700">${d.dogru}</span></div>
-                                    <div class="w-6 bg-red-500 rounded-t relative print-shadow-none" style="height: ${yanlisH}%;"><span class="absolute -top-4 left-1/2 -translate-x-1/2 text-[10px] font-bold text-slate-700">${d.yanlis}</span></div>
-                                    <div class="w-6 bg-indigo-500 rounded-t relative print-shadow-none" style="height: ${netH}%;"><span class="absolute -top-4 left-1/2 -translate-x-1/2 text-[10px] font-bold text-slate-700">${d.net % 1 === 0 ? d.net : d.net.toFixed(2)}</span></div>
+                                <div class="flex items-end gap-0.5 w-full h-full justify-center">
+                                    <div class="w-4 bg-emerald-500 rounded-t relative print-shadow-none" style="height: ${dogruH}%;"><span class="absolute -top-3.5 left-1/2 -translate-x-1/2 text-[8px] font-bold text-slate-700">${d.dogru}</span></div>
+                                    <div class="w-4 bg-red-500 rounded-t relative print-shadow-none" style="height: ${yanlisH}%;"><span class="absolute -top-3.5 left-1/2 -translate-x-1/2 text-[8px] font-bold text-slate-700">${d.yanlis}</span></div>
+                                    <div class="w-4 bg-indigo-500 rounded-t relative print-shadow-none" style="height: ${netH}%;"><span class="absolute -top-3.5 left-1/2 -translate-x-1/2 text-[8px] font-bold text-slate-700">${d.net % 1 === 0 ? d.net : d.net.toFixed(1)}</span></div>
                                 </div>
-                                <span class="text-[10px] font-bold text-slate-600 mt-2">${d.label}</span>
+                                <span class="text-[9px] font-bold text-slate-600 mt-2 truncate w-full text-center">${d.label}</span>
                             </div>`;
                     });
                     chartHtml += `</div></div>`;
@@ -406,32 +534,31 @@
                     Object.keys(s.details).forEach(key => {
                         const d = s.details[key];
                         lessonRowsHtml += `
-                            <div class="border border-slate-300 rounded p-2 mb-1 bg-white text-xs print-shadow-none">
-                                <div class="bg-slate-50 border border-slate-200 p-1 rounded text-[10px] font-mono tracking-widest whitespace-nowrap">
-                                    <div class="flex"><span class="w-20 font-semibold text-slate-500">${d.label.substring(0,3).toUpperCase()}:</span> <span class="text-slate-800">${d.subKey}</span></div>
-                                    <div class="flex mt-1"><span class="w-20 font-semibold text-slate-500">ÖĞR:</span> <span class="text-slate-800 font-bold">${d.formattedStudentAns}</span></div>
+                            <div class="border border-slate-300 rounded p-1.5 mb-1 bg-white text-xs print-shadow-none">
+                                <div class="bg-slate-50 border border-slate-200 p-1 rounded text-[9px] font-mono tracking-widest whitespace-nowrap">
+                                    <div class="flex"><span class="w-16 font-semibold text-slate-500">${d.label.substring(0,4).toUpperCase()}:</span> <span class="text-slate-800">${d.subKey}</span></div>
+                                    <div class="flex mt-0.5"><span class="w-16 font-semibold text-slate-500">ÖĞR:</span> <span class="text-slate-800 font-bold">${d.formattedStudentAns}</span></div>
                                 </div>
                             </div>`;
                     });
 
                     printAreaKarneler.innerHTML += `
-                        <div class="page-break max-w-3xl mx-auto p-8 my-4 bg-white border-2 border-slate-800 rounded-2xl print-shadow-none">
-                            <div class="text-center border-b-2 border-slate-800 pb-2 mb-4">
-                                <h2 class="text-2xl font-black text-slate-900">${currentExamTitle} SONUÇ BELGESİ</h2>
+                        <div class="page-break max-w-3xl mx-auto p-6 my-4 bg-white border border-slate-400 rounded-2xl print-shadow-none">
+                            <div class="text-center border-b border-slate-400 pb-2 mb-3">
+                                <h2 class="text-xl font-black text-slate-900">${currentExamTitle} SONUÇ BELGESİ</h2>
                             </div>
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
-                                <div><span class="text-slate-500 block text-[10px] uppercase font-bold">Öğr. No / Adı</span> <span class="font-bold text-sm block">${s.numara || '-'} - ${s.name}</span></div>
-                                <div><span class="text-slate-500 block text-[10px] uppercase font-bold">Sınıf</span> <span class="font-bold text-sm block">${s.sınıf || '-'}</span></div>
-                                <div><span class="text-slate-500 block text-[10px] uppercase font-bold">Genel Sıralama</span> <span class="font-black text-indigo-700 text-sm block">${s.sira} / ${reportData.length}</span></div>
-                                <div><span class="text-slate-500 block text-[10px] uppercase font-bold">Puan</span> <span class="font-black text-emerald-600 text-sm block">${s.puan.toFixed(1)}</span></div>
+                            <div class="grid grid-cols-4 gap-2 text-xs mb-3 bg-slate-50 p-3 rounded-xl border border-slate-200">
+                                <div><span class="text-slate-500 block text-[9px] uppercase font-bold">Öğrenci</span> <span class="font-bold block truncate">${s.numara} - ${s.name}</span></div>
+                                <div><span class="text-slate-500 block text-[9px] uppercase font-bold">Sınıf</span> <span class="font-bold block">${s.sınıf || '-'}</span></div>
+                                <div><span class="text-slate-500 block text-[9px] uppercase font-bold">Derece</span> <span class="font-black text-indigo-700 block">${s.sira} / ${reportData.length}</span></div>
+                                <div><span class="text-slate-500 block text-[9px] uppercase font-bold">Puan</span> <span class="font-black text-emerald-600 block">${s.puan.toFixed(1)}</span></div>
                             </div>
                             ${chartHtml}
-                            <div class="space-y-1 mt-2">${lessonRowsHtml}</div>
+                            <div class="grid grid-cols-2 gap-2 mt-2">${lessonRowsHtml}</div>
                         </div>`;
                 });
                 printAreaKarneler.classList.remove('hidden');
             }
-            
             setTimeout(() => { window.print(); printArea.classList.add('hidden'); }, 300);
         }
 
@@ -439,11 +566,10 @@
             const btn = document.getElementById("btnSaveToDB");
             if (btn) btn.innerText = "⏳ Gönderiliyor...";
             try {
-                // Öğrenci bilgileri (TC, Optik, Netler vb.) s.telefon ve s.optikAdi ile arka planda veritabanına sorunsuz gönderiliyor.
-                const response = await fetch(WEB_APP_URL, {
-                    method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ students: reportData })
+                await fetch(WEB_APP_URL, {
+                    method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'saveExam', students: reportData })
                 });
-                alert("✅ Başarılı! Optik verileri Google Sheets'e güncellendi.");
+                alert("✅ Başarılı! Tüm detaylı branş verileri buluta (Google Sheets) güvenle aktarıldı.");
             } catch (error) {
                 console.error("Hata:", error);
                 alert("❌ Kaydedilirken bir hata oluştu.");
