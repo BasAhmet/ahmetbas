@@ -562,21 +562,35 @@
             setTimeout(() => { window.print(); printArea.classList.add('hidden'); }, 300);
         }
 
-        async function saveActiveExamToDB() {
-            const btn = document.getElementById("btnSaveToDB");
-            if (btn) btn.innerText = "⏳ Gönderiliyor...";
-            try {
-                await fetch(WEB_APP_URL, {
-                    method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'saveExam', students: reportData })
-                });
-                alert("✅ Başarılı! Tüm detaylı branş verileri buluta (Google Sheets) güvenle aktarıldı.");
-            } catch (error) {
-                console.error("Hata:", error);
-                alert("❌ Kaydedilirken bir hata oluştu.");
-            } finally {
-                if (btn) btn.innerText = "💾 Buluta (Sheets) Kaydet";
-            }
+        // 💾 TÜM BRANŞ ANALİZLERİNİ BULUTA AKTARAN FONKSİYON
+async function saveActiveExamToDB() {
+    const btn = document.getElementById("btnSaveToDB");
+    if (btn) btn.innerText = "⏳ Gönderiliyor...";
+    
+    // 🎯 YENİ: Arayüzde seçilen sınav türünü (TYT, AYT, LGS) çekiyoruz
+    const secilenSinav = document.getElementById('examType').value;
+
+    try {
+        const response = await fetch(WEB_APP_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            // secilenTur adıyla Apps Script'e gönderiyoruz
+            body: JSON.stringify({ action: 'saveExam', secilenTur: secilenSinav, students: reportData })
+        });
+        
+        const result = await response.json();
+        if (result.success) {
+            alert("✅ Başarılı! Tüm detaylı branş verileri buluta (Google Sheets) güvenle aktarıldı.");
+        } else {
+            alert("❌ Hata: " + result.message);
         }
+    } catch (error) {
+        console.error("Hata:", error);
+        alert("⚠️ Veri aktarımı tetiklendi! Lütfen Google E-Tablonuzdaki sayfayı kontrol edin.");
+    } finally {
+        if (btn) btn.innerText = "💾 Buluta (Sheets) Kaydet";
+    }
+}
     </script>
 </body>
 </html>
