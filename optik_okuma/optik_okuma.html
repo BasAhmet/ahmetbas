@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head>    
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Optik Okuyucu & Karne Sistemi</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Yazdırma Yönünü Ayarlayan Dinamik Stil -->
+    <style id="printPageStyle"></style>
     <style>
         @media print {
             body * { visibility: hidden; }
@@ -22,42 +24,33 @@
 
     <div class="max-w-[95rem] mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 no-print">
         
+        <!-- SOL PANEL: YÜKLEME VE AYARLAR -->
         <div class="md:col-span-1 space-y-4">
             <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
                 <h2 class="text-lg font-bold text-slate-800 mb-4">📂 Dosya Yükle</h2>
                 <input type="text" id="examTitle" placeholder="Örn: TYT Deneme 1" class="w-full px-3 py-2 border border-slate-200 rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                 <input type="file" id="fileInput" accept=".txt" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer mb-4"/>
-                <button onclick="processFile()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-xl transition-colors">📊 Sonuçları Analiz Et</button>
-            </div>
+                
+                <h3 class="font-bold text-slate-700 mb-2 text-sm mt-6">⚙️ Format Seçimi</h3>
+                
+                <label class="text-xs text-slate-500 font-bold ml-1">1. Sınav Türü:</label>
+                <select id="examType" onchange="filterOptics()" class="w-full px-3 py-2 border border-slate-200 rounded-lg mb-3 text-sm bg-slate-50 focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <option value="">⏳ Ayarlar Çekiliyor...</option>
+                </select>
 
-            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 text-xs">
-                <h3 class="font-bold text-slate-700 mb-3 text-sm">⚙️ Format Ayarları (Sütunlar)</h3>
-                <div class="grid grid-cols-2 gap-2 mb-2">
-                    <div><label class="text-slate-500 block mb-1">Ad Baş.</label><input type="number" id="startName" value="0" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
-                    <div><label class="text-slate-500 block mb-1">Ad Bit.</label><input type="number" id="endName" value="20" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
-                </div>
-                <div class="grid grid-cols-2 gap-2 mb-2">
-                    <div><label class="text-slate-500 block mb-1">Öğr. No Baş.</label><input type="number" id="startNum" value="20" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
-                    <div><label class="text-slate-500 block mb-1">Öğr. No Bit.</label><input type="number" id="endNum" value="25" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
-                </div>
-                <div class="grid grid-cols-2 gap-2 mb-2">
-                    <div><label class="text-slate-500 block mb-1">Sınıf Baş.</label><input type="number" id="startClass" value="25" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
-                    <div><label class="text-slate-500 block mb-1">Sınıf Bit.</label><input type="number" id="endClass" value="30" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
-                </div>
-                <div class="grid grid-cols-2 gap-2 mb-2">
-                    <div><label class="text-slate-500 block mb-1">Kitapçık Baş.</label><input type="number" id="startType" value="30" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
-                    <div><label class="text-slate-500 block mb-1">Kitapçık Bit.</label><input type="number" id="endType" value="31" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/></div>
-                </div>
-                <div class="mt-2">
-                    <label class="text-slate-500 block mb-1">Cevaplar Başlangıç</label>
-                    <input type="number" id="startAnswers" value="31" class="w-full px-2 py-1.5 border border-slate-200 rounded-lg"/>
-                </div>
+                <label class="text-xs text-slate-500 font-bold ml-1">2. Kullanılan Optik:</label>
+                <select id="opticName" class="w-full px-3 py-2 border border-slate-200 rounded-lg mb-4 text-sm bg-slate-50 focus:ring-2 focus:ring-indigo-500 outline-none" disabled>
+                    <option value="">Önce Sınav Türü Seçin</option>
+                </select>
+
+                <button onclick="processFile()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-xl transition-colors disabled:opacity-50" id="btnAnalyze" disabled>📊 Sonuçları Analiz Et</button>
             </div>
         </div>
 
+        <!-- SAĞ PANEL: TABLO -->
         <div class="md:col-span-3 space-y-4">
             <div id="actionButtons" class="hidden flex flex-wrap gap-3">
-                <button onclick="printReport('liste')" class="flex-1 bg-white border-2 border-slate-200 hover:border-slate-300 text-slate-700 font-bold py-2 rounded-xl transition-all">📋 Listeyi Yazdır</button>
+                <button onclick="printReport('liste')" class="flex-1 bg-white border-2 border-slate-200 hover:border-slate-300 text-slate-700 font-bold py-2 rounded-xl transition-all">📋 Listeyi Yazdır (Yatay)</button>
                 <button onclick="printReport('karne')" class="flex-1 bg-indigo-50 border-2 border-indigo-100 hover:border-indigo-200 text-indigo-700 font-bold py-2 rounded-xl transition-all">🖨️ Karneleri Yazdır</button>
                 <button id="btnSaveToDB" onclick="saveActiveExamToDB()" class="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 rounded-xl transition-all shadow-sm shadow-emerald-200">💾 Buluta (Sheets) Kaydet</button>
             </div>
@@ -71,18 +64,14 @@
                                 <th class="py-3 px-3">Öğr. No</th>
                                 <th class="py-3 px-3">Adı Soyadı</th>
                                 <th class="py-3 px-2 text-center">Sınıf</th>
-                                <th class="py-3 px-2 text-center">Tür</th>
-                                <th class="py-3 px-2 text-center">Türkçe (D/Y)</th>
-                                <th class="py-3 px-2 text-center">Sosyal (D/Y)</th>
-                                <th class="py-3 px-2 text-center">Mat (D/Y)</th>
-                                <th class="py-3 px-2 text-center">Fen (D/Y)</th>
+                                <!-- TC VE OPTİK SÜTUNLARI EKRANDAN GİZLENDİ -->
                                 <th class="py-3 px-3 text-center text-indigo-600">Top. Net</th>
                                 <th class="py-3 px-3 text-center text-emerald-600">Puan</th>
                                 <th class="py-3 px-3 text-center">İşlem</th>
                             </tr>
                         </thead>
                         <tbody id="resultTableBody" class="divide-y divide-slate-100">
-                            <tr><td colspan="12" class="py-8 text-center text-slate-400">Sonuçları görmek için bir dosya yükleyin.</td></tr>
+                            <tr><td colspan="7" class="py-8 text-center text-slate-400">Sonuçları görmek için bir dosya yükleyin.</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -90,11 +79,13 @@
         </div>
     </div>
 
+    <!-- YAZDIRMA ALANI -->
     <div id="printArea" class="hidden absolute top-0 left-0 w-full bg-white z-50">
         <div id="printAreaListe" class="hidden p-4"></div>
         <div id="printAreaKarneler" class="hidden"></div>
     </div>
 
+    <!-- KARNE MODAL -->
     <div id="karneModal" class="hidden fixed inset-0 bg-slate-900/60 z-[100] flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl p-6">
             <div class="flex justify-between items-start border-b border-slate-100 pb-4 mb-4">
@@ -109,15 +100,58 @@
             <div class="mb-6"><canvas id="karneGrafik" height="100"></canvas></div>
             <div class="flex justify-end gap-3 border-t border-slate-100 pt-4">
                 <button onclick="document.getElementById('karneModal').classList.add('hidden')" class="px-5 py-2 rounded-xl bg-slate-100 text-slate-700 font-bold hover:bg-slate-200">Kapat</button>
-                <button onclick="printReport('karne')" class="px-5 py-2 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700">Tüm Karneleri Yazdır</button>
             </div>
         </div>
     </div>
 
     <script>
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzq_AUX-Ep0NM10bP-Yol83ODOWVehBqsXLW5BxnqjG8QJQn5h81CbzAPx0J9s85V68zA/exec";
+        
         let reportData = [];
         let currentExamTitle = "";
+        let globalSettings = []; 
         let currentChart = null; 
+
+        window.onload = async () => {
+            try {
+                const response = await fetch(WEB_APP_URL);
+                globalSettings = await response.json();
+                
+                const examTypes = [...new Set(globalSettings.map(item => item['Sınav Türü']))];
+                
+                const typeSelect = document.getElementById('examType');
+                typeSelect.innerHTML = '<option value="">Sınav Türü Seçin</option>';
+                examTypes.forEach(type => {
+                    typeSelect.innerHTML += `<option value="${type}">${type}</option>`;
+                });
+                
+            } catch (error) {
+                document.getElementById('examType').innerHTML = '<option value="">❌ Ayarlar Çekilemedi!</option>';
+                console.error("Hata:", error);
+            }
+        };
+
+        function filterOptics() {
+            const selectedType = document.getElementById('examType').value;
+            const opticSelect = document.getElementById('opticName');
+            const analyzeBtn = document.getElementById('btnAnalyze');
+            
+            opticSelect.innerHTML = '<option value="">Optik Form Seçin</option>';
+            
+            if (!selectedType) {
+                opticSelect.disabled = true;
+                analyzeBtn.disabled = true;
+                return;
+            }
+
+            const filteredOptics = globalSettings.filter(s => s['Sınav Türü'] === selectedType);
+            filteredOptics.forEach(opt => {
+                opticSelect.innerHTML += `<option value="${opt['Optik Adı']}">${opt['Optik Adı']}</option>`;
+            });
+            
+            opticSelect.disabled = false;
+            analyzeBtn.disabled = false;
+        }
 
         function turkceKarakterOnar(text) {
             const map = { 'Ý': 'İ', 'Þ': 'Ş', 'Ð': 'Ğ', 'ý': 'ı', 'þ': 'ş', 'ð': 'ğ', 'Ä±': 'ı', 'Ä°': 'İ', 'ÄŸ': 'ğ', 'Äž': 'Ğ', 'ÅŸ': 'ş', 'Åž': 'Ş', 'Ã¶': 'ö', 'Ã–': 'Ö', 'Ã§': 'ç', 'Ã‡': 'Ç', 'Ã¼': 'ü', 'Ãœ': 'Ü' };
@@ -127,20 +161,16 @@
         function processFile() {
             const fileInput = document.getElementById('fileInput');
             const titleInput = document.getElementById('examTitle').value.trim();
+            const selectedExamType = document.getElementById('examType').value;
+            const selectedOptic = document.getElementById('opticName').value;
+
             if (!fileInput.files[0]) { alert('Lütfen .txt dosyasını seçin.'); return; }
+            if (!selectedExamType || !selectedOptic) { alert('Lütfen Sınav Türü ve Optik Form seçin.'); return; }
+            
+            const ayar = globalSettings.find(s => s['Sınav Türü'] === selectedExamType && s['Optik Adı'] === selectedOptic);
             
             currentExamTitle = titleInput || fileInput.files[0].name.replace(".txt", "");
             document.getElementById('examTitle').value = currentExamTitle;
-
-            const sName = parseInt(document.getElementById('startName').value) || 0;
-            const eName = parseInt(document.getElementById('endName').value) || 20;
-            const sNum = parseInt(document.getElementById('startNum').value) || 20;
-            const eNum = parseInt(document.getElementById('endNum').value) || 25;
-            const sClass = parseInt(document.getElementById('startClass').value) || 25;
-            const eClass = parseInt(document.getElementById('endClass').value) || 30;
-            const sType = parseInt(document.getElementById('startType').value) || 30;
-            const eType = parseInt(document.getElementById('endType').value) || 31;
-            const sAnswers = parseInt(document.getElementById('startAnswers').value) || 31;
 
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -149,41 +179,47 @@
                 let keyA = "", keyB = "";
 
                 lines.forEach(line => {
-                    const namePart = line.substring(sName, eName).trim();
-                    if (namePart.startsWith('CEVAP_ANAHTARI_A')) { keyA = line.substring(sAnswers).toUpperCase(); } 
-                    else if (namePart.startsWith('CEVAP_ANAHTARI_B')) { keyB = line.substring(sAnswers).toUpperCase(); } 
+                    const namePart = line.substring(ayar['Ad Başlangıç'] || 0, ayar['Ad Bitiş'] || 0).trim();
+                    if (namePart.startsWith('CEVAP_ANAHTARI_A')) { keyA = line; } 
+                    else if (namePart.startsWith('CEVAP_ANAHTARI_B')) { keyB = line; } 
                     else {
                         studentsLines.push({
-                            numara: line.substring(sNum, eNum).trim(),
+                            numara: line.substring(ayar['Öğr No Başlangıç'] || 0, ayar['Öğr No Bitiş'] || 0).trim(),
                             name: turkceKarakterOnar(namePart), 
-                            sınıf: turkceKarakterOnar(line.substring(sClass, eClass).trim()),
-                            kitapcik: line.substring(sType, eType).trim().toUpperCase(),
-                            answers: line.substring(sAnswers).toUpperCase()
+                            sınıf: turkceKarakterOnar(line.substring(ayar['Sınıf Başlangıç'] || 0, ayar['Sınıf Bitiş'] || 0).trim()),
+                            telefon: line.substring(ayar['TC/Tel Başlangıç'] || 0, ayar['TC/Tel Bitiş'] || 0).trim(), 
+                            kitapcik: line.substring(ayar['Kitapçık Başlangıç'] || 0, ayar['Kitapçık Bitiş'] || 0).trim().toUpperCase(),
+                            fullLine: line 
                         });
                     }
                 });
 
-                const lessons = [
-                    { id: 'turkce', name: 'Türkçe', max: 40 },
-                    { id: 'sosyal', name: 'Sosyal Bilimleri', max: 20 },
-                    { id: 'matematik', name: 'Matematik', max: 40 },
-                    { id: 'fen', name: 'Fen Bilimleri', max: 20 }
-                ];
+                const lessonsConfig = [
+                    { id: 'turkce', name: 'Türkçe', start: ayar['Türkçe Başlangıç'], end: ayar['Türkçe Bitiş'] },
+                    { id: 'sosyal', name: 'Sosyal', start: ayar['Sosyal Başlangıç'], end: ayar['Sosyal Bitiş'] },
+                    { id: 'matematik', name: 'Matematik', start: ayar['Matematik Başlangıç'], end: ayar['Matematik Bitiş'] },
+                    { id: 'fen', name: 'Fen Bilimleri', start: ayar['Fen Başlangıç'], end: ayar['Fen Bitiş'] },
+                    { id: 'ingilizce', name: 'İngilizce', start: ayar['İngilizce Başlangıç'], end: ayar['İngilizce Bitiş'] }
+                ].filter(l => l.start !== "" && l.end !== "" && !isNaN(l.start) && !isNaN(l.end) && parseInt(l.start) < parseInt(l.end));
 
                 reportData = studentsLines.map(student => {
                     let activeKey = (student.kitapcik === 'B') ? keyB : keyA;
-                    let r = { numara: student.numara, name: student.name, sınıf: student.sınıf, kitapcik: student.kitapcik, denemeAdi: currentExamTitle, totalNet: 0, details: {} };
-                    let currentIdx = 0;
+                    let r = { numara: student.numara, name: student.name, sınıf: student.sınıf, telefon: student.telefon, kitapcik: student.kitapcik, denemeAdi: currentExamTitle, optikAdi: selectedOptic, totalNet: 0, details: {} };
                     
-                    lessons.forEach(l => {
-                        let dogru = 0, yanlis = 0, bos = 0; 
-                        const subKey = activeKey.substring(currentIdx, currentIdx + l.max);
-                        const subAns = student.answers.substring(currentIdx, currentIdx + l.max);
+                    lessonsConfig.forEach(l => {
+                        let dogru = 0, yanlis = 0, bos = 0;
+                        const sStart = parseInt(l.start);
+                        const sEnd = parseInt(l.end);
+                        const maxSoru = sEnd - sStart;
+
+                        const subKey = activeKey.substring(sStart, sEnd) || "".padEnd(maxSoru, " ");
+                        const subAns = student.fullLine.substring(sStart, sEnd) || "".padEnd(maxSoru, " ");
                         let formattedStudentAns = ""; 
 
-                        for(let i=0; i < l.max; i++) {
+                        for(let i=0; i < maxSoru; i++) {
                             const k = subKey[i] || ' '; 
                             const s = subAns[i] || ' ';
+                            
                             if (s === 'X' || s === ' ' || s === '') {
                                 bos++; formattedStudentAns += '-'; 
                             } else if (s === k) {
@@ -192,15 +228,16 @@
                                 yanlis++; formattedStudentAns += s.toLowerCase(); 
                             }
                         }
-                        
                         let net = dogru - (yanlis / 4); 
-                        r.details[l.id] = { label: l.name, dogru: dogru, yanlis: yanlis, bos: bos, net: net, max: l.max, subKey: subKey, formattedStudentAns: formattedStudentAns };
+                        r.details[l.id] = { label: l.name, dogru, yanlis, bos, net, max: maxSoru, subKey, formattedStudentAns };
                         r.totalNet += net; 
-                        currentIdx += l.max;
                     });
                     
-                    r.tytPuan = 100 + (r.totalNet * 3.333); 
-                    if (r.tytPuan > 500) r.tytPuan = 500;
+                    if(selectedExamType === 'TYT') { r.puan = 100 + (r.totalNet * 3.333); } 
+                    else if (selectedExamType === 'LGS') { r.puan = 200 + (r.totalNet * 3.1); } 
+                    else { r.puan = r.totalNet * 3.5; }
+                    
+                    if (r.puan > 500) r.puan = 500;
                     return r;
                 });
 
@@ -210,31 +247,20 @@
         }
 
         function renderUI() {
-            reportData.sort((a, b) => b.tytPuan - a.tytPuan);
+            reportData.sort((a, b) => b.puan - a.puan);
             const tbody = document.getElementById('resultTableBody');
             tbody.innerHTML = '';
             
             reportData.forEach((s, idx) => {
-                s.sira = idx + 1; 
-
-                const trk = `<span class="text-emerald-600">${s.details.turkce.dogru}</span>/<span class="text-red-500">${s.details.turkce.yanlis}</span>`;
-                const sos = `<span class="text-emerald-600">${s.details.sosyal.dogru}</span>/<span class="text-red-500">${s.details.sosyal.yanlis}</span>`;
-                const mat = `<span class="text-emerald-600">${s.details.matematik.dogru}</span>/<span class="text-red-500">${s.details.matematik.yanlis}</span>`;
-                const fen = `<span class="text-emerald-600">${s.details.fen.dogru}</span>/<span class="text-red-500">${s.details.fen.yanlis}</span>`;
-
+                s.sira = idx + 1;
                 tbody.innerHTML += `
                     <tr class="hover:bg-indigo-50 transition-colors">
                         <td class="py-2.5 px-3 font-semibold text-slate-600">${s.sira}</td>
                         <td class="py-2.5 px-3 font-mono text-slate-500">${s.numara || '-'}</td>
                         <td class="py-2.5 px-3 font-medium text-slate-800">${s.name}</td>
                         <td class="py-2.5 px-2 text-center text-slate-600">${s.sınıf || '-'}</td>
-                        <td class="py-2.5 px-2 text-center font-bold text-slate-600">${s.kitapcik}</td>
-                        <td class="py-2.5 px-2 text-center font-mono text-xs">${trk}</td>
-                        <td class="py-2.5 px-2 text-center font-mono text-xs">${sos}</td>
-                        <td class="py-2.5 px-2 text-center font-mono text-xs">${mat}</td>
-                        <td class="py-2.5 px-2 text-center font-mono text-xs">${fen}</td>
                         <td class="py-2.5 px-3 text-center font-bold text-indigo-600 bg-indigo-50/50">${s.totalNet.toFixed(2)}</td>
-                        <td class="py-2.5 px-3 text-center font-black text-emerald-600 bg-emerald-50/50">${s.tytPuan.toFixed(1)}</td>
+                        <td class="py-2.5 px-3 text-center font-black text-emerald-600 bg-emerald-50/50">${s.puan.toFixed(1)}</td>
                         <td class="py-2.5 px-3 text-center">
                             <button onclick="showKarne('${s.numara}')" class="bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm transition-colors">📊 Karne</button>
                         </td>
@@ -248,22 +274,32 @@
             if (!student) return;
 
             document.getElementById("karneOgrenciAdi").innerText = `${student.name} (${student.numara})`;
-            document.getElementById("karneSiralama").innerText = `Sınıf: ${student.sınıf} | Genel Sıralama: ${student.sira} | TYT Puanı: ${student.tytPuan.toFixed(1)}`;
+            document.getElementById("karneSiralama").innerText = `Sınıf: ${student.sınıf} | Genel Sıralama: ${student.sira} | Puan: ${student.puan.toFixed(1)}`;
             
             const ctx = document.getElementById('karneGrafik').getContext('2d');
             if (currentChart) currentChart.destroy(); 
 
+            const labels = [], dataDogru = [], dataYanlis = [], dataNet = [];
+
+            Object.keys(student.details).forEach(key => {
+                const d = student.details[key];
+                labels.push(d.label);
+                dataDogru.push(d.dogru);
+                dataYanlis.push(d.yanlis);
+                dataNet.push(d.net);
+            });
+
             currentChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['Türkçe', 'Sosyal Bilimleri', 'Matematik', 'Fen Bilimleri'],
+                    labels: labels,
                     datasets: [
-                        { label: 'Doğru', data: [student.details.turkce.dogru, student.details.sosyal.dogru, student.details.matematik.dogru, student.details.fen.dogru], backgroundColor: '#10b981', borderRadius: 4 },
-                        { label: 'Yanlış', data: [student.details.turkce.yanlis, student.details.sosyal.yanlis, student.details.matematik.yanlis, student.details.fen.yanlis], backgroundColor: '#ef4444', borderRadius: 4 },
-                        { label: 'Net', data: [student.details.turkce.net, student.details.sosyal.net, student.details.matematik.net, student.details.fen.net], backgroundColor: '#6366f1', borderRadius: 4 }
+                        { label: 'Doğru', data: dataDogru, backgroundColor: '#10b981', borderRadius: 4 },
+                        { label: 'Yanlış', data: dataYanlis, backgroundColor: '#ef4444', borderRadius: 4 },
+                        { label: 'Net', data: dataNet, backgroundColor: '#6366f1', borderRadius: 4 }
                     ]
                 },
-                options: { responsive: true, scales: { y: { beginAtZero: true, max: 40 } }, plugins: { legend: { position: 'bottom' } } }
+                options: { responsive: true, scales: { y: { beginAtZero: true } }, plugins: { legend: { position: 'bottom' } } }
             });
             document.getElementById("karneModal").classList.remove('hidden');
         }
@@ -272,44 +308,68 @@
             const printArea = document.getElementById('printArea');
             const printAreaListe = document.getElementById('printAreaListe');
             const printAreaKarneler = document.getElementById('printAreaKarneler');
+            const pageStyle = document.getElementById('printPageStyle');
             
             printAreaListe.classList.add('hidden');
             printAreaKarneler.classList.add('hidden');
             printArea.classList.remove('hidden');
 
             if (type === 'liste') {
+                // Listeyi yazdırırken sayfayı YATAY (landscape) yapıyoruz
+                pageStyle.innerHTML = '@media print { @page { size: landscape; margin: 10mm; } }';
+                
+                let firstStudent = reportData[0];
+                let lessonHeaders = '';
+                let subHeaders = '';
+                
+                if(firstStudent) {
+                    Object.keys(firstStudent.details).forEach(key => {
+                        lessonHeaders += `<th class="border border-slate-400 p-1 bg-slate-200" colspan="3">${firstStudent.details[key].label}</th>`;
+                        subHeaders += `
+                            <th class="border border-slate-400 p-1 text-emerald-700 bg-emerald-50 text-[9px]">D</th>
+                            <th class="border border-slate-400 p-1 text-red-700 bg-red-50 text-[9px]">Y</th>
+                            <th class="border border-slate-400 p-1 text-indigo-700 bg-indigo-50 text-[9px]">N</th>
+                        `;
+                    });
+                }
+
                 printAreaListe.innerHTML = `
-                    <h2 class="text-xl font-black mb-4 text-center">${currentExamTitle} - DETAYLI SONUÇ LİSTESİ</h2>
-                    <table class="w-full text-[11px] text-center border-collapse border border-slate-400">
+                    <h2 class="text-xl font-black mb-4 text-center uppercase">${currentExamTitle} - DETAYLI SONUÇ LİSTESİ</h2>
+                    <table class="w-full text-[10px] text-center border-collapse border border-slate-400">
                         <thead>
                             <tr class="bg-slate-100 text-slate-800">
-                                <th class="border border-slate-400 p-1.5">Sıra</th>
-                                <th class="border border-slate-400 p-1.5">Öğr. No</th>
-                                <th class="border border-slate-400 p-1.5 text-left">Ad Soyad</th>
-                                <th class="border border-slate-400 p-1.5">Sınıf</th>
-                                <th class="border border-slate-400 p-1.5">Türkçe<br>(D/Y/N)</th>
-                                <th class="border border-slate-400 p-1.5">Sosyal<br>(D/Y/N)</th>
-                                <th class="border border-slate-400 p-1.5">Matematik<br>(D/Y/N)</th>
-                                <th class="border border-slate-400 p-1.5">Fen<br>(D/Y/N)</th>
-                                <th class="border border-slate-400 p-1.5">Top. Net</th>
-                                <th class="border border-slate-400 p-1.5">TYT Puanı</th>
+                                <th class="border border-slate-400 p-1" rowspan="2">Sıra</th>
+                                <th class="border border-slate-400 p-1" rowspan="2">Öğr. No</th>
+                                <th class="border border-slate-400 p-1 text-left" rowspan="2">Ad Soyad</th>
+                                <th class="border border-slate-400 p-1" rowspan="2">Sınıf</th>
+                                ${lessonHeaders}
+                                <th class="border border-slate-400 p-1 bg-indigo-100" rowspan="2">Top. Net</th>
+                                <th class="border border-slate-400 p-1 bg-emerald-100" rowspan="2">Puan</th>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                ${subHeaders}
                             </tr>
                         </thead>
                         <tbody>
                             ${reportData.map(s => {
-                                const t = s.details.turkce, so = s.details.sosyal, m = s.details.matematik, f = s.details.fen;
+                                let studentLessonsHtml = '';
+                                Object.keys(s.details).forEach(key => {
+                                    let d = s.details[key];
+                                    studentLessonsHtml += `
+                                        <td class="border border-slate-400 p-1 font-bold text-emerald-700">${d.dogru}</td>
+                                        <td class="border border-slate-400 p-1 font-bold text-red-700">${d.yanlis}</td>
+                                        <td class="border border-slate-400 p-1 font-bold text-indigo-700">${d.net % 1 === 0 ? d.net : d.net.toFixed(2)}</td>
+                                    `;
+                                });
                                 return `
                                 <tr>
                                     <td class="border border-slate-400 p-1 font-bold">${s.sira}</td>
                                     <td class="border border-slate-400 p-1 font-mono">${s.numara||'-'}</td>
-                                    <td class="border border-slate-400 p-1 text-left font-medium whitespace-normal">${s.name}</td>
+                                    <td class="border border-slate-400 p-1 text-left font-medium">${s.name}</td>
                                     <td class="border border-slate-400 p-1">${s.sınıf||'-'}</td>
-                                    <td class="border border-slate-400 p-1">${t.dogru} / ${t.yanlis} / <strong>${t.net % 1 === 0 ? t.net : t.net.toFixed(2)}</strong></td>
-                                    <td class="border border-slate-400 p-1">${so.dogru} / ${so.yanlis} / <strong>${so.net % 1 === 0 ? so.net : so.net.toFixed(2)}</strong></td>
-                                    <td class="border border-slate-400 p-1">${m.dogru} / ${m.yanlis} / <strong>${m.net % 1 === 0 ? m.net : m.net.toFixed(2)}</strong></td>
-                                    <td class="border border-slate-400 p-1">${f.dogru} / ${f.yanlis} / <strong>${f.net % 1 === 0 ? f.net : f.net.toFixed(2)}</strong></td>
-                                    <td class="border border-slate-400 p-1 font-black text-indigo-700">${s.totalNet.toFixed(2)}</td>
-                                    <td class="border border-slate-400 p-1 font-black text-emerald-700">${s.tytPuan.toFixed(1)}</td>
+                                    ${studentLessonsHtml}
+                                    <td class="border border-slate-400 p-1 font-black text-indigo-800 bg-indigo-50">${s.totalNet.toFixed(2)}</td>
+                                    <td class="border border-slate-400 p-1 font-black text-emerald-800 bg-emerald-50">${s.puan.toFixed(1)}</td>
                                 </tr>`;
                             }).join('')}
                         </tbody>
@@ -317,36 +377,28 @@
                 printAreaListe.classList.remove('hidden');
             } 
             else if (type === 'karne') {
+                // Karneleri yazdırırken sayfayı DİKEY (portrait) yapıyoruz
+                pageStyle.innerHTML = '@media print { @page { size: portrait; margin: 10mm; } }';
+                
                 printAreaKarneler.innerHTML = '';
-                reportData.forEach((s, i) => {
-                    let chartHtml = `
-                    <div class="flex flex-col mb-6 bg-slate-50 p-4 rounded-xl border border-slate-200">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-sm font-bold text-slate-700">Net ve Başarı Analizi</span>
-                            <div class="flex gap-3 text-[10px] font-bold uppercase">
-                                <span class="flex items-center gap-1"><span class="w-3 h-3 bg-emerald-500 rounded-sm"></span> Doğru</span>
-                                <span class="flex items-center gap-1"><span class="w-3 h-3 bg-red-500 rounded-sm"></span> Yanlış</span>
-                                <span class="flex items-center gap-1"><span class="w-3 h-3 bg-indigo-500 rounded-sm"></span> Net</span>
-                            </div>
-                        </div>
-                        <div class="flex justify-around items-end h-32 border-b-2 border-l-2 border-slate-300 pb-2 pl-2 relative pt-4">
-                    `;
+                reportData.forEach(s => {
+                    let chartHtml = `<div class="flex flex-col mb-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <div class="flex justify-around items-end h-32 border-b-2 border-l-2 border-slate-300 pb-2 pl-2 relative pt-4">`;
+                    
                     Object.keys(s.details).forEach(key => {
                         const d = s.details[key];
-                        const maxH = d.max;
-                        const dogruH = Math.max(0, (d.dogru / maxH) * 100);
-                        const yanlisH = Math.max(0, (d.yanlis / maxH) * 100);
-                        const netH = Math.max(0, (d.net / maxH) * 100);
+                        const dogruH = Math.max(0, (d.dogru / d.max) * 100);
+                        const yanlisH = Math.max(0, (d.yanlis / d.max) * 100);
+                        const netH = Math.max(0, (d.net / d.max) * 100);
                         chartHtml += `
                             <div class="flex flex-col items-center gap-1 w-1/4 h-full justify-end">
                                 <div class="flex items-end gap-1 w-full h-full justify-center">
-                                    <div class="w-6 bg-emerald-500 rounded-t relative print-shadow-none" style="height: ${dogruH}%; -webkit-print-color-adjust: exact;"><span class="absolute -top-4 left-1/2 -translate-x-1/2 text-[11px] font-bold text-slate-700">${d.dogru}</span></div>
-                                    <div class="w-6 bg-red-500 rounded-t relative print-shadow-none" style="height: ${yanlisH}%; -webkit-print-color-adjust: exact;"><span class="absolute -top-4 left-1/2 -translate-x-1/2 text-[11px] font-bold text-slate-700">${d.yanlis}</span></div>
-                                    <div class="w-6 bg-indigo-500 rounded-t relative print-shadow-none" style="height: ${netH}%; -webkit-print-color-adjust: exact;"><span class="absolute -top-4 left-1/2 -translate-x-1/2 text-[11px] font-bold text-slate-700">${d.net % 1 === 0 ? d.net : d.net.toFixed(2)}</span></div>
+                                    <div class="w-6 bg-emerald-500 rounded-t relative print-shadow-none" style="height: ${dogruH}%;"><span class="absolute -top-4 left-1/2 -translate-x-1/2 text-[10px] font-bold text-slate-700">${d.dogru}</span></div>
+                                    <div class="w-6 bg-red-500 rounded-t relative print-shadow-none" style="height: ${yanlisH}%;"><span class="absolute -top-4 left-1/2 -translate-x-1/2 text-[10px] font-bold text-slate-700">${d.yanlis}</span></div>
+                                    <div class="w-6 bg-indigo-500 rounded-t relative print-shadow-none" style="height: ${netH}%;"><span class="absolute -top-4 left-1/2 -translate-x-1/2 text-[10px] font-bold text-slate-700">${d.net % 1 === 0 ? d.net : d.net.toFixed(2)}</span></div>
                                 </div>
-                                <span class="text-[11px] font-bold text-slate-600 mt-2">${d.label}</span>
-                            </div>
-                        `;
+                                <span class="text-[10px] font-bold text-slate-600 mt-2">${d.label}</span>
+                            </div>`;
                     });
                     chartHtml += `</div></div>`;
 
@@ -354,28 +406,27 @@
                     Object.keys(s.details).forEach(key => {
                         const d = s.details[key];
                         lessonRowsHtml += `
-                            <div class="border border-slate-300 rounded-xl p-3 mb-2 bg-white text-xs print-shadow-none">
-                                <div class="bg-slate-50 border border-slate-200 p-2 rounded text-[11px] font-mono tracking-widest overflow-x-auto whitespace-nowrap">
-                                    <div class="flex"><span class="w-20 font-semibold text-slate-500">${d.label.substring(0,3).toUpperCase()} ANAHTAR:</span> <span class="text-slate-800">${d.subKey}</span></div>
-                                    <div class="flex mt-1"><span class="w-20 font-semibold text-slate-500">ÖĞRENCİ:</span> <span class="text-slate-800 font-bold">${d.formattedStudentAns}</span></div>
+                            <div class="border border-slate-300 rounded p-2 mb-1 bg-white text-xs print-shadow-none">
+                                <div class="bg-slate-50 border border-slate-200 p-1 rounded text-[10px] font-mono tracking-widest whitespace-nowrap">
+                                    <div class="flex"><span class="w-20 font-semibold text-slate-500">${d.label.substring(0,3).toUpperCase()}:</span> <span class="text-slate-800">${d.subKey}</span></div>
+                                    <div class="flex mt-1"><span class="w-20 font-semibold text-slate-500">ÖĞR:</span> <span class="text-slate-800 font-bold">${d.formattedStudentAns}</span></div>
                                 </div>
                             </div>`;
                     });
 
                     printAreaKarneler.innerHTML += `
                         <div class="page-break max-w-3xl mx-auto p-8 my-4 bg-white border-2 border-slate-800 rounded-2xl print-shadow-none">
-                            <div class="text-center border-b-2 border-slate-800 pb-4 mb-6">
-                                <h2 class="text-2xl font-black text-slate-900 tracking-tight">${currentExamTitle} SONUÇ BELGESİ</h2>
+                            <div class="text-center border-b-2 border-slate-800 pb-2 mb-4">
+                                <h2 class="text-2xl font-black text-slate-900">${currentExamTitle} SONUÇ BELGESİ</h2>
                             </div>
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-6 bg-slate-50 p-4 rounded-xl border border-slate-200">
-                                <div><span class="text-slate-500 block text-[10px] uppercase font-bold">Öğr. No / Adı</span> <span class="font-bold text-base block whitespace-normal break-words leading-tight">${s.numara || '-'} - ${s.name}</span></div>
-                                <div><span class="text-slate-500 block text-[10px] uppercase font-bold">Sınıf / Kitapçık</span> <span class="font-bold text-base">${s.sınıf || '-'} / ${s.kitapcik}</span></div>
-                                <div><span class="text-slate-500 block text-[10px] uppercase font-bold">Genel Sıralama</span> <span class="font-black text-indigo-700 text-base">${s.sira} / ${reportData.length}</span></div>
-                                <div><span class="text-slate-500 block text-[10px] uppercase font-bold">TYT Puanı</span> <span class="font-black text-emerald-600 text-base">${s.tytPuan.toFixed(1)}</span></div>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                                <div><span class="text-slate-500 block text-[10px] uppercase font-bold">Öğr. No / Adı</span> <span class="font-bold text-sm block">${s.numara || '-'} - ${s.name}</span></div>
+                                <div><span class="text-slate-500 block text-[10px] uppercase font-bold">Sınıf</span> <span class="font-bold text-sm block">${s.sınıf || '-'}</span></div>
+                                <div><span class="text-slate-500 block text-[10px] uppercase font-bold">Genel Sıralama</span> <span class="font-black text-indigo-700 text-sm block">${s.sira} / ${reportData.length}</span></div>
+                                <div><span class="text-slate-500 block text-[10px] uppercase font-bold">Puan</span> <span class="font-black text-emerald-600 text-sm block">${s.puan.toFixed(1)}</span></div>
                             </div>
                             ${chartHtml}
-                            <div class="space-y-1 mt-2"><h3 class="text-sm font-bold text-slate-700 mb-2">Cevap Anahtarı Analizi</h3>${lessonRowsHtml}</div>
-                            <div class="text-center mt-6 text-[10px] text-slate-400 font-medium">* Doğru şıklar BÜYÜK, yanlış şıklar küçük harfle gösterilmiştir. Boşlar tire (-) işaretidir.</div>
+                            <div class="space-y-1 mt-2">${lessonRowsHtml}</div>
                         </div>`;
                 });
                 printAreaKarneler.classList.remove('hidden');
@@ -385,38 +436,21 @@
         }
 
         async function saveActiveExamToDB() {
-    const webAppUrl = "https://script.google.com/macros/s/AKfycbzq_AUX-Ep0NM10bP-Yol83ODOWVehBqsXLW5BxnqjG8QJQn5h81CbzAPx0J9s85V68zA/exec";
-    const btn = document.getElementById("btnSaveToDB");
-    
-    // Veri yoksa uyar
-    if (!reportData || reportData.length === 0) {
-        alert("Lütfen önce bir dosya yükleyip analiz edin!");
-        return;
-    }
-
-    // TEST EKRANI: Hata nerede buluyoruz
-    let gidenDenemeAdi = reportData[0].denemeAdi;
-    let onay = confirm("Google'a gönderilecek Deneme Adı: [" + gidenDenemeAdi + "]\n\nEğer köşeli parantez içi boşsa veya 'undefined' yazıyorsa İPTAL'e basın.");
-    
-    if (!onay) return; // Kullanıcı iptal ederse gönderme
-
-    if (btn) btn.innerText = "⏳ Gönderiliyor...";
-    
-    try {
-        const response = await fetch(webAppUrl, {
-            method: 'POST',
-            mode: 'no-cors', 
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ students: reportData })
-        });
-        alert("✅ Başarılı! Optik verileri Google Sheets'e güncellendi.");
-    } catch (error) {
-        console.error("Kayıt hatası:", error);
-        alert("❌ Kaydedilirken bir hata oluştu.");
-    } finally {
-        if (btn) btn.innerText = "💾 Buluta (Sheets) Kaydet";
-    }
-}
+            const btn = document.getElementById("btnSaveToDB");
+            if (btn) btn.innerText = "⏳ Gönderiliyor...";
+            try {
+                // Öğrenci bilgileri (TC, Optik, Netler vb.) s.telefon ve s.optikAdi ile arka planda veritabanına sorunsuz gönderiliyor.
+                const response = await fetch(WEB_APP_URL, {
+                    method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ students: reportData })
+                });
+                alert("✅ Başarılı! Optik verileri Google Sheets'e güncellendi.");
+            } catch (error) {
+                console.error("Hata:", error);
+                alert("❌ Kaydedilirken bir hata oluştu.");
+            } finally {
+                if (btn) btn.innerText = "💾 Buluta (Sheets) Kaydet";
+            }
+        }
     </script>
 </body>
 </html>
