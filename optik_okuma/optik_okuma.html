@@ -360,7 +360,8 @@
                                     yanlis++; formattedStudentAns += s.toLowerCase(); 
                                 }
                             }
-                            let net = dogru - (yanlis / 4); 
+                            //let net = dogru - (yanlis / 4); 
+                            let net = (selectedExamType === 'LGS') ? (dogru - (yanlis / 3)) : (dogru - (yanlis / 4));
                             let finalLabel = l.name;
                             if (selectedExamType === 'AYT' && l.id === 'matematik') finalLabel = 'AYT Mat';
                             r.details[l.id] = { label: finalLabel, dogru, yanlis, bos, net, max: maxSoru, subKey, formattedStudentAns };
