@@ -339,7 +339,8 @@
                                         yanlis++; formattedStudentAns += s.toLowerCase();
                                     }
                                 }
-                                let net = dogru - (yanlis / 4);
+                                //let net = dogru - (yanlis / 4);
+                                let net = (selectedExamType === 'LGS') ? (dogru - (yanlis / 3)) : (dogru - (yanlis / 4));
                                 r.details[sub.id] = { label: sub.name, dogru, yanlis, bos, net, max: maxSoruSub, subKey: partKey, formattedStudentAns };
                                 r.totalNet += net;
                                 currentOffset += maxSoruSub;
