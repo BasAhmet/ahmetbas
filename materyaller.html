@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ders Materyalleri - Ahmet Baş</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
+    
+    <!-- Navbar (Üst Menü) -->
+    <nav class="bg-white shadow-sm border-b px-6 py-4">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-black text-blue-600 tracking-tight">Ahmet Baş</a>
+            <a href="index.html" class="text-slate-500 hover:text-blue-600 font-semibold transition-colors">Ana Sayfaya Dön</a>
+        </div>
+    </nav>
+
+    <!-- Ana İçerik -->
+    <main class="flex-grow max-w-6xl mx-auto w-full p-6 mt-8">
+        <header class="mb-10 text-center sm:text-left">
+            <h1 class="text-3xl sm:text-4xl font-bold text-slate-800 mb-3">Ders Materyalleri</h1>
+            <p class="text-slate-500 text-lg">Ortaokul, Lise, LGS, TYT ve AYT için hazırladığım PDF testler ve çalışma kağıtları.</p>
+        </header>
+
+        <!-- Filtreleme Alanı -->
+        <div class="mb-8 flex flex-col sm:flex-row gap-4 items-center bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <label for="kategori-filtre" class="font-bold text-slate-700">Kategori Seçin:</label>
+            <select id="kategori-filtre" class="p-3 border border-slate-200 rounded-lg bg-slate-50 outline-none focus:border-blue-500 w-full sm:w-auto font-medium text-slate-700 cursor-pointer">
+                <option value="hepsi">Tüm Materyaller</option>
+                <option value="5">5. Sınıf</option>
+                <option value="6">6. Sınıf</option>
+                <option value="7">7. Sınıf</option>
+                <option value="8">8. Sınıf / LGS</option>
+                <option value="9">9. Sınıf</option>
+                <option value="10">10. Sınıf</option>
+                <option value="11">11. Sınıf</option>
+                <option value="12">12. Sınıf</option>
+                <option value="tyt">TYT Matematik</option>
+                <option value="ayt">AYT Matematik</option>
+            </select>
+        </div>
+
+        <!-- Materyallerin Listeleneceği Izgara -->
+        <div id="materyaller-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Yükleniyor animasyonu -->
+            <div class="col-span-full text-center py-20 text-slate-400 font-medium text-lg flex flex-col items-center justify-center gap-3" id="loading-text">
+                <svg class="animate-spin h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Materyaller Yükleniyor...
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t py-6 text-center text-slate-500 mt-12">
+        <p class="font-medium">© 2026 Ahmet Baş. Tüm hakları saklıdır.</p>
+    </footer>
+
+    <script type="module">
+        import { db } from './firebase-config.js';
+        import { collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const grid = document.getElementById('materyaller-grid');
+        const filtre = document.getElementById('kategori-filtre');
+        let tumMateryaller = []; 
+
+        // 1. Firebase'den Verileri Çekme
+        async function materyalleriGetir() {
+            try {
+                const q = query(collection(db, "materyaller"), orderBy("eklenmeZamani", "desc"));
+                const querySnapshot = await getDocs(q);
+                
+                tumMateryaller = [];
+                querySnapshot.forEach((doc) => {
+                    tumMateryaller.push({ id: doc.id, ...doc.data() });
+                });
+                
+                ekranaYazdir(tumMateryaller);
+            } catch (error) {
+                console.error("Veri çekme hatası:", error);
+                grid.innerHTML = '<div class="col-span-full text-center py-20 text-red-500 font-bold">Veriler yüklenirken bir hata oluştu. Lütfen sayfayı yenileyin.</div>';
+            }
+        }
+
+        // 2. Verileri Ekrana Kartlar Halinde Yazdırma
+        function ekranaYazdir(liste) {
+            if (liste.length === 0) {
+                grid.innerHTML = '<div class="col-span-full text-center py-20 text-slate-400 font-medium text-lg">Bu kategoride henüz materyal bulunmuyor.</div>';
+                return;
+            }
+
+            grid.innerHTML = liste.map(item => `
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full group">
+                    <div class="mb-4">
+                        <span class="inline-block bg-blue-50 text-blue-600 text-xs font-black px-3 py-1.5 rounded-lg mb-3">
+                            ${kategoriIsmiFormatla(item.kategori)}
+                        </span>
+                        <h3 class="text-xl font-bold text-slate-800 leading-snug group-hover:text-blue-600 transition-colors">${item.baslik}</h3>
+                    </div>
+                    <div class="mt-auto pt-5 border-t border-slate-100 flex justify-between items-center">
+                        <span class="text-sm text-slate-400 font-semibold">${item.boyut || ''}</span>
+                        <a href="${item.link}" target="_blank" class="bg-emerald-100 text-emerald-700 hover:bg-emerald-600 hover:text-white px-5 py-2.5 rounded-xl font-bold transition-colors text-sm flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            İndir
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 3. Kategori Kodlarını Okunabilir Metne Çevirme
+        function kategoriIsmiFormatla(kod) {
+            const isimler = {
+                '5': '5. Sınıf', '6': '6. Sınıf', '7': '7. Sınıf', '8': '8. Sınıf / LGS',
+                '9': '9. Sınıf', '10': '10. Sınıf', '11': '11. Sınıf', '12': '12. Sınıf',
+                'tyt': 'TYT Matematik', 'ayt': 'AYT Matematik'
+            };
+            return isimler[kod] || kod;
+        }
+
+        // 4. Filtre Değiştiğinde Listeyi Güncelle
+        filtre.addEventListener('change', (e) => {
+            const secilen = e.target.value;
+            if (secilen === 'hepsi') {
+                ekranaYazdir(tumMateryaller);
+            } else {
+                const filtrelenmis = tumMateryaller.filter(m => m.kategori === secilen);
+                ekranaYazdir(filtrelenmis);
+            }
+        });
+
+        // Sayfa açıldığında verileri getir
+        materyalleriGetir();
+    </script>
+</body>
+</html>
