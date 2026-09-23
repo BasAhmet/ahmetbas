@@ -384,10 +384,6 @@ async function loadBulmaca() {
             });
         }
 
-       document.getElementById('tab-btn-home').addEventListener('click', () => {
-           switchTab('home');
-        });
-
         // main.js dosyasının en altına ekleyin:
         window.switchTab = switchTab;
         window.openSocialModal = openSocialModal;
