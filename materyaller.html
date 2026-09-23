@@ -243,73 +243,68 @@
     </button>
 
             <!-- ANA İÇERİK ALANI -->
-    <main class="max-w-4xl mx-auto px-6 py-12 flex-grow w-full">
-        <!-- 1. SEKME: ANA SAYFA -->
-        <div id="tab-home" class="tab-content active space-y-12 animate-fadeIn">
-            
-            <!-- Profil Üst Alanı -->
-            <div class="text-center">
-                <div class="w-32 h-32 mx-auto mb-4 relative group">
-                    <div class="absolute inset-0 bg-gradient-to-tr from-blue-500 to-sky-400 rounded-full opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                    <img src="profil.jpeg" alt="Ahmet Baş" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=math';" class="w-32 h-32 object-cover object-[center_top_20%] rounded-full border-4 theme-card relative z-10 shadow-md">
-                </div>
-                <h1 class="text-4xl font-extrabold tracking-tight theme-text-title mb-1">Ahmet Baş</h1>
-                <h2 class="text-xl font-bold math-gradient mb-2">Matematik Öğretmeni & Eğitim İçeriği Üreticisi</h2>
+        <main class="max-w-4xl mx-auto px-6 py-12 flex-grow w-full">
+            <!-- 1. SEKME: ANA SAYFA -->
+            <div id="tab-home" class="tab-content active space-y-12 animate-fadeIn">
                 
-                <!-- GÜNÜN MOTİVASYON SÖZÜ ALANI -->
-                <div class="max-w-md mx-auto py-1 px-4 mb-4">
-                    <p id="motivational-quote" class="text-xs italic font-semibold theme-text-muted transition-all duration-500 leading-relaxed">
-                    </p>
-                </div>
-                <!-- Rozetler / Seviyeler -->
+                <!-- Profil Üst Alanı -->
                 <div class="text-center">
-                    <div class="flex flex-wrap justify-center gap-2.5">
-                        <span class="theme-accent-soft theme-accent-text border theme-border px-4 py-1.5 rounded-full text-sm font-bold shadow-sm"><i class="fas fa-graduation-cap mr-2"></i>Ortaokul Matematik</span>
-                        <span class="theme-accent-soft theme-accent-text border theme-border px-4 py-1.5 rounded-full text-sm font-bold shadow-sm"><i class="fas fa-book-open mr-2"></i>Lise Matematik</span>
-                        <span class="theme-accent-soft theme-accent-text border theme-border px-4 py-1.5 rounded-full text-sm font-bold shadow-sm"><i class="fas fa-star mr-2"></i>LGS & YKS Hazırlık</span>
+                    <div class="w-32 h-32 mx-auto mb-4 relative group">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-blue-500 to-sky-400 rounded-full opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                        <img src="profil.jpeg" alt="Ahmet Baş" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=math';" class="w-32 h-32 object-cover object-[center_top_20%] rounded-full border-4 theme-card relative z-10 shadow-md">
+                    </div>
+                    <h1 class="text-4xl font-extrabold tracking-tight theme-text-title mb-1">Ahmet Baş</h1>
+                    <h2 class="text-xl font-bold math-gradient mb-2">Matematik Öğretmeni & Eğitim İçeriği Üreticisi</h2>
+                    
+                    <!-- GÜNÜN MOTİVASYON SÖZÜ ALANI -->
+                    <div class="max-w-md mx-auto py-1 px-4 mb-4">
+                        <p id="motivational-quote" class="text-xs italic font-semibold theme-text-muted transition-all duration-500 leading-relaxed">
+                        </p>
+                    </div>
+                    <!-- Rozetler / Seviyeler -->
+                    <div class="text-center">
+                        <div class="flex flex-wrap justify-center gap-2.5">
+                            <span class="theme-accent-soft theme-accent-text border theme-border px-4 py-1.5 rounded-full text-sm font-bold shadow-sm"><i class="fas fa-graduation-cap mr-2"></i>Ortaokul Matematik</span>
+                            <span class="theme-accent-soft theme-accent-text border theme-border px-4 py-1.5 rounded-full text-sm font-bold shadow-sm"><i class="fas fa-book-open mr-2"></i>Lise Matematik</span>
+                            <span class="theme-accent-soft theme-accent-text border theme-border px-4 py-1.5 rounded-full text-sm font-bold shadow-sm"><i class="fas fa-star mr-2"></i>LGS & YKS Hazırlık</span>
+                        </div>
                     </div>
                 </div>
+                <div class="max-w-6xl mx-auto px-4 py-8">
+                        <h1 class="text-3xl font-bold theme-text-title mb-2">Ders Materyalleri</h1>
+                        <p class="theme-text-muted mb-8">Ortaokul, Lise, LGS, TYT ve AYT için hazırladığım PDF testler ve çalışma kağıtları.</p>
+    
+            <!-- Filtreleme Alanı -->
+            <div class="mb-8 flex flex-col sm:flex-row gap-4 items-center bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                <label for="kategori-filtre" class="font-bold text-slate-700">Kategori Seçin:</label>
+                <select id="kategori-filtre" class="p-3 border border-slate-200 rounded-lg bg-slate-50 outline-none focus:border-blue-500 w-full sm:w-auto font-medium text-slate-700 cursor-pointer">
+                    <option value="hepsi">Tüm Materyaller</option>
+                    <option value="5">5. Sınıf</option>
+                    <option value="6">6. Sınıf</option>
+                    <option value="7">7. Sınıf</option>
+                    <option value="8">8. Sınıf / LGS</option>
+                    <option value="9">9. Sınıf</option>
+                    <option value="10">10. Sınıf</option>
+                    <option value="11">11. Sınıf</option>
+                    <option value="12">12. Sınıf</option>
+                    <option value="tyt">TYT Matematik</option>
+                    <option value="ayt">AYT Matematik</option>
+                </select>
             </div>
-            <div class="max-w-6xl mx-auto px-4 py-8">
-                    <h1 class="text-3xl font-bold theme-text-title mb-2">Ders Materyalleri</h1>
-                    <p class="theme-text-muted mb-8">Ortaokul, Lise, LGS, TYT ve AYT için hazırladığım PDF testler ve çalışma kağıtları.</p>
-
-        <!-- Filtreleme Alanı -->
-        <div class="mb-8 flex flex-col sm:flex-row gap-4 items-center bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-            <label for="kategori-filtre" class="font-bold text-slate-700">Kategori Seçin:</label>
-            <select id="kategori-filtre" class="p-3 border border-slate-200 rounded-lg bg-slate-50 outline-none focus:border-blue-500 w-full sm:w-auto font-medium text-slate-700 cursor-pointer">
-                <option value="hepsi">Tüm Materyaller</option>
-                <option value="5">5. Sınıf</option>
-                <option value="6">6. Sınıf</option>
-                <option value="7">7. Sınıf</option>
-                <option value="8">8. Sınıf / LGS</option>
-                <option value="9">9. Sınıf</option>
-                <option value="10">10. Sınıf</option>
-                <option value="11">11. Sınıf</option>
-                <option value="12">12. Sınıf</option>
-                <option value="tyt">TYT Matematik</option>
-                <option value="ayt">AYT Matematik</option>
-            </select>
-        </div>
-
-        <!-- Materyallerin Listeleneceği Izgara -->
-        <div id="materyaller-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Yükleniyor animasyonu -->
-            <div class="col-span-full text-center py-20 text-slate-400 font-medium text-lg flex flex-col items-center justify-center gap-3" id="loading-text">
-                <svg class="animate-spin h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Materyaller Yükleniyor...
+    
+            <!-- Materyallerin Listeleneceği Izgara -->
+            <div id="materyaller-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Yükleniyor animasyonu -->
+                <div class="col-span-full text-center py-20 text-slate-400 font-medium text-lg flex flex-col items-center justify-center gap-3" id="loading-text">
+                    <svg class="animate-spin h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Materyaller Yükleniyor...
+                </div>
             </div>
         </div>
-                   </div>
     </main>
-
-    <!-- Footer -->
-    <footer class="bg-white border-t py-6 text-center text-slate-500 mt-12">
-        <p class="font-medium">© 2026 Ahmet Baş. Tüm hakları saklıdır.</p>
-    </footer>
 
     <script type="module">
         import { db } from './firebase-config.js';
