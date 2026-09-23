@@ -1,10 +1,194 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head>
+<head> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ders Materyalleri - Ahmet Baş</title>
+    <meta name="google-adsense-account" content="ca-pub-1818576194203212">
+    
+    <!-- SEO Meta Etiketleri -->
+    <title>Matematik Kültürü | Ahmet Baş</title>
+    <link rel="icon" href="/favicon.png" sizes="any" />
+    <meta name="description" content="Ahmet Baş ile LGS ve TYT matematik hazırlığı. Ücretsiz çalışma kağıtları, yeni nesil soru bankaları ve matematik ders materyalleri ile başarınızı artırın.">
+    <meta name="keywords" content="matematik öğretmeni, LGS matematik, TYT matematik, matematik soru bankası, Ahmet Baş, özel ders, matematik çalışma kağıtları">
+    <meta name="author" content="Ahmet Baş">
+
+    <!-- Sosyal Medya Önizleme (Open Graph) -->
+    <meta property="og:title" content="Ahmet Baş | Matematik Öğretmeni">
+    <meta property="og:description" content="LGS ve TYT matematik hazırlığında ücretsiz materyaller ve pratik çözümler için sitemi ziyaret edin.">
+    <meta property="og:type" content="website">
+    
+    <!-- Tailwind CSS ve FontAwesome İkonları -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-87MVS0ZGXZ');
+</script>
+    <!-- Google adsens -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1818576194203212"
+     crossorigin="anonymous"></script>
+    
+    <!-- LATEX / MATHJAX MATEMATİKSEL BİÇİMLENDİRME ENTEGRASYONU -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        window.mathJaxReady = true;
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- SAYFA AÇILIRKEN HIZLI TEMA KONTROLÜ -->
+    <script>
+        (function() {
+            try {
+                let savedTheme = localStorage.getItem('site-theme') || 'light';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                document.body.setAttribute('data-theme', savedTheme);
+            } catch (e) {}
+        })();
+    </script>
+    <style>
+        /* Yukarı Çık Oku Stili */
+        #scrollToTopBtn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: none;
+            background-color: #2563eb;
+            color: white;
+            padding: 1rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 50;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        #scrollToTopBtn:hover { transform: scale(1.1); background-color: #1d4ed8; }
+    </style>
+    
+    <!-- ÇOKLU TEMA RENK DEĞİŞKENLERİ -->
+    <style>
+        /* 1. KLASİK AYDINLIK TEMASI */
+        body[data-theme="light"] {
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --text-title: #0f172a;
+            --text-body: #334155;
+            --text-muted: #64748b;
+            --border-ui: #e2e8f0;
+            --accent-soft: #eff6ff;
+            --accent-color: #2563eb;
+            --accent-border: #bfdbfe;
+            --btn-accent: #2563eb;
+            --btn-accent-hover: #1d4ed8;
+            --btn-accent-text: #ffffff;
+            --header-bg: rgba(255, 255, 255, 0.85);
+        }
+
+        /* 2. GECE MAVİSİ TEMASI (DARK MODE) */
+        body[data-theme="dark"] {
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --text-title: #f8fafc;
+            --text-body: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border-ui: #334155;
+            --accent-soft: #1e1b4b;
+            --accent-color: #818cf8;
+            --accent-border: #312e81;
+            --btn-accent: #6366f1;
+            --btn-accent-hover: #4f46e5;
+            --btn-accent-text: #ffffff;
+            --header-bg: rgba(30, 41, 59, 0.85);
+        }
+
+        /* 3. AKADEMİ YEŞİLİ TEMASI */
+        body[data-theme="emerald"] {
+            --bg-body: #f4fbf7;
+            --bg-card: #ffffff;
+            --text-title: #064e3b;
+            --text-body: #0f766e;
+            --text-muted: #115e59;
+            --border-ui: #ccfbf1;
+            --accent-soft: #f0fdf4;
+            --accent-color: #059669;
+            --accent-border: #a7f3d0;
+            --btn-accent: #059669;
+            --btn-accent-hover: #047857;
+            --btn-accent-text: #ffffff;
+            --header-bg: rgba(255, 255, 255, 0.85);
+        }
+
+        /* 4. SICAK GÜN BATIMI TEMASI */
+        body[data-theme="sunset"] {
+            --bg-body: #fffbeb;
+            --bg-card: #ffffff;
+            --text-title: #7c2d12;
+            --text-body: #9a3412;
+            --text-muted: #b45309;
+            --border-ui: #ffedd5;
+            --accent-soft: #fff7ed;
+            --accent-color: #ea580c;
+            --accent-border: #fed7aa;
+            --btn-accent: #ea580c;
+            --btn-accent-hover: #ca8a04;
+            --btn-accent-text: #ffffff;
+            --header-bg: rgba(255, 255, 255, 0.85);
+        }
+
+        /* TEMA ÖZEL SINIFLARI (TAILWIND İLE BÜTÜNLEŞİK) */
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-body);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .theme-header {
+            background-color: var(--header-bg);
+            border-color: var(--border-ui);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .theme-card {
+            background-color: var(--bg-card);
+            border-color: var(--border-ui);
+            color: var(--text-body);
+            transition: all 0.3s ease;
+        }
+        .theme-text-title { color: var(--text-title); transition: color 0.3s ease; }
+        .theme-text-body { color: var(--text-body); transition: color 0.3s ease; }
+        .theme-text-muted { color: var(--text-muted); transition: color 0.3s ease; }
+        .theme-border { border-color: var(--border-ui); transition: border-color 0.3s ease; }
+        .theme-accent-soft { background-color: var(--accent-soft); transition: background-color 0.3s ease; }
+        .theme-accent-text { color: var(--accent-color); transition: color 0.3s ease; }
+        .theme-btn-accent {
+            background-color: var(--btn-accent);
+            color: var(--btn-accent-text);
+            transition: all 0.3s ease;
+        }
+        .theme-btn-accent:hover {
+            background-color: var(--btn-accent-hover);
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .sub-content { display: none; }
+        .sub-content.active { display: block; }
+    </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
     
