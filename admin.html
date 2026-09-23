@@ -6,13 +6,29 @@
     <title>Ahmet Baş - Yönetim Paneli</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-50 text-slate-800 p-8">
-    <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-md border border-slate-200">
-        <h1 class="text-2xl font-bold mb-6 text-blue-600">Site Yönetim Paneli</h1>
+<body class="bg-slate-50 text-slate-800 p-8 min-h-screen">
+    
+    <!-- GİRİŞ EKRANI -->
+    <div id="login-section" class="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-md border border-slate-200 mt-20">
+        <h2 class="text-2xl font-bold mb-6 text-center text-blue-600">Admin Girişi</h2>
+        <form id="login-form" class="space-y-4">
+            <input type="email" id="email" placeholder="E-posta" class="w-full p-3 rounded-lg border focus:outline-none focus:border-blue-500" required>
+            <input type="password" id="password" placeholder="Şifre" class="w-full p-3 rounded-lg border focus:outline-none focus:border-blue-500" required>
+            <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold w-full hover:bg-blue-700 transition">Giriş Yap</button>
+        </form>
+        <p id="login-error" class="text-red-500 text-sm mt-4 text-center hidden">Hatalı e-posta veya şifre!</p>
+    </div>
+
+    <!-- YÖNETİM PANELİ (Giriş yapılana kadar gizli kalacak) -->
+    <div id="admin-content" class="hidden max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-md border border-slate-200">
+        <div class="flex justify-between items-center mb-8 pb-4 border-b">
+            <h1 class="text-2xl font-bold text-blue-600">Site Yönetim Paneli</h1>
+            <button id="logout-btn" class="bg-slate-200 text-slate-700 px-4 py-2 rounded-lg font-semibold hover:bg-slate-300 transition">Çıkış Yap</button>
+        </div>
         
         <!-- Matematik Kültürü Ekleme Formu -->
         <div class="mb-10 p-6 bg-slate-50 rounded-xl border border-slate-200">
-            <h2 class="text-xl font-bold mb-4">📚 Matematik Kültürü Yazısı Ekle</h2>
+            <h2 class="text-xl font-bold mb-4 text-slate-700">📚 Matematik Kültürü Yazısı Ekle</h2>
             <form id="kultur-form" class="space-y-4">
                 <input type="text" id="k-baslik" placeholder="Yazı Başlığı" class="w-full p-3 rounded-lg border" required>
                 <input type="text" id="k-ozet" placeholder="Kısa Özet" class="w-full p-3 rounded-lg border" required>
@@ -21,15 +37,15 @@
                     <input type="number" id="k-sure" placeholder="Okuma Süresi (dk)" class="w-1/2 p-3 rounded-lg border" required>
                     <input type="date" id="k-tarih" class="w-1/2 p-3 rounded-lg border" required>
                 </div>
-                <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold w-full hover:bg-blue-700">Yazıyı Kaydet</button>
+                <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold w-full hover:bg-blue-700 transition">Yazıyı Kaydet</button>
             </form>
         </div>
 
         <!-- Materyal Ekleme Formu -->
         <div class="p-6 bg-slate-50 rounded-xl border border-slate-200">
-            <h2 class="text-xl font-bold mb-4">📂 Ders Materyali Ekle</h2>
+            <h2 class="text-xl font-bold mb-4 text-slate-700">📂 Ders Materyali Ekle</h2>
             <form id="materyal-form" class="space-y-4">
-                <select id="m-kategori" class="w-full p-3 rounded-lg border" required>
+                <select id="m-kategori" class="w-full p-3 rounded-lg border bg-white" required>
                     <option value="">Kategori Seçin (Sınıf/Sınav)</option>
                     <option value="5">5. Sınıf</option>
                     <option value="6">6. Sınıf</option>
@@ -45,16 +61,57 @@
                 </select>
                 <input type="text" id="m-baslik" placeholder="Materyal Adı (örn: Üslü Sayılar Test-1)" class="w-full p-3 rounded-lg border" required>
                 <input type="url" id="m-link" placeholder="Drive / İndirme Linki" class="w-full p-3 rounded-lg border" required>
-                <button type="submit" class="bg-emerald-600 text-white px-6 py-3 rounded-lg font-bold w-full hover:bg-emerald-700">Materyali Kaydet</button>
+                <button type="submit" class="bg-emerald-600 text-white px-6 py-3 rounded-lg font-bold w-full hover:bg-emerald-700 transition">Materyali Kaydet</button>
             </form>
         </div>
     </div>
 
     <script type="module">
-        import { db } from './firebase-config.js';
+        import { db, auth } from './firebase-config.js';
         import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-        // Matematik Kültürü Kayıt
+        const loginSection = document.getElementById('login-section');
+        const adminContent = document.getElementById('admin-content');
+        const loginForm = document.getElementById('login-form');
+        const logoutBtn = document.getElementById('logout-btn');
+        const loginError = document.getElementById('login-error');
+
+        // 1. Kullanıcı Giriş Durumunu Dinleme
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // Giriş yapılmışsa admin panelini göster
+                loginSection.classList.add('hidden');
+                adminContent.classList.remove('hidden');
+            } else {
+                // Giriş yapılmamışsa login ekranını göster
+                loginSection.classList.remove('hidden');
+                adminContent.classList.add('hidden');
+            }
+        });
+
+        // 2. Giriş Yapma İşlemi
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                loginError.classList.add('hidden');
+                loginForm.reset();
+            } catch (error) {
+                console.error("Giriş Hatası:", error);
+                loginError.classList.remove('hidden');
+            }
+        });
+
+        // 3. Çıkış Yapma İşlemi
+        logoutBtn.addEventListener('click', () => {
+            signOut(auth);
+        });
+
+        // 4. Matematik Kültürü Kayıt İşlemi
         document.getElementById('kultur-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             try {
@@ -70,11 +127,11 @@
                 e.target.reset();
             } catch (error) {
                 console.error("Hata:", error);
-                alert("Eklerken hata oluştu!");
+                alert("Eklerken hata oluştu! Konsolu kontrol edin.");
             }
         });
 
-        // Materyal Kayıt
+        // 5. Materyal Kayıt İşlemi
         document.getElementById('materyal-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             try {
@@ -88,7 +145,7 @@
                 e.target.reset();
             } catch (error) {
                 console.error("Hata:", error);
-                alert("Eklerken hata oluştu!");
+                alert("Eklerken hata oluştu! Konsolu kontrol edin.");
             }
         });
     </script>
