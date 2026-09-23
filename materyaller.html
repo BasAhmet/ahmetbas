@@ -332,24 +332,24 @@
             }
         }
 
-        // 2. Verileri Ekrana Kartlar Halinde Yazdırma
-        function ekranaYazdir(liste) {
+            // 2. Verileri Ekrana Kartlar Halinde Yazdırma
+            function ekranaYazdir(liste) {
             if (liste.length === 0) {
-                grid.innerHTML = '<div class="col-span-full text-center py-20 text-slate-400 font-medium text-lg">Bu kategoride henüz materyal bulunmuyor.</div>';
+                grid.innerHTML = '<div class="col-span-full text-center py-20 theme-text-muted font-medium text-lg">Bu kategoride henüz materyal bulunmuyor.</div>';
                 return;
             }
-
+        
             grid.innerHTML = liste.map(item => `
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full group">
+                <div class="theme-card p-6 rounded-2xl border theme-border shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full group">
                     <div class="mb-4">
-                        <span class="inline-block bg-blue-50 text-blue-600 text-xs font-black px-3 py-1.5 rounded-lg mb-3">
+                        <span class="inline-block theme-accent-soft theme-accent-text text-xs font-black px-3 py-1.5 rounded-lg mb-3">
                             ${kategoriIsmiFormatla(item.kategori)}
                         </span>
-                        <h3 class="text-xl font-bold text-slate-800 leading-snug group-hover:text-blue-600 transition-colors">${item.baslik}</h3>
+                        <h3 class="text-xl font-bold theme-text-title leading-snug group-hover:theme-accent-text transition-colors">${item.baslik}</h3>
                     </div>
-                    <div class="mt-auto pt-5 border-t border-slate-100 flex justify-between items-center">
-                        <span class="text-sm text-slate-400 font-semibold">${item.boyut || ''}</span>
-                        <a href="${item.link}" target="_blank" class="bg-emerald-100 text-emerald-700 hover:bg-emerald-600 hover:text-white px-5 py-2.5 rounded-xl font-bold transition-colors text-sm flex items-center gap-2">
+                    <div class="mt-auto pt-5 border-t theme-border flex justify-between items-center">
+                        <span class="text-sm theme-text-muted font-semibold">${item.boyut || ''}</span>
+                        <a href="${item.link}" target="_blank" class="theme-btn-accent px-5 py-2.5 rounded-xl font-bold transition-colors text-sm flex items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                             </svg>
