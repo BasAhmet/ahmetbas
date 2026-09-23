@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmet Baş - Yönetim Paneli</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 p-8">
+    <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-md border border-slate-200">
+        <h1 class="text-2xl font-bold mb-6 text-blue-600">Site Yönetim Paneli</h1>
+        
+        <!-- Matematik Kültürü Ekleme Formu -->
+        <div class="mb-10 p-6 bg-slate-50 rounded-xl border border-slate-200">
+            <h2 class="text-xl font-bold mb-4">📚 Matematik Kültürü Yazısı Ekle</h2>
+            <form id="kultur-form" class="space-y-4">
+                <input type="text" id="k-baslik" placeholder="Yazı Başlığı" class="w-full p-3 rounded-lg border" required>
+                <input type="text" id="k-ozet" placeholder="Kısa Özet" class="w-full p-3 rounded-lg border" required>
+                <textarea id="k-icerik" placeholder="Yazı İçeriği (Paragraflar için Enter kullanın. LaTeX için $ ve $$ kullanabilirsiniz)" class="w-full p-3 rounded-lg border h-32" required></textarea>
+                <div class="flex gap-4">
+                    <input type="number" id="k-sure" placeholder="Okuma Süresi (dk)" class="w-1/2 p-3 rounded-lg border" required>
+                    <input type="date" id="k-tarih" class="w-1/2 p-3 rounded-lg border" required>
+                </div>
+                <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold w-full hover:bg-blue-700">Yazıyı Kaydet</button>
+            </form>
+        </div>
+
+        <!-- Materyal Ekleme Formu -->
+        <div class="p-6 bg-slate-50 rounded-xl border border-slate-200">
+            <h2 class="text-xl font-bold mb-4">📂 Ders Materyali Ekle</h2>
+            <form id="materyal-form" class="space-y-4">
+                <select id="m-kategori" class="w-full p-3 rounded-lg border" required>
+                    <option value="">Kategori Seçin (Sınıf/Sınav)</option>
+                    <option value="5">5. Sınıf</option>
+                    <option value="6">6. Sınıf</option>
+                    <option value="7">7. Sınıf</option>
+                    <option value="8">8. Sınıf</option>
+                    <option value="9">9. Sınıf</option>
+                    <option value="10">10. Sınıf</option>
+                    <option value="11">11. Sınıf</option>
+                    <option value="12">12. Sınıf</option>
+                    <option value="lgs">LGS Matematik</option>
+                    <option value="tyt">TYT Matematik</option>
+                    <option value="ayt">AYT Matematik</option>
+                </select>
+                <input type="text" id="m-baslik" placeholder="Materyal Adı (örn: Üslü Sayılar Test-1)" class="w-full p-3 rounded-lg border" required>
+                <input type="url" id="m-link" placeholder="Drive / İndirme Linki" class="w-full p-3 rounded-lg border" required>
+                <button type="submit" class="bg-emerald-600 text-white px-6 py-3 rounded-lg font-bold w-full hover:bg-emerald-700">Materyali Kaydet</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        import { db } from './firebase-config.js';
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Matematik Kültürü Kayıt
+        document.getElementById('kultur-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                await addDoc(collection(db, "kulturYazilari"), {
+                    baslik: document.getElementById('k-baslik').value,
+                    ozet: document.getElementById('k-ozet').value,
+                    icerik: document.getElementById('k-icerik').value,
+                    okumaSuresi: document.getElementById('k-sure').value,
+                    tarih: document.getElementById('k-tarih').value,
+                    eklenmeZamani: new Date()
+                });
+                alert("Yazı başarıyla eklendi!");
+                e.target.reset();
+            } catch (error) {
+                console.error("Hata:", error);
+                alert("Eklerken hata oluştu!");
+            }
+        });
+
+        // Materyal Kayıt
+        document.getElementById('materyal-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                await addDoc(collection(db, "materyaller"), {
+                    kategori: document.getElementById('m-kategori').value,
+                    baslik: document.getElementById('m-baslik').value,
+                    link: document.getElementById('m-link').value,
+                    eklenmeZamani: new Date()
+                });
+                alert("Materyal başarıyla eklendi!");
+                e.target.reset();
+            } catch (error) {
+                console.error("Hata:", error);
+                alert("Eklerken hata oluştu!");
+            }
+        });
+    </script>
+</body>
+</html>
