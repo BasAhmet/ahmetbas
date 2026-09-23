@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ahmet Baş - Yönetim Paneli</title>
+    <title>Ahmet Baş - Kapsamlı Yönetim Paneli</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-50 text-slate-800 p-8 min-h-screen">
@@ -19,135 +19,277 @@
         <p id="login-error" class="text-red-500 text-sm mt-4 text-center hidden">Hatalı e-posta veya şifre!</p>
     </div>
 
-    <!-- YÖNETİM PANELİ (Giriş yapılana kadar gizli kalacak) -->
-    <div id="admin-content" class="hidden max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-md border border-slate-200">
-        <div class="flex justify-between items-center mb-8 pb-4 border-b">
+    <!-- YÖNETİM PANELİ -->
+    <div id="admin-content" class="hidden max-w-6xl mx-auto space-y-8">
+        <div class="flex justify-between items-center bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
             <h1 class="text-2xl font-bold text-blue-600">Site Yönetim Paneli</h1>
             <button id="logout-btn" class="bg-slate-200 text-slate-700 px-4 py-2 rounded-lg font-semibold hover:bg-slate-300 transition">Çıkış Yap</button>
         </div>
-        
-        <!-- Matematik Kültürü Ekleme Formu -->
-        <div class="mb-10 p-6 bg-slate-50 rounded-xl border border-slate-200">
-            <h2 class="text-xl font-bold mb-4 text-slate-700">📚 Matematik Kültürü Yazısı Ekle</h2>
-            <form id="kultur-form" class="space-y-4">
-                <input type="text" id="k-baslik" placeholder="Yazı Başlığı" class="w-full p-3 rounded-lg border" required>
-                <input type="text" id="k-ozet" placeholder="Kısa Özet" class="w-full p-3 rounded-lg border" required>
-                <textarea id="k-icerik" placeholder="Yazı İçeriği (Paragraflar için Enter kullanın. LaTeX için $ ve $$ kullanabilirsiniz)" class="w-full p-3 rounded-lg border h-32" required></textarea>
-                <div class="flex gap-4">
-                    <input type="number" id="k-sure" placeholder="Okuma Süresi (dk)" class="w-1/2 p-3 rounded-lg border" required>
-                    <input type="date" id="k-tarih" class="w-1/2 p-3 rounded-lg border" required>
-                </div>
-                <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold w-full hover:bg-blue-700 transition">Yazıyı Kaydet</button>
-            </form>
-        </div>
 
-        <!-- Materyal Ekleme Formu -->
-        <div class="p-6 bg-slate-50 rounded-xl border border-slate-200">
-            <h2 class="text-xl font-bold mb-4 text-slate-700">📂 Ders Materyali Ekle</h2>
-            <form id="materyal-form" class="space-y-4">
-                <select id="m-kategori" class="w-full p-3 rounded-lg border bg-white" required>
-                    <option value="">Kategori Seçin (Sınıf/Sınav)</option>
-                    <option value="5">5. Sınıf</option>
-                    <option value="6">6. Sınıf</option>
-                    <option value="7">7. Sınıf</option>
-                    <option value="8">8. Sınıf</option>
-                    <option value="9">9. Sınıf</option>
-                    <option value="10">10. Sınıf</option>
-                    <option value="11">11. Sınıf</option>
-                    <option value="12">12. Sınıf</option>
-                    <option value="lgs">LGS Matematik</option>
-                    <option value="tyt">TYT Matematik</option>
-                    <option value="ayt">AYT Matematik</option>
-                </select>
-                <input type="text" id="m-baslik" placeholder="Materyal Adı (örn: Üslü Sayılar Test-1)" class="w-full p-3 rounded-lg border" required>
-                <input type="url" id="m-link" placeholder="Drive / İndirme Linki" class="w-full p-3 rounded-lg border" required>
-                <button type="submit" class="bg-emerald-600 text-white px-6 py-3 rounded-lg font-bold w-full hover:bg-emerald-700 transition">Materyali Kaydet</button>
-            </form>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- MATERYAL YÖNETİMİ -->
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-bold mb-4 text-emerald-600">📂 Materyal Yönetimi</h2>
+                <form id="materyal-form" class="space-y-3 mb-6">
+                    <input type="hidden" id="m-id">
+                    <select id="m-kategori" class="w-full p-3 rounded-lg border bg-white" required>
+                        <option value="">Kategori Seçin</option>
+                        <option value="5">5. Sınıf</option>
+                        <option value="6">6. Sınıf</option>
+                        <option value="7">7. Sınıf</option>
+                        <option value="8">8. Sınıf / LGS</option>
+                        <option value="9">9. Sınıf</option>
+                        <option value="10">10. Sınıf</option>
+                        <option value="11">11. Sınıf</option>
+                        <option value="12">12. Sınıf</option>
+                        <option value="tyt">TYT</option>
+                        <option value="ayt">AYT</option>
+                    </select>
+                    <input type="text" id="m-baslik" placeholder="Materyal Adı (örn: Üslü Sayılar Test)" class="w-full p-3 rounded-lg border" required>
+                    <div class="flex gap-2">
+                        <input type="text" id="m-boyut" placeholder="Boyut (örn: 2.5 MB)" class="w-1/3 p-3 rounded-lg border" required>
+                        <input type="url" id="m-link" placeholder="Drive İndirme Linki" class="w-2/3 p-3 rounded-lg border" required>
+                    </div>
+                    <button type="submit" id="m-btn" class="bg-emerald-600 text-white px-4 py-2 rounded-lg font-bold w-full hover:bg-emerald-700">Ekle / Güncelle</button>
+                </form>
+                <div class="h-64 overflow-y-auto border rounded-lg p-2 bg-slate-50 space-y-2" id="materyal-liste">
+                    <!-- Dinamik liste buraya gelecek -->
+                </div>
+            </div>
+
+            <!-- HAFTANIN BULMACASI YÖNETİMİ -->
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-bold mb-4 text-purple-600">🧩 Haftanın Bulmacası</h2>
+                <form id="bulmaca-form" class="space-y-3 mb-6">
+                    <input type="hidden" id="b-id">
+                    <input type="text" id="b-hafta" placeholder="Başlık (örn: Ekim 1. Hafta Bulmacası)" class="w-full p-3 rounded-lg border" required>
+                    <textarea id="b-soru" placeholder="Bulmaca Sorusu (LaTeX destekli)" class="w-full p-3 rounded-lg border h-20" required></textarea>
+                    <input type="url" id="b-gorsel" placeholder="Görsel Linki (Opsiyonel, varsa)" class="w-full p-3 rounded-lg border">
+                    <textarea id="b-cozum" placeholder="Çözüm (Göstermek isterseniz)" class="w-full p-3 rounded-lg border h-20"></textarea>
+                    <button type="submit" id="b-btn" class="bg-purple-600 text-white px-4 py-2 rounded-lg font-bold w-full hover:bg-purple-700">Ekle / Güncelle</button>
+                </form>
+                <div class="h-64 overflow-y-auto border rounded-lg p-2 bg-slate-50 space-y-2" id="bulmaca-liste"></div>
+            </div>
+
+            <!-- MATEMATİK KÜLTÜRÜ YÖNETİMİ -->
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm lg:col-span-2">
+                <h2 class="text-xl font-bold mb-4 text-blue-600">📚 Matematik Kültürü Yönetimi</h2>
+                <form id="kultur-form" class="space-y-3 mb-6">
+                    <input type="hidden" id="k-id">
+                    <div class="flex gap-2">
+                        <input type="text" id="k-baslik" placeholder="Yazı Başlığı" class="w-2/3 p-3 rounded-lg border" required>
+                        <input type="text" id="k-ozet" placeholder="Kısa Özet" class="w-1/3 p-3 rounded-lg border" required>
+                    </div>
+                    <textarea id="k-icerik" placeholder="Yazı İçeriği (Paragraflar için Enter, formüller için $kullanın$)" class="w-full p-3 rounded-lg border h-32" required></textarea>
+                    <div class="flex gap-2">
+                        <input type="number" id="k-sure" placeholder="Süre (dk)" class="w-1/4 p-3 rounded-lg border" required>
+                        <input type="date" id="k-tarih" class="w-1/4 p-3 rounded-lg border" required>
+                    </div>
+                    <button type="submit" id="k-btn" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold w-full hover:bg-blue-700">Ekle / Güncelle</button>
+                </form>
+                <div class="h-64 overflow-y-auto border rounded-lg p-2 bg-slate-50 space-y-2" id="kultur-liste"></div>
+            </div>
+
         </div>
     </div>
 
     <script type="module">
         import { db, auth } from './firebase-config.js';
-        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { collection, addDoc, getDocs, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-        const loginSection = document.getElementById('login-section');
-        const adminContent = document.getElementById('admin-content');
-        const loginForm = document.getElementById('login-form');
-        const logoutBtn = document.getElementById('logout-btn');
-        const loginError = document.getElementById('login-error');
+        // Değişkenleri Hafızada Tutalım
+        let materyallerData = [];
+        let kulturData = [];
+        let bulmacaData = [];
 
-        // 1. Kullanıcı Giriş Durumunu Dinleme
+        // Auth İşlemleri
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // Giriş yapılmışsa admin panelini göster
-                loginSection.classList.add('hidden');
-                adminContent.classList.remove('hidden');
+                document.getElementById('login-section').classList.add('hidden');
+                document.getElementById('admin-content').classList.remove('hidden');
+                verileriYukle();
             } else {
-                // Giriş yapılmamışsa login ekranını göster
-                loginSection.classList.remove('hidden');
-                adminContent.classList.add('hidden');
+                document.getElementById('login-section').classList.remove('hidden');
+                document.getElementById('admin-content').classList.add('hidden');
             }
         });
 
-        // 2. Giriş Yapma İşlemi
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-                loginError.classList.add('hidden');
-                loginForm.reset();
-            } catch (error) {
-                console.error("Giriş Hatası:", error);
-                loginError.classList.remove('hidden');
-            }
-        });
-
-        // 3. Çıkış Yapma İşlemi
-        logoutBtn.addEventListener('click', () => {
-            signOut(auth);
-        });
-
-        // 4. Matematik Kültürü Kayıt İşlemi
-        document.getElementById('kultur-form').addEventListener('submit', async (e) => {
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             try {
-                await addDoc(collection(db, "kulturYazilari"), {
-                    baslik: document.getElementById('k-baslik').value,
-                    ozet: document.getElementById('k-ozet').value,
-                    icerik: document.getElementById('k-icerik').value,
-                    okumaSuresi: document.getElementById('k-sure').value,
-                    tarih: document.getElementById('k-tarih').value,
-                    eklenmeZamani: new Date()
-                });
-                alert("Yazı başarıyla eklendi!");
-                e.target.reset();
+                await signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value);
+                document.getElementById('login-error').classList.add('hidden');
             } catch (error) {
-                console.error("Hata:", error);
-                alert("Eklerken hata oluştu! Konsolu kontrol edin.");
+                document.getElementById('login-error').classList.remove('hidden');
             }
         });
 
-        // 5. Materyal Kayıt İşlemi
+        document.getElementById('logout-btn').addEventListener('click', () => signOut(auth));
+
+        // --- VERİ ÇEKME VE LİSTELEME FONKSİYONLARI ---
+        async function verileriYukle() {
+            loadMateryaller();
+            loadKultur();
+            loadBulmaca();
+        }
+
+        async function loadMateryaller() {
+            const snap = await getDocs(collection(db, "materyaller"));
+            materyallerData = [];
+            let html = '';
+            snap.forEach(d => {
+                const data = {id: d.id, ...d.data()};
+                materyallerData.push(data);
+                html += `<div class="flex justify-between items-center bg-white p-3 border rounded shadow-sm">
+                    <div><span class="font-bold text-sm">[${data.kategori}]</span> ${data.baslik} <span class="text-xs text-gray-500">(${data.boyut})</span></div>
+                    <div class="flex gap-2">
+                        <button onclick="window.duzenleMateryal('${data.id}')" class="text-xs bg-yellow-400 px-2 py-1 rounded">Düzenle</button>
+                        <button onclick="window.silMateryal('${data.id}')" class="text-xs bg-red-500 text-white px-2 py-1 rounded">Sil</button>
+                    </div>
+                </div>`;
+            });
+            document.getElementById('materyal-liste').innerHTML = html;
+        }
+
+        async function loadKultur() {
+            const snap = await getDocs(collection(db, "kulturYazilari"));
+            kulturData = [];
+            let html = '';
+            snap.forEach(d => {
+                const data = {id: d.id, ...d.data()};
+                kulturData.push(data);
+                html += `<div class="flex justify-between items-center bg-white p-3 border rounded shadow-sm">
+                    <div><span class="font-bold">${data.baslik}</span> <span class="text-xs text-gray-500">${data.tarih}</span></div>
+                    <div class="flex gap-2">
+                        <button onclick="window.duzenleKultur('${data.id}')" class="text-xs bg-yellow-400 px-2 py-1 rounded">Düzenle</button>
+                        <button onclick="window.silKultur('${data.id}')" class="text-xs bg-red-500 text-white px-2 py-1 rounded">Sil</button>
+                    </div>
+                </div>`;
+            });
+            document.getElementById('kultur-liste').innerHTML = html;
+        }
+
+        async function loadBulmaca() {
+            const snap = await getDocs(collection(db, "bulmacalar"));
+            bulmacaData = [];
+            let html = '';
+            snap.forEach(d => {
+                const data = {id: d.id, ...d.data()};
+                bulmacaData.push(data);
+                html += `<div class="flex justify-between items-center bg-white p-3 border rounded shadow-sm">
+                    <div class="font-bold">${data.hafta}</div>
+                    <div class="flex gap-2">
+                        <button onclick="window.duzenleBulmaca('${data.id}')" class="text-xs bg-yellow-400 px-2 py-1 rounded">Düzenle</button>
+                        <button onclick="window.silBulmaca('${data.id}')" class="text-xs bg-red-500 text-white px-2 py-1 rounded">Sil</button>
+                    </div>
+                </div>`;
+            });
+            document.getElementById('bulmaca-liste').innerHTML = html;
+        }
+
+        // --- FORM GÖNDERME (EKLEME / GÜNCELLEME) İŞLEMLERİ ---
+        
+        // Materyal Kayıt
         document.getElementById('materyal-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            try {
-                await addDoc(collection(db, "materyaller"), {
-                    kategori: document.getElementById('m-kategori').value,
-                    baslik: document.getElementById('m-baslik').value,
-                    link: document.getElementById('m-link').value,
-                    eklenmeZamani: new Date()
-                });
-                alert("Materyal başarıyla eklendi!");
-                e.target.reset();
-            } catch (error) {
-                console.error("Hata:", error);
-                alert("Eklerken hata oluştu! Konsolu kontrol edin.");
-            }
+            const id = document.getElementById('m-id').value;
+            const data = {
+                kategori: document.getElementById('m-kategori').value,
+                baslik: document.getElementById('m-baslik').value,
+                boyut: document.getElementById('m-boyut').value,
+                link: document.getElementById('m-link').value,
+                guncellenmeZamani: new Date()
+            };
+            if(id) await updateDoc(doc(db, "materyaller", id), data);
+            else await addDoc(collection(db, "materyaller"), {...data, eklenmeZamani: new Date()});
+            
+            e.target.reset(); document.getElementById('m-id').value = '';
+            loadMateryaller();
         });
+
+        // Kültür Kayıt
+        document.getElementById('kultur-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('k-id').value;
+            const data = {
+                baslik: document.getElementById('k-baslik').value,
+                ozet: document.getElementById('k-ozet').value,
+                icerik: document.getElementById('k-icerik').value,
+                okumaSuresi: document.getElementById('k-sure').value,
+                tarih: document.getElementById('k-tarih').value
+            };
+            if(id) await updateDoc(doc(db, "kulturYazilari", id), data);
+            else await addDoc(collection(db, "kulturYazilari"), {...data, eklenmeZamani: new Date()});
+            
+            e.target.reset(); document.getElementById('k-id').value = '';
+            loadKultur();
+        });
+
+        // Bulmaca Kayıt
+        document.getElementById('bulmaca-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('b-id').value;
+            const data = {
+                hafta: document.getElementById('b-hafta').value,
+                soru: document.getElementById('b-soru').value,
+                gorsel: document.getElementById('b-gorsel').value,
+                cozum: document.getElementById('b-cozum').value
+            };
+            if(id) await updateDoc(doc(db, "bulmacalar", id), data);
+            else await addDoc(collection(db, "bulmacalar"), {...data, eklenmeZamani: new Date()});
+            
+            e.target.reset(); document.getElementById('b-id').value = '';
+            loadBulmaca();
+        });
+
+        // --- SİLME VE DÜZENLEME (GLOBAL FONKSİYONLAR) ---
+        // JS modül yapısı içinde onclick çalışabilmesi için window'a ekliyoruz.
+        
+        window.silMateryal = async (id) => {
+            if(confirm("Materyali silmek istediğinize emin misiniz?")) {
+                await deleteDoc(doc(db, "materyaller", id)); loadMateryaller();
+            }
+        };
+        window.duzenleMateryal = (id) => {
+            const data = materyallerData.find(d => d.id === id);
+            document.getElementById('m-id').value = data.id;
+            document.getElementById('m-kategori').value = data.kategori;
+            document.getElementById('m-baslik').value = data.baslik;
+            document.getElementById('m-boyut').value = data.boyut || '';
+            document.getElementById('m-link').value = data.link;
+        };
+
+        window.silKultur = async (id) => {
+            if(confirm("Yazıyı silmek istediğinize emin misiniz?")) {
+                await deleteDoc(doc(db, "kulturYazilari", id)); loadKultur();
+            }
+        };
+        window.duzenleKultur = (id) => {
+            const data = kulturData.find(d => d.id === id);
+            document.getElementById('k-id').value = data.id;
+            document.getElementById('k-baslik').value = data.baslik;
+            document.getElementById('k-ozet').value = data.ozet;
+            document.getElementById('k-icerik').value = data.icerik;
+            document.getElementById('k-sure').value = data.okumaSuresi;
+            document.getElementById('k-tarih').value = data.tarih;
+        };
+
+        window.silBulmaca = async (id) => {
+            if(confirm("Bulmacayı silmek istediğinize emin misiniz?")) {
+                await deleteDoc(doc(db, "bulmacalar", id)); loadBulmaca();
+            }
+        };
+        window.duzenleBulmaca = (id) => {
+            const data = bulmacaData.find(d => d.id === id);
+            document.getElementById('b-id').value = data.id;
+            document.getElementById('b-hafta').value = data.hafta;
+            document.getElementById('b-soru').value = data.soru;
+            document.getElementById('b-gorsel').value = data.gorsel || '';
+            document.getElementById('b-cozum').value = data.cozum || '';
+        };
+
     </script>
 </body>
 </html>
